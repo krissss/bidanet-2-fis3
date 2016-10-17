@@ -79,6 +79,11 @@ a:active {
     border: 0;
 }
 
+.panel .msg-title{
+    font-size: 20px;
+    padding: 10px 0;
+}
+
 .panel-primary .panel-body {
     background: #b6e1f8;
     border-radius: 5px;
@@ -93,11 +98,6 @@ a:active {
     background: #dff0d8;
     border-radius: 5px;
     margin-bottom: 5px;
-}
-
-.panel-success .msg{
-    font-size: 20px;
-    padding: 10px 0;
 }
 
 .panel-success .col-xs-6{
@@ -360,10 +360,6 @@ a:active {
 .customer-info-message .title .user-info .date{
     font-size: 12px;
     margin: 0;
-}
-
-.customer-info-message .info{
-    
 }
 
 .customer-info-message .info .item{

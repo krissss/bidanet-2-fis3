@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Bootstrap 101 Template</title>
+
+	<!-- Bootstrap -->
+	<link href="../css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+      <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+	<link rel="stylesheet" href="../css/app.css">
+</head>
+
+<body>
+	<div class="common-header header">
+		<div class="user-head">
+			<img src="../img/default-avator.jpg" alt="user-head">
+		</div>
+		<div class="user-info">
+			<div class="name">
+				晓晓
+			</div>
+			<div class="group">
+				新凯旋店-门市A组
+			</div>
+		</div>
+	</div>
+	<div class="menu">
+		<a href="add.html" target="iframe" class="item">
+			<span class="icon glyphicon glyphicon-search"></span>
+			<span class="title">新增</span>
+		</a>
+		<a href="list.html" target="iframe" class="item">
+			<span class="icon glyphicon glyphicon-search"></span>
+			<span class="title">列表</span>
+		</a>
+		<a href="mine.html" target="iframe" class="item">
+			<span class="icon glyphicon glyphicon-search"></span>
+			<span class="title">我的</span>
+		</a>
+	</div>
+
+	<iframe id="iframe" name="iframe" src="add.html" width="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="../js/bootstrap.min.js"></script>
+
+	<script src="../js/app.js"></script>
+
+	<script>
+      $("#iframe").load(function () {
+        var mainheight = $(this).contents().find("body").height();
+        $(this).height(mainheight);
+      });
+    </script>
+</body>
+
+</html>
