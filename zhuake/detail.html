@@ -1,8 +1,4 @@
-<link rel="import" href="../components/head.html?__inline">
-
-<link rel="import" href="../components/common-header.html?__inline">
-
-<link rel="import" href="../components/menu-zhuake.html?__inline">
+<link rel="import" href="../components/head-iframe.html?__inline">
 
 <div class="container">
 	<div class="map-head"><span class="vertical-line"></span>客资详情</div>
@@ -14,4 +10,125 @@
   <link rel="import" href="../components/detail-menshi.html?__inline">
 </div>
 
-<link rel="import" href="../components/foot.html?__inline">
+<script>
+  var customerUuid = request.getParam('id');
+  api.getObject('BusCustomer', customerUuid, function(data){
+    // console.log(data);
+    if(data.retMsg != 'OK'){
+      alert(data.retMsg);
+    }
+    var obj = data.retVal;
+
+    // 重新组装值
+    var newObj = {
+      status: '状态怎么判断',
+      lastModifyDepartment: function(){
+        if(obj.umkName){
+          return '门市客服';
+        }
+        if(obj.uykName){
+          return '邀约客服';
+        }
+        return '抓客客服';
+      },
+      lastModifyUsername: function(){
+        if(obj.umkName){
+          return obj.umkName;
+        }
+        if(obj.uykName){
+          return obj.uykName;
+        }
+        return obj.uzkName;
+      },
+      lastModifyTime: function(){
+        return new Date(obj.modify_time).format("yyyy-MM-dd hh:mm");
+      },
+      zkUsername: obj.uzkName,
+      zkChannel: obj.channelName,
+      zkRecordTime: function(){
+        return new Date(obj.create_date).format("yyyy-MM-dd hh:mm");
+      },
+      yyUsername: obj.uykName,
+      //yyType: '',
+      yyDaodianDate: function(){
+        return new Date(obj.shop_date).format("yyyy-MM-dd");
+      },
+      yyDaodianTime: obj.shop_date2,
+      //yyAcceptTime: '',
+      //yyTransferTime: '',
+      msShopName: obj.umdName,
+      msUsername: obj.umkName,
+      //msTradeMoney: '',
+      //msPaidMoney: '',
+      //msAcceptTime: '',
+      //msOrderTime: '',
+      zkUsername: obj.uzkName,
+      zkRecordTime: function(){
+        return new Date(obj.create_date).format("yyyy-MM-dd hh:mm");
+      },
+      zkCustomerName: obj.name1,
+      zkCustomerCellphone: obj.tel1,
+      zkCustomerChannel: obj.channelName,
+      zkCustomerWechat: obj.wechat1,
+      zkCustomerLocation: obj.locationName,
+      zkCustomerQq: obj.qq1,
+      zkCustomerType: function(){
+        var customerFlag = '';
+        switch(obj.customer_flag){
+          case 1: customerFlag = 'A'; break;
+          case 2: customerFlag = 'B'; break;
+          case 3: customerFlag = 'C'; break;
+          case 4: customerFlag = 'D'; break;
+          default: customerFlag = '未知'
+        }
+        return customerFlag
+      },
+      zkCustomerIdentity: obj.name_flag,
+      zkCustomerRecord: obj.zkrecord,
+      yyUsername: obj.uykName,
+      //yyTransferData: '',
+      yyCustomerWeddingDate: function(){
+        return new Date(obj.wedding_date).format("yyyy-MM-dd");
+      },
+      //yyCustomerShootingDate: '',
+      yyCustomerBalance: obj.budget,
+      //yyCustomerRelation: '',
+      //yyCustomerShootingRecord: '',
+      //yyCustomerWorryRecord: '',
+      //yyCustomerOrderRecord: '',
+      yyCustomerRecord: obj.yyrecord,
+      msShopName: obj.smdName,
+      //msUsername: '',
+      //msOrderTime: '',
+      msCustomerRecord: obj.msrecord,
+      
+    },
+        hasYy = newObj.yyUsername?true:false,
+        hasMs = newObj.msUsername?true:false,
+        replaceName = '',
+        replaceValue = '';
+
+    $('.replace-data').each(function(){
+      replaceName = dash2Hump($(this).data('name'));
+      replaceValue = newObj[replaceName];
+      if(undefined == replaceValue){
+        console.log(replaceName);
+        //$(this).text('unknown');
+      }else{
+        $(this).text(replaceValue);
+      }
+    });
+
+    if(!hasYy){
+      $('.has-yaoyue').hide();
+    }
+    if(!hasMs){
+      $('.has-menshi').hide();
+    }
+
+    // 重新设定 iframe 高度
+    iframe.changeHeight();
+  });
+</script>
+
+<link rel="import" href="../components/foot-iframe.html?__inline">

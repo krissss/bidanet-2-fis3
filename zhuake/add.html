@@ -1,111 +1,133 @@
 <link rel="import" href="../components/head-iframe.html?__inline">
 
-	<div class="container">
-		<div class="map-head"><span class="vertical-line"></span>新增客资</div>
-		<div class="panel panel-primary">
-			<form action="add-success.html" class="form-horizontal form" role="form">
-				<div class="panel-body">
-					<div class="form-group">
-						<label for="call" class="col-xs-4 control-label no-padding-left">
+<div class="container">
+	<div class="map-head"><span class="vertical-line"></span>新增客资</div>
+	<div class="panel panel-primary">
+		<form id="form" action="" class="form-horizontal form" role="form">
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-4 control-label no-padding-left">
             <span class="icon glyphicon glyphicon-search"></span> 称呼
           </label>
-						<div class="col-xs-8 no-padding-left">
-							<input type="text" class="form-control" id="call">
-						</div>
+					<div class="col-xs-8 no-padding-left">
+						<input name="name1" type="text" class="form-control">
 					</div>
-					<div class="form-group">
-						<label for="call" class="col-xs-4 control-label no-padding-left">
+				</div>
+				<div class="form-group">
+					<label class="col-xs-4 control-label no-padding-left">
             <span class="icon glyphicon glyphicon-search"></span> 渠道
           </label>
-						<div class="col-xs-8 no-padding-left">
-							<select class="form-control">
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
+					<div class="col-xs-8 no-padding-left">
+						<select name="channel_id" class="form-control">
+              <option value="">请选择</option>
             </select>
-						</div>
 					</div>
-					<div class="form-group">
-						<label for="call" class="col-xs-4 control-label no-padding-left">
+				</div>
+				<div class="form-group">
+					<label class="col-xs-4 control-label no-padding-left">
             <span class="icon glyphicon glyphicon-search"></span> 地区
           </label>
-						<div class="col-xs-8 no-padding-left">
-							<select class="form-control">
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
+					<div class="col-xs-8 no-padding-left">
+						<select name="location_id" class="form-control">
+              <option value="">请选择</option>
             </select>
-						</div>
 					</div>
-					<div class="form-group">
-						<label for="call" class="col-xs-4 control-label no-padding-left">
+				</div>
+				<div class="form-group">
+					<label class="col-xs-4 control-label no-padding-left">
             <span class="icon glyphicon glyphicon-search"></span> 类别
           </label>
-						<div class="col-xs-8 no-padding-left">
-							<select class="form-control">
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
+					<div class="col-xs-8 no-padding-left">
+						<select name="customer_flag" class="form-control">
+              <option value="">请选择</option>
+              <option value="1">A</option>
+              <option value="2">B</option>
+              <option value="3">C</option>
+              <option value="4">D</option>
             </select>
-						</div>
 					</div>
 				</div>
-				<div class="panel-body">
-					<div class="form-group">
-						<label for="call" class="col-xs-4 control-label no-padding-left">
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-4 control-label no-padding-left">
             <span class="icon glyphicon glyphicon-search"></span> 手机
           </label>
-						<div class="col-xs-8 no-padding-left">
-							<input type="text" class="form-control" id="call">
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="call" class="col-xs-4 control-label no-padding-left">
-            <span class="icon glyphicon glyphicon-search"></span> 微信
-          </label>
-						<div class="col-xs-8 no-padding-left">
-							<input type="text" class="form-control" id="call">
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="call" class="col-xs-4 control-label no-padding-left">
-            <span class="icon glyphicon glyphicon-search"></span> Q Q
-          </label>
-						<div class="col-xs-8 no-padding-left">
-							<input type="text" class="form-control" id="call">
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="call" class="col-xs-4 control-label no-padding-left">
-            <span class="icon glyphicon glyphicon-search"></span> 身份
-          </label>
-						<div class="col-xs-8 no-padding-left">
-							<input type="text" class="form-control" id="call">
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="call" class="col-xs-4 control-label">
-            沟通记录
-          </label>
-						<div class="col-xs-12">
-							<textarea class="form-control" rows="3"></textarea>
-						</div>
-					</div>
-
-					<div class="form-group">
-						<div class="col-xs-offset-2 col-xs-8">
-							<input type="submit" class="btn btn-primary btn-block" value="提交">
-						</div>
+					<div class="col-xs-8 no-padding-left">
+						<input name="tel1" type="text" class="form-control">
 					</div>
 				</div>
-			</form>
-		</div>
+				<div class="form-group">
+					<label class="col-xs-4 control-label no-padding-left">
+            <span class="icon glyphicon glyphicon-search"></span> 微信
+          </label>
+					<div class="col-xs-8 no-padding-left">
+						<input name="wechat1" type="text" class="form-control">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-4 control-label no-padding-left">
+            <span class="icon glyphicon glyphicon-search"></span> Q Q
+          </label>
+					<div class="col-xs-8 no-padding-left">
+						<input name="qq1" type="text" class="form-control">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-4 control-label no-padding-left">
+            <span class="icon glyphicon glyphicon-search"></span> 身份
+          </label>
+					<div class="col-xs-8 no-padding-left">
+						<input name="name_flag" type="text" class="form-control">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-4 control-label">
+            沟通记录
+          </label>
+					<div class="col-xs-12">
+						<textarea name="zkrecord" class="form-control" rows="3"></textarea>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-xs-offset-2 col-xs-8">
+						<input type="submit" class="btn btn-primary btn-block" value="提交">
+					</div>
+				</div>
+			</div>
+		</form>
 	</div>
+</div>
+
+<script>
+  // 渠道
+  api.listIdAndName('BusChannel', function(options){
+    $('select[name=channel_id]').append(options);
+  });
+
+  // 地区
+  api.listIdAndName('BusLocation', function(options){
+    $('select[name=location_id]').append(options);
+  });
+  
+  // 表单提交
+  $('#form').submit(function(){
+    var params = {},
+        values = $("#form").serializeArray();
+    // 表单数据
+    $.each(values, function(index,item){
+      params[item.name] = item.value;
+    });
+    // 额外数据
+    params['customer_service_id'] = api.userInfo.userUuid;
+    params['create_date'] = new Date().getTime();
+    // 调用接口
+    api.saveObject('BusCustomer', params, function(data){
+      console.log(data);
+    });
+    return false;
+  });
+</script>
 
 <link rel="import" href="../components/foot-iframe.html?__inline">

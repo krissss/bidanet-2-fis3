@@ -1,69 +1,98 @@
 <link rel="import" href="../components/head-iframe.html?__inline">
 
 <div class="container">
-  <div class="map-head">
-    <span class="vertical-line"></span>客资列表
-    <div class="filter">
-      <div class="btn-group">
-        <a href="list.html" class="btn btn-sm btn-primary">有效客资</a>
-        <a href="list.html" class="btn btn-sm btn-default">无效客资</a>
-      </div>
-    </div>
-  </div>
-  <table class="table table-bordered table-striped">
-      <thead>
-        <tr>
-          <th>序号</th>
-          <th>姓名</th>
-          <th>抓取日期</th>
-          <th>类别</th>
-          <th>客资状态</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr onclick="javascript:window.location.href='detail.html'">
-          <td>1</td>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-          <td>@mdo</td>
-        </tr>
-        </a>
-        <tr onclick="javascript:window.location.href='detail.html'">
-          <td>2</td>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@TwBootstrap</td>
-          <td>@mdo</td>
-        </tr>
-        <tr onclick="javascript:window.location.href='detail.html'">
-          <td>3</td>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-          <td>@mdo</td>
-        </tr>
-        <tr>
-          <td>4</td>
-          <td>Larry the Bird</td>
-          <td>@twitter</td>
-          <td>@mdo</td>
-          <td>@mdo</td>
-        </tr>
-      </tbody>
-    </table>
-    <nav>
-      <ul class="pagination no-margin">
-        <li><a href="#">&laquo;</a></li>
-        <li class="active"><a href="#">1</a></li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">4</a></li>
-        <li><a href="#">5</a></li>
-        <li><a href="#">&raquo;</a></li>
-      </ul>
-    </nav>
+	<div class="map-head">
+		<span class="vertical-line"></span>客资列表
+		<div class="filter">
+			<div class="btn-group">
+        <a href="javascript:;" class="btn btn-sm btn-primary validate-flag" data-validate="-1">全部</a>
+				<a href="javascript:;" class="btn btn-sm btn-default validate-flag" data-validate="1">有效客资</a>
+				<a href="javascript:;" class="btn btn-sm btn-default validate-flag" data-validate="2">无效客资</a>
+			</div>
+		</div>
+	</div>
+	<table class="table table-bordered table-striped">
+		<thead>
+			<tr>
+				<th>序号</th>
+				<th>姓名</th>
+				<th>抓取日期</th>
+				<th>类别</th>
+				<th>客资状态</th>
+			</tr>
+		</thead>
+		<tbody id="table-content">
+		</tbody>
+	</table>
 
 </div>
+
+<script>
+  var searchParams =  {
+    customer_service_id: api.userInfo.userUuid
+  },
+  // 以下两个暂时预留不用
+  pageIndex = request.getParam('pageIndex')?request.getParam('pageIndex'):0,
+  pageSize = request.getParam('pageSize')?request.getParam('pageSize'):999;
+
+  // 有效无效的点击事件
+  $('.validate-flag').click(function(){
+    $('.validate-flag').removeClass('btn-primary').addClass('btn-default');
+    $(this).addClass('btn-primary');
+    var value = parseInt($(this).data('validate'));
+    if(value == -1){
+      delete searchParams['validate_flag'];
+    }else{
+      searchParams['validate_flag'] = parseInt(value);
+    }
+    setTableList(searchParams, pageIndex, pageSize);
+  });
+
+  // 初始化加载数据
+  setTableList(searchParams, pageIndex, pageSize);
+  
+  // 设置表格数据
+  function setTableList(searchParams, pageIndex, pageSize){
+    api.listObject('BusCustomer', searchParams, pageIndex, pageSize, function(data){
+      var tabelTbody = '',
+          createTime,
+          customerFlag,
+          validFlag;
+      if(data){
+        $.each(data.list, function(index, item){
+          // 格式化数据
+          createTime = new Date(item.createDate).format("yyyy-MM-dd\nhh:mm:ss");
+          switch(item.customer_flag){
+            case 1: customerFlag = 'A'; break;
+            case 2: customerFlag = 'B'; break;
+            case 3: customerFlag = 'C'; break;
+            case 4: customerFlag = 'D'; break;
+            default: customerFlag = '未知'
+          }
+          switch(item.validFlag){
+            case 1: validFlag = '有效'; break;
+            case 2: validFlag = '无效'; break;
+            default: validFlag = '未报备'
+          }
+          // 构造table body
+          tabelTbody +=
+          '<tr onclick="javascript:window.location.href=\'detail.html?id='+ item.uuid +'\'">'
+            + '<td>'+ (index+1) +'</td>'
+            + '<td>'+ item.name1 +'</td>'
+            + '<td>'+ createTime +'</td>'
+            + '<td>'+ customerFlag +'</td>'
+            + '<td>'+ validFlag +'</td>'
+            + '</tr>'
+            + "\n";
+        });
+      }
+      // 一次性加到页面上
+      $('#table-content').html(tabelTbody);
+      // 重新设定 iframe 高度
+      iframe.changeHeight();
+    });
+  }
+  
+</script>
 
 <link rel="import" href="../components/foot-iframe.html?__inline">
