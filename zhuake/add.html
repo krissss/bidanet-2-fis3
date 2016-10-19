@@ -19,7 +19,6 @@
           </label>
 					<div class="col-xs-8 no-padding-left">
 						<select name="channel_id" class="form-control">
-              <option value="">请选择</option>
             </select>
 					</div>
 				</div>
@@ -29,7 +28,6 @@
           </label>
 					<div class="col-xs-8 no-padding-left">
 						<select name="location_id" class="form-control">
-              <option value="">请选择</option>
             </select>
 					</div>
 				</div>
@@ -124,7 +122,12 @@
     params['create_date'] = new Date().getTime();
     // 调用接口
     api.saveObject('BusCustomer', params, function(data){
-      console.log(data);
+      // console.log(data);
+			if(data.retMsg == 'OK'){
+				$('#iframe').attr('src', 'add-success.html');
+			}else{
+				alert(data.retMsg);
+			}
     });
     return false;
   });

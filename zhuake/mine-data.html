@@ -1,0 +1,55 @@
+<link rel="import" href="../components/head-iframe.html?__inline">
+
+<p>抓客客资统计</p>
+<div class="btn-group btn-group-justified margin-top-10">
+	<a href="javascript:;" class="btn btn-primary date-filter-btn" data-date="today">今日</a>
+	<a href="javascript:;" class="btn btn-default date-filter-btn" data-date="this-week">本周</a>
+	<a href="javascript:;" class="btn btn-default date-filter-btn" data-date="this-month">本月</a>
+</div>
+<table class="table table-bordered margin-top-10">
+	<tbody>
+		<tr>
+			<td></td>
+			<td>部门总客资</td>
+			<td>我的客资数</td>
+			<td>有效客资数</td>
+			<td>客资有效率</td>
+			<td>客资成交数</td>
+		</tr>
+		<tr>
+			<td>实际</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>目标</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>达成率</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+	</tbody>
+</table>
+
+<script>
+  $('.date-filter-btn').click(function(){
+    $('.date-filter-btn').removeClass('btn-primary').addClass('btn-default');
+    $(this).addClass('btn-primary');
+    var date = $(this).data('date');
+    console.log(date);
+  });
+</script>
+
+<link rel="import" href="../components/foot-iframe.html?__inline">

@@ -44,7 +44,7 @@ var api = {
       dataType: 'JSON',
       success: function (data) {
         api.filterToken(data);
-        var itemElem = '';
+        var itemElem = '<option value="">请选择</option>';
         $.each(data.retVal.list, function (key, value) {
           itemElem += '<option value="' + value.uuid + '">' + value.name + '</option>';
         });

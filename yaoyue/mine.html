@@ -1,74 +1,27 @@
-<link rel="import" href="../components/head.html?__inline">
-
-<link rel="import" href="../components/common-header.html?__inline">
-
-<link rel="import" href="../components/menu-yaoyue.html?__inline">
+<link rel="import" href="../components/head-iframe.html?__inline">
 
 <div class="container">
 	<div class="map-head">
 		<span class="vertical-line"></span>我的
 		<div class="filter">
 			<div class="btn-group">
-				<a href="mine.html" type="button" class="btn btn-sm btn-primary">数据</a>
-				<a href="mine-message.html" class="btn btn-sm btn-default">消息</a>
-				<a href="mine-info.html" class="btn btn-sm btn-default">资料</a>
-				<a href="mine-target.html" class="btn btn-sm btn-default">目标</a>
+				<a href="mine-data.html" target="iframe2" class="btn btn-sm btn-primary mine-btn">数据</a>
+				<a href="mine-message.html" target="iframe2" class="btn btn-sm btn-default mine-btn">消息</a>
+				<a href="mine-info.html" target="iframe2" class="btn btn-sm btn-default mine-btn">资料</a>
+				<a href="mine-target.html" target="iframe2" class="btn btn-sm btn-default mine-btn">目标</a>
 			</div>
 		</div>
 	</div>
-	<p>抓客客资统计</p>
-	<div class="btn-group btn-group-justified margin-top-10">
-		<a href="mine.html" type="button" class="btn btn-primary">今日</a>
-		<a href="mine.html" class="btn btn-default">本周</a>
-		<a href="mine.html" class="btn btn-default">本月</a>
-	</div>
-	<table class="table table-bordered margin-top-10">
-		<tbody>
-			<tr>
-				<td></td>
-				<td>报备有效客资</td>
-				<td>邀约到店资数</td>
-				<td>网络成交资数</td>
-				<td>总成交订单数</td>
-			</tr>
-			<tr>
-				<td>实际</td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-			<tr>
-				<td>目标</td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-			<tr>
-				<td>达成率</td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-		</tbody>
-	</table>
-  <p>本月截止目前的邀约到店率</p>
-	<table class="table table-bordered margin-top-10">
-		<tbody>
-			<tr>
-				<td>我的到店率</td>
-				<td>部门到店率</td>
-				<td>目标到店率</td>
-			</tr>
-			<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-		</tbody>
-	</table>
+
+	<iframe id="iframe" name="iframe2" src="mine-data.html" width="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+
 </div>
 
-<link rel="import" href="../components/foot.html?__inline">
+<script>
+  $('.mine-btn').click(function(){
+    $('.mine-btn').removeClass('btn-primary').addClass('btn-default');
+    $(this).addClass('btn-primary');
+  });
+</script>
+
+<link rel="import" href="../components/foot-iframe.html?__inline">
