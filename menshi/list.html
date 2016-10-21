@@ -1,0 +1,89 @@
+<link rel="import" href="../components/head-iframe.html?__inline">
+
+<div class="container">
+	<div class="map-head">
+		<span class="vertical-line"></span>客资列表
+		<div class="filter">
+			<select class="form-control input-sm">
+        <option>按照客资状态</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+      </select>
+		</div>
+	</div>
+
+	<div class="btn-group btn-group-justified margin-top-10">
+		<a href="javascript:;" class="btn btn-primary date-filter-btn" data-date="all">全部</a>
+		<a href="javascript:;" class="btn btn-default date-filter-btn" data-date="today">当日</a>
+		<a href="javascript:;" class="btn btn-default date-filter-btn" data-date="this-week">本周</a>
+    <a href="javascript:;" class="btn btn-default date-filter-btn" data-date="this-month">本月</a>
+	</div>
+
+	<table class="table table-bordered table-striped margin-top-10">
+		<thead>
+			<tr>
+				<th>序号</th>
+				<th>姓名</th>
+				<th>下发时间</th>
+				<th>订单</th>
+				<th>预约到店时间</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr onclick="javascript:window.location.href='detail.html'">
+				<td>1</td>
+				<td>Mark</td>
+				<td>Otto</td>
+				<td>@mdo</td>
+				<td>@mdo</td>
+			</tr>
+			</a>
+			<tr onclick="javascript:window.location.href='detail.html'">
+				<td>2</td>
+				<td>Mark</td>
+				<td>Otto</td>
+				<td>@TwBootstrap</td>
+				<td>@mdo</td>
+			</tr>
+			<tr onclick="javascript:window.location.href='detail.html'">
+				<td>3</td>
+				<td>Jacob</td>
+				<td>Thornton</td>
+				<td>@fat</td>
+				<td>@mdo</td>
+			</tr>
+			<tr>
+				<td>4</td>
+				<td>Larry the Bird</td>
+				<td>@twitter</td>
+				<td>@mdo</td>
+				<td>@mdo</td>
+			</tr>
+		</tbody>
+	</table>
+	<nav>
+		<ul class="pagination no-margin">
+			<li><a href="#">&laquo;</a></li>
+			<li class="active"><a href="#">1</a></li>
+			<li><a href="#">2</a></li>
+			<li><a href="#">3</a></li>
+			<li><a href="#">4</a></li>
+			<li><a href="#">5</a></li>
+			<li><a href="#">&raquo;</a></li>
+		</ul>
+	</nav>
+
+</div>
+
+<script>
+  $('.date-filter-btn').click(function(){
+    $('.date-filter-btn').removeClass('btn-primary').addClass('btn-default');
+    $(this).addClass('btn-primary');
+    var date = $(this).data('date');
+    console.log(date);
+  });
+</script>
+
+<link rel="import" href="../components/foot-iframe.html?__inline">

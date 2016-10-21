@@ -17,8 +17,12 @@
 					<label class="col-xs-4 control-label no-padding-left">
             <span class="icon glyphicon glyphicon-search"></span> 渠道
           </label>
-					<div class="col-xs-8 no-padding-left">
+					<div class="col-xs-4 no-padding-left">
 						<select name="channel_id" class="form-control">
+            </select>
+					</div>
+					<div class="col-xs-4 no-padding-left">
+						<select name="channel_id2" class="form-control">
             </select>
 					</div>
 				</div>
@@ -121,14 +125,15 @@
     params['customer_service_id'] = api.userInfo.userUuid;
     params['create_date'] = new Date().getTime();
     // 调用接口
-    api.saveObject('BusCustomer', params, function(data){
+		window.location.href = 'add-success.html';
+    /*api.saveObject('BusCustomer', params, function(data){
       // console.log(data);
 			if(data.retMsg == 'OK'){
 				$('#iframe').attr('src', 'add-success.html');
 			}else{
 				alert(data.retMsg);
 			}
-    });
+    });*/
     return false;
   });
 </script>

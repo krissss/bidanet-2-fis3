@@ -43,7 +43,7 @@
     if(value == -1){
       delete searchParams['validate_flag'];
     }else{
-      searchParams['validate_flag'] = parseInt(value);
+      searchParams['validate_flag'] = value;
     }
     setTableList(searchParams, pageIndex, pageSize);
   });
@@ -62,7 +62,7 @@
         $.each(data.list, function(index, item){
           // 格式化数据
           createTime = new Date(item.createDate).format("yyyy-MM-dd\nhh:mm:ss");
-          switch(item.customer_flag){
+          switch(item.customerFlag){
             case 1: customerFlag = 'A'; break;
             case 2: customerFlag = 'B'; break;
             case 3: customerFlag = 'C'; break;

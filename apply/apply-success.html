@@ -1,24 +1,22 @@
-<link rel="import" href="../components/head.html?__inline">
-<div class="header apply-header">
-	<div class="site">
-		<span class="name">网销大师</span>
-		<span class="version">v3.0云端版</span>
-	</div>
-	<div class="title">
-		功能申请
-	</div>
-</div>
+<link rel="import" href="../components/head-iframe.html?__inline">
+
 <div class="container margin-top-15">
 	<div class="panel panel-success">
 		<div class="panel-body">
 			<div class="msg-title">恭喜提交成功！</div>
 			<div class="row">
 				<div class="col-xs-6">
-					<a href="apply.html" class="btn btn-default btn-block">返回 重新认证</a>
+					<a id="return-btn" href="javascript:;" class="btn btn-default btn-block">返回 重新认证</a>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
 
-<link rel="import" href="../components/foot.html?__inline">
+<script>
+	$('#return-btn').click(function(){
+		window.top.location.href = WEB_ROOT + '/';
+	});
+</script>
+
+<link rel="import" href="../components/foot-iframe.html?__inline">

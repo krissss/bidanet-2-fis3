@@ -5,78 +5,71 @@
 			<div class="title">
 				客资状态：<span class="replace-data" data-name="status">客户到店已订单</span>
 				<div class="small">最近更新：
-          <span class="replace-data" data-name="last-modify-department">门店门市</span>
-          -
-          <span class="replace-data" data-name="last-modify-username">张磊</span>
-          &nbsp;
-          <span class="replace-data" data-name="last-modify-time">2016-09-09 19:22</span>
-        </div>
+					<span class="replace-data" data-name="last-modify">门店门市-张磊&nbsp;2016-09-09 19:22</span>
+				</div>
 			</div>
 			<div class="message-tr">
 				<div class="tr-title col-xs-2">
 					抓客
 				</div>
 				<div class="tr-info col-xs-10">
-					<p>来源：抓客客服-
-            <span class="replace-data" data-name="zk-username">阿君</span>
-            &nbsp;渠道：
-            <span class="replace-data" data-name="zk-channel">官网-百度</span>
-          </p>
-					<p>登记时间：
-            <span class="replace-data" data-name="zk-record-time">2016-09-09 18:00</span>
+          <p class="replace-data" data-name="msg-zk">
+            来源：抓客客服-阿君&nbsp;渠道：官网-百度<br/>
+            登记时间：2016-09-09 18:00
           </p>
 				</div>
 			</div>
-			<div class="has-yaoyue message-tr">
+			<div class="has-yaoyue message-tr hidden">
 				<div class="tr-title col-xs-2">
 					邀约
 				</div>
 				<div class="tr-info col-xs-10">
-					<p>邀约：邀约客服-
-            <span class="replace-data" data-name="yy-username">小丽</span>
-            &nbsp;方式：<span class="replace-data" data-name="yy-type">邀约到店</span>
-          </p>
-					<p>预计到店时间：
-            <span class="replace-data" data-name="yy-daodian-date">2016年09月08日</span>
-            &nbsp;
-            <span class="replace-data" data-name="yy-daodian-time">下午三四点</span>
-          </p>
-					<p>接收：
-            <span class="replace-data" data-name="yy-accept-time">2016-09-09 17:20</span>
-            &nbsp;下发：
-            <span class="replace-data" data-name="yy-transfer-time">2016-09-09 19:20</span>
+          <p class="replace-data" data-name="msg-yy">
+            邀约：邀约客服-小丽&nbsp;方式：邀约到店<br/>
+            预计到店时间：2016年09月08日&nbsp;下午三四点<br/>
+            接收：2016-09-09 17:20&nbsp;下发：2016-09-09 19:20
           </p>
 				</div>
 			</div>
-			<div class="has-menshi message-tr">
+			<div class="has-menshi message-tr hidden">
 				<div class="tr-title col-xs-2">
 					到店
 				</div>
 				<div class="tr-info col-xs-10">
-					<p>门店门市：
-            <span class="replace-data" data-name="ms-shop-name">金凯旋店</span>
-            -
-            <span class="replace-data" data-name="ms-username">小敏</span>
-          </p>
-					<p>订单金额：
-            <span class="replace-data" data-name="ms-trade-money">3439</span>
-            元&nbsp;付款：
-            <span class="replace-data" data-name="ms-paid-money">1000</span>
-          </p>
-					<p>接收：
-            <span class="replace-data" data-name="ms-accept-time">2016-09-09 17:20</span>
-            &nbsp;订单：
-            <span class="replace-data" data-name="ms-order-time">2016-09-09 19:20</span>
-          </p>
+          <p class="replace-data" data-name="msg-ms">
+            门店门市：金凯旋店-小敏
+            订单金额：3439元&nbsp;付款：1000
+            接收：2016-09-09 17:20&nbsp;订单：2016-09-09 19:20
+					</p>
 				</div>
 			</div>
-			<div class="btn-group btn-group-justified margin-top-10">
-				<a href="../yaoyue/operate-baobei.html" class="btn btn-default">报备</a>
-				<a href="../yaoyue/operate-xiafa.html" class="btn btn-default">下发</a>
-				<a href="../yaoyue/operate-zhifu.html" class="btn btn-default">支付</a>
-				<a href="../yaoyue/operate-zhuanyi.html" class="btn btn-default">转移</a>
-				<a href="../yaoyue/operate-tuihui.html" class="btn btn-default">退回</a>
-			</div>
+      <div class="status-message replace-data" data-name="status-msg">
+        <p>等待客人进店订单...</p>
+        <p>原因：ask达拉斯刀口浪尖阿喀琉斯家的刻录机阿萨德卡就算了</p>
+      </div>
+			<div id="status-operations" class="btn-group btn-group-justified margin-top-10"></div>
+			
+			<a id="zk-xiugai" href="../zhuake/operate-xiugai.html" class="btn btn-default hidden">修改</a>
+			<a id="zk-zhiding" href="../zhuake/operate-zhiding.html" class="btn btn-default hidden">指定</a>
+			<a id="zk-shanchu" href="../zhuake/operate-shanchu.html" class="btn btn-default hidden">删除</a>
+			<a id="zk-shensu" href="../zhuake/operate-shensu.html" class="btn btn-default hidden">申诉</a>
+			<a id="zk-wuxiao" href="../zhuake/operate-wuxiao.html" class="btn btn-default hidden">无效</a>
+
+			<a id="yy-baobei" href="../yaoyue/operate-baobei.html" class="btn btn-default hidden">报备</a>
+			<a id="yy-xiafa" href="../yaoyue/operate-xiafa.html" class="btn btn-default hidden">下发</a>
+			<a id="yy-zhifu" href="../yaoyue/operate-zhifu.html" class="btn btn-default hidden">支付</a>
+			<a id="yy-zhuanyi" href="../yaoyue/operate-zhuanyi.html" class="btn btn-default hidden">转移</a>
+			<a id="yy-tuihui" href="../yaoyue/operate-tuihui.html" class="btn btn-default hidden">退回</a>
+
+			<a id="ms-dingdan" href="../menshi/operate-dingdan.html" class="btn btn-default hidden">订单</a>
+			<a id="ms-gaiqi" href="../menshi/operate-gaiqi.html" class="btn btn-default hidden">改期</a>
+			<a id="ms-tuihui" href="../menshi/operate-tuihui.html" class="btn btn-default hidden">退回</a>
+			<a id="ms-zhuanyi" href="../menshi/operate-zhuanyi.html" class="btn btn-default hidden">转移</a>
+
+			<a id="ms-duanxin" href="../menshi/operate-duanxin.html" class="btn btn-default hidden">致谢短信</a>
+			<a id="ms-huodong" href="../menshi/operate-huodong.html" class="btn btn-default hidden">介绍活动</a>
+			<a id="ms-gaiqijin" href="../menshi/operate-gaiqijin.html" class="btn btn-default hidden">改期再进店</a>
+			<a id="ms-zhuancke" href="../menshi/operate-zhuanc.html" class="btn btn-default hidden">转为C客</a>
 		</div>
 	</div>
 </div>

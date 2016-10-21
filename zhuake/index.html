@@ -2,13 +2,13 @@
 
 	<div class="common-header header">
 		<div class="user-head">
-			<img src="../img/default-avator.jpg" alt="user-head">
+			<img id="userhead" src="../img/default-avator.jpg" alt="user-head">
 		</div>
 		<div class="user-info">
-			<div class="name">
+			<div id="username" class="name">
 				晓晓
 			</div>
-			<div class="group">
+			<div id="usergroup" class="group">
 				新凯旋店-门市A组
 			</div>
 		</div>
@@ -28,7 +28,14 @@
 		</a>
 	</div>
 
-	<iframe id="iframe" name="iframe" src="mine.html" width="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+	<iframe id="iframe" name="iframe" src="detail.html?id=bd7666a8-57b0-4e3e-83f8-3923fad26800" width="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+
+<script>
+  // console.log(api.userInfo);
+  $('#userhead').attr('src',api.userInfo.thumb_photo);
+  $('#username').text(api.userInfo.userName);
+  $('#usergroup').text(api.userInfo.departmentName + '-' + api.userInfo.workcenterName);
+</script>
 
 <link rel="import" href="../components/foot.html?__inline">
 

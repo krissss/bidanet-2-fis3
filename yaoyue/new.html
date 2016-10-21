@@ -1,9 +1,42 @@
 <link rel="import" href="../components/head-iframe.html?__inline">
 
 <div class="container">
-  <div class="map-head"><span class="vertical-line"></span>新推送的客资</div>
-  <link rel="import" href="../components/new-customer.html?__inline">
-  <link rel="import" href="../components/new-customer.html?__inline">
+	<div class="map-head"><span class="vertical-line"></span>新推送的客资</div>
+
+	<div class="panel panel-primary new-customer-message-container">
+		<div class="panel-body">
+			<div class="new-customer-message row">
+				<div class="col-xs-8 info">
+					<p>发送时间：2016-09-09 18:00</p>
+					<p>来源：抓客客服-小丽</p>
+					<p>渠道：官网-百度</p>
+				</div>
+				<div class="col-xs-4 count-down">
+					<span class="number">54</span>s
+				</div>
+				<div class="col-xs-10 col-xs-offset-1">
+					<a href="javascript:;" class="btn btn-primary btn-block accept-customer" data-id="123232315644">接收客资</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
 </div>
+
+<script>
+  function addNewCustomer(){
+    var newObj = $('.new-customer-message-container').eq(0).clone();
+    newObj.find('.info').html('<p>发送时间：2016-09-09 12:00</p><p>来源：抓客客服-sdffd</p><p>渠道：官网-百度2</p>');
+    newObj.find('.number').html('50');
+    newObj.find('.accept-customer').attr('data-id', 'asjdkjklqkwe');
+    $('.map-head').after(newObj);
+    iframe.changeHeight();
+  }
+  
+  $('.add').click(function(){
+    addNewCustomer();
+  });
+  
+</script>
 
 <link rel="import" href="../components/foot-iframe.html?__inline">

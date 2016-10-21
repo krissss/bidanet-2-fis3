@@ -3,7 +3,7 @@
 <div class="container margin-top-15">
 	<div class="panel panel-primary">
 		<div class="panel-body">
-			<form id="form" action="" class="form-horizontal form" role="form">
+			<form id="form" action="" class="form-horizontal form" role="form" enctype="multipart/form-data">
 				<div class="form-group">
 					<label class="col-xs-4 control-label no-padding-left">
             <span class="icon glyphicon glyphicon-search"></span> 称呼
@@ -26,7 +26,13 @@
             <span class="icon glyphicon glyphicon-search"></span> 职位
           </label>
 					<div class="col-xs-8 no-padding-left">
-						<input name="user_job" type="text" class="form-control">
+						<select name="user_job" class="form-control">
+							<option value="">请选择</option>
+							<option value="抓客客服">抓客客服</option>
+							<option value="邀约客服">邀约客服</option>
+							<option value="门市客服">门市客服</option>
+							<option value="其他">其他</option>
+            </select>
 					</div>
 				</div>
 				<div class="form-group">
@@ -46,7 +52,7 @@
             </select>
 					</div>
 					<div class="col-xs-4 no-padding-left">
-						<select name="work_center_id" class="form-control">
+						<select name="workcenter_id" class="form-control">
             </select>
 					</div>
 				</div>
@@ -55,7 +61,7 @@
             <span class="icon glyphicon glyphicon-search"></span> 头像
           </label>
 					<div class="col-xs-8 no-padding-left">
-						<input name="photo" type="text" class="form-control">
+						<input name="photo" type="file" class="form-control" accept="image/*">
 					</div>
 				</div>
 				<div class="form-group">
@@ -70,23 +76,29 @@
 
 <script>
 	// 公司
-  api.listIdAndName('SysCompany', function(options){
-    $('select[name=company_id]').text(options);
+  api.listIdAndNameNoToken('SysCompany', {}, function(options){
+    $('select[name=company_id]').html(options);
   });
 
 	// 部门级联更改
 	$('select[name=company_id]').change(function(){
+		$('select[name=department_id]').val();
 		// 部门
-		api.listIdAndName('SysDepartment', function(options){
-			$('select[name=department_id]').text(options);
+		api.listIdAndNameNoToken('SysDepartment', {
+			company_id: $(this).val()
+		}, function(options){
+			$('select[name=department_id]').html(options);
 		});
 	});
 
 	// 组别级联更改
 	$('select[name=department_id]').change(function(){
+		$('select[name=workcenter_id]').val();
 		// 组别
-		api.listIdAndName('SysWorkCenter', function(options){
-			$('select[name=work_center_id]').text(options);
+		api.listIdAndNameNoToken('SysWorkCenter', {
+			department_id: $(this).val()
+		}, function(options){
+			$('select[name=workcenter_id]').html(options);
 		});
 	});
 
@@ -95,16 +107,19 @@
     var params = {},
         values = $("#form").serializeArray();
     // 表单数据
+		var params = new FormData();
     $.each(values, function(index,item){
-      params[item.name] = item.value;
+      params.append(item.name, item.value);
     });
+		// 头像文件
+		params.append("photo", $('input[name=photo]').prop("files")[0]);
     // 额外数据
-    params['openid'] = api.openid;
+		params.append("openid", api.openid);
     // 调用接口
-    api.saveObject('BusCustomer', params, function(data){
-      // console.log(data);
+    api.register(params, function(data){
 			if(data.retMsg == 'OK'){
-				$('#iframe').attr('src', 'add-success.html');
+				window.location.href = 'apply-success.html';
+				// console.log(data);
 			}else{
 				alert(data.retMsg);
 			}

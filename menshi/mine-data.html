@@ -1,0 +1,66 @@
+<link rel="import" href="../components/head-iframe.html?__inline">
+
+<p>抓客客资统计</p>
+<div class="btn-group btn-group-justified margin-top-10">
+	<a href="javascript:;" class="btn btn-primary date-filter-btn" data-date="today">今日</a>
+	<a href="javascript:;" class="btn btn-default date-filter-btn" data-date="this-week">本周</a>
+	<a href="javascript:;" class="btn btn-default date-filter-btn" data-date="this-month">本月</a>
+</div>
+<table class="table table-bordered margin-top-10">
+	<tbody>
+		<tr>
+			<td></td>
+			<td>报备有效客资</td>
+			<td>邀约到店资数</td>
+			<td>网络成交资数</td>
+			<td>总成交订单数</td>
+		</tr>
+		<tr>
+			<td>实际</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>目标</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>达成率</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+	</tbody>
+</table>
+<p>本月截止目前的邀约到店率</p>
+<table class="table table-bordered margin-top-10">
+	<tbody>
+		<tr>
+			<td>我的到店率</td>
+			<td>部门到店率</td>
+			<td>目标到店率</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+	</tbody>
+</table>
+
+<script>
+  $('.date-filter-btn').click(function(){
+    $('.date-filter-btn').removeClass('btn-primary').addClass('btn-default');
+    $(this).addClass('btn-primary');
+    var date = $(this).data('date');
+    console.log(date);
+  });
+</script>
+
+<link rel="import" href="../components/foot-iframe.html?__inline">

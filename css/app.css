@@ -184,6 +184,7 @@ a:active {
 
 .common-header .user-head img{
     width: 100%;
+    height: 100%;
     border-radius: 50%;
 }
 
@@ -324,11 +325,22 @@ a:active {
 }
 
 .customer-status-message .tr-info p{
-    min-height: 30px;
-    line-height: 30px;
+    min-height: 25px;
+    line-height: 25px;
     margin: 0;
     font-size: 12px;
 }
+
+.customer-status-message .status-message p{
+    line-height: 25px;
+    margin: 0;
+    font-size: 14px;
+}
+
+.customer-status-message .status-message p:first-child{
+    color: #e9142d;
+}
+
 /* customer-status-message */
 
 /* customer-info-message */
