@@ -1,0 +1,32 @@
+<link rel="import" href="../components/head-iframe.html?__inline">
+
+<div class="container">
+  <div class="map-head"><span class="vertical-line"></span>删除客资</div>
+  <div id="delete-msg" class="panel panel-success hidden">
+		<div class="panel-body">
+			<div class="msg-title">删除客资成功！</div>
+			<div class="row">
+				<div class="col-xs-6">
+					<a href="add.html" class="btn btn-default btn-block">返回 新增</a>
+				</div>
+				<div class="col-xs-6">
+					<a href="list.html" class="btn btn-default btn-block">查看客资列表</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+  var customerUuid = request.getParam('id');
+  api.delObject('BusCustomer', customerUuid, function(data){
+    if(data.retMsg != 'OK'){
+      alert(data.retMsg);
+    }else{
+      $('#delete-msg').removeClass('hidden');
+      iframe.changeHeight();
+    }
+  });
+</script>
+
+<link rel="import" href="../components/foot-iframe.html?__inline">

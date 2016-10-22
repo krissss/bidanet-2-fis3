@@ -385,6 +385,7 @@ a:active {
     padding: 0;
     font-weight: bold;
     font-size: 12px;
+    line-height: 20px;
 }
 
 .customer-info-message .info .msg{
@@ -392,6 +393,10 @@ a:active {
     background-color: #fff;
     padding-left: 3px;
     font-size: 12px;
+    line-height: 20px;
+}
+.customer-info-message .info .msg.min-height-40{
+    min-height: 40px;
 }
 /* customer-info-message */
 

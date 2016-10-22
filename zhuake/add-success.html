@@ -4,13 +4,13 @@
   <div class="map-head"><span class="vertical-line"></span>新增客资</div>
   <div class="panel panel-success">
 		<div class="panel-body">
-			<div class="msg">恭喜提交成功！</div>
+			<div class="msg-title">恭喜提交成功！</div>
 			<div class="row">
 				<div class="col-xs-6">
 					<a href="add.html" class="btn btn-default btn-block">返回 继续添加</a>
 				</div>
 				<div class="col-xs-6">
-					<a href="add.html" class="btn btn-default btn-block">返回修改</a>
+					<a id="return-update" href="add.html" class="btn btn-default btn-block">返回修改</a>
 				</div>
 				<div class="col-xs-6">
 					<a href="list.html" class="btn btn-default btn-block">查看客资列表</a>
@@ -19,5 +19,15 @@
 		</div>
 	</div>
 </div>
+
+<script>
+	var customerUuid = request.getParam('id'),
+		returnUpdateUrl = $('#return-update').attr('href');
+	returnUpdateUrl = request.addParam(returnUpdateUrl, 'type', 'update');
+	returnUpdateUrl = request.addParam(returnUpdateUrl, 'id', customerUuid);
+	// console.log(returnUrl);
+	// add.html?type=update&id=bd7666a8-57b0-4e3e-83f8-3923fad26800
+	$('#return-update').attr('href', returnUpdateUrl);
+</script>
 
 <link rel="import" href="../components/foot-iframe.html?__inline">

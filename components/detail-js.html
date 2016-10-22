@@ -1,0 +1,346 @@
+<script>
+  var customerUuid = request.getParam('id');
+  api.getObject('BusCustomer', customerUuid, function(data){
+    if(data.retMsg != 'OK'){
+      alert(data.retMsg);
+    }
+    var obj = data.retVal;
+
+    // 重新组装值
+    var newObj = {
+      statusCode: 2,// obj.customer_status, // 状态code
+      currentUserRole: 1,//api.userInfo.groupFlag, // 当前用户角色
+      status: function(){
+        var msg = '';
+        switch (newObj.statusCode) {
+          case 1: msg = '客资新增，待确认'; break;
+          case 2: msg = '客资已报备，待追踪'; break;
+          case 3: msg = '客资已报备，待追踪'; break;
+          case 4: msg = '退回，无效'; break;
+          case 5: msg = '下发到门店，等门市接受'; break;
+          case 6: msg = '门市接收，等待到店'; break;
+          case 7: msg = '客人未到店，已经改期'; break;
+          case 8: msg = '客人未到店，退回再邀约'; break;
+          case 9: msg = '客人到店，已经订单'; break;
+          case 10: msg = '客人到店，未订单'; break;
+          case 11: msg = '客人网络预付，下发到店'; break;
+          case 12: msg = '客人预付，门市追踪到店'; break;
+          case 13: msg = '客人网络预付订单'; break;
+          default: msg = '状态未知';break;
+        }
+        return msg;
+      },
+      lastModify: function(){
+        var lastModifyTime = new Date(obj.modify_time).format("yyyy-MM-dd hh:mm"),
+            msg = '';
+        if(newObj.statusCode){
+          msg = '门市客服-' + obj.umkName;
+        }else if(obj.uykName){
+          msg = '邀约客服-' + obj.uykName;
+        }else if(obj.uykName){
+          msg = '抓客客服-' + obj.uzkName;
+        }else{
+          msg = '未知操作人';
+        }
+        return msg + '&nbsp;' + lastModifyTime;
+      },
+      msgZk: function(){
+        var msg = '';
+        msg += '来源：抓客客服-' + obj.uzkName + '<br/>'
+         + '渠道：' + obj.channelName + '<br/>'
+         + '登记时间：' + new Date(obj.zkcreate_time).format("yyyy-MM-dd hh:mm");
+        return msg;
+      },
+      msgYy: function(){
+        var msg = '';
+        msg += '邀约：邀约客服-' + obj.uykName + '<br/>'
+         + '组别：' + 'unknown' + '<br/>'; // TODO
+         console.log('未知：邀约组别');
+        switch(newObj.statusCode){
+          case 1: break;
+          case 2: case 3: 
+            msg += '报备时间：' + 'unknown'; // TODO
+            console.log('未知：邀约报备时间');
+            break;
+          case 4:
+            msg += '退回时间：' + 'unknown'; // TODO
+            console.log('未知：邀约退回时间');
+            break;
+          case 5: case 6: case 7: case 8: case 9: case 10: 
+            msg += '下发时间：' + 'unknown' + '<br/>'; // TODO
+            console.log('未知：邀约下发时间');
+            msg += '预计进店：' 
+              + new Date(obj.shop_date).format("yyyy-MM-dd")
+              + obj.str_shop_date;
+            break;
+          case 11: case 12: case 13:
+            msg += '网络预约暂时不做'; // TODO
+            break;
+          default: msg += '未知状态';
+        }
+        return msg;
+      },
+      msgMs: function(){
+        var msg = '';
+        function ms1(msg){
+          msg += '下发门店：' + obj.umdName;
+          return msg;
+        }
+        function ms2(msg){
+          msg += '接待门市' + obj.umkName
+            + '接收时间：' + 'unknown'; // TODO
+          console.log('未知：门店接收时间');
+          return msg;
+        }
+        switch(newObj.statusCode){
+          case 1: case 2: case 3: case 4:
+            break;
+          case 5:
+            msg = ms1(msg);
+            break;
+          case 6:
+            msg = ms1(msg);
+            msg = ms2(msg);
+            break;
+          case 7:
+            msg = ms1(msg);
+            msg = ms2(msg);
+            msg += '沟通改期：' + 'unknown'; // TODO
+            console.log('未知：门店沟通改期');
+            msg += '改期进店：' + 'unknown'; // TODO
+            console.log('未知：门店改期进店（2个值）');
+            break;
+          case 8:
+            msg = ms1(msg);
+            msg = ms2(msg);
+            msg += '退回时间：' + 'unknown'; // TODO
+            console.log('未知：门店退回时间');
+            break;
+          case 9:
+            msg = ms1(msg);
+            msg = ms2(msg);
+            msg += '订单时间：' + 'unknown'; // TODO
+            console.log('未知：订单时间');
+            msg += '订单金额：' + obj.order_cost;
+            msg += '付款：' + obj.paid;
+            break;
+          case 10:
+            msg = ms1(msg);
+            msg = ms2(msg);
+            msg += '进店时间：' + 'unknown'; // TODO
+            console.log('未知：进店时间');
+            break;
+          case 11: case 12: case 13:
+            msg += '网络预约暂时不做'; // TODO
+            break;
+          default: msg += '未知状态';
+        }
+        return msg;
+      },
+      statusMsg: function(){
+        var msg = '',
+            reason = '',
+            result;
+        switch(newObj.statusCode){
+          case 1:
+            msg += '等待邀约客服确认接收...';
+            break;
+          case 2: case 3:
+            msg += '等待邀约客服邀约...';
+            break;
+          case 4:
+            switch(newObj.currentUserRole){
+              case 1:
+                msg += '退回客资验证...';
+                reason += '理由：' + 'unknown'; // TODO
+                console.log('未知：邀约退回理由');
+                break;
+              case 2:
+                msg += '客资已经退回，等待处理...';
+                break;
+              default: msg += '未知客服';
+            }
+            break;
+          case 5: case 6: case 7: 
+            msg += '等待客人进店订单...';
+            break;
+          case 8:
+            switch(newObj.currentUserRole){
+              case 1:
+                msg += '等待客人进店订单...';
+                break;
+              case 2:
+                msg += '退回理由...';
+                reason += '理由：' + 'unknown'; // TODO
+                console.log('未知：门市退回理由');
+                break;
+              default: msg += '未知客服';
+            }
+            break;
+          case 9: 
+            msg += '客人完成订单...';
+            break;
+          case 10: 
+            switch(newObj.currentUserRole){
+              case 1:
+                msg += '客人未订单，持续维护...';
+                break;
+              case 2: case 3:
+                msg += '客人不订单理由...';
+                reason += '理由：' + 'unknown'; // TODO
+                console.log('未知：门市客人不订单理由');
+                break;
+              default: msg += '未知客服';
+            }
+            break;
+          case 11: case 12: case 13:
+            msg += '网络预约暂时不做'; // TODO
+            break;
+          default: msg += '未知状态';
+        }
+        result = '<p>' + msg + '</p>';
+        if(reason){
+          result = '<p>' + reason + '</p>';
+        }
+        return result;
+      },
+      zkUsername: obj.uzkName,
+      zkRecordTime: function(){
+        return new Date(obj.create_date).format("yyyy-MM-dd hh:mm");
+      },
+      zkCustomerName: obj.name1,
+      zkCustomerCellphone: obj.tel1,
+      zkCustomerChannel: obj.channelName,
+      zkCustomerWechat: obj.wechat1,
+      zkCustomerLocation: obj.locationName,
+      zkCustomerQq: obj.qq1,
+      zkCustomerType: function(){
+        var customerFlag = '';
+        switch(obj.customer_flag){
+          case 1: customerFlag = 'A'; break;
+          case 2: customerFlag = 'B'; break;
+          case 3: customerFlag = 'C'; break;
+          case 4: customerFlag = 'D'; break;
+          default: customerFlag = '未知'
+        }
+        return customerFlag
+      },
+      zkCustomerIdentity: obj.name_flag,
+      zkCustomerRecord: obj.zkrecord,
+      yyUsername: obj.uyyName,
+      yyTransferData: obj.yytime,
+      yyCustomerWeddingDate: function(){
+        return new Date(obj.wedding_date).format("yyyy-MM-dd");
+      },
+      yyCustomerShootingDate: function(){
+        return new Date(obj.shooting_time).format("yyyy-MM-dd");
+      },
+      yyCustomerBalance: obj.str_budget,
+      yyCustomerRelation: obj.type_name,
+      yyCustomerShootingRecord: obj.shoot_idea,
+      yyCustomerWorryRecord: obj.care_problem,
+      yyCustomerOrderRecord: obj.need,
+      yyCustomerRecord: obj.yyrecord,
+      msShopName: obj.smdName,
+      msUsername: obj.umkName,
+      msOrderTime: obj.mstime,
+      msCustomerRecord: obj.msrecord,
+    },
+    replaceName = '',
+    replaceValue = '';
+
+    // 替换数据
+    $('.replace-data').each(function(){
+      replaceName = dash2Hump($(this).data('name'));
+      replaceValue = newObj[replaceName];
+      if(undefined == replaceValue){
+        console.log(replaceName);
+        //$(this).text('unknown');
+      }else{
+        $(this).html(replaceValue);
+      }
+    });
+
+// TODO 可能此处需要单独判断状态里面的邀约和门市是否显示
+    // 判断是否显示邀约信息
+    function hasYy(){
+      if(newObj.statusCode <= 1){
+        return false;
+      }else{
+        return true;
+      }
+    }
+
+    // 判断是否显示门市信息
+    function hasMs(){
+      if(newObj.statusCode <= 4){
+        return false;
+      }else{
+        return true;
+      }
+    }
+
+    // 邀约信息的显示
+    if(hasYy()){
+      $('.has-yaoyue').removeClass('hidden')
+    }
+    // 门市信息的显示
+    if(hasMs()){
+      $('.has-menshi').removeClass('hidden')
+    }
+
+    function showOperation(ids){
+      $.each(ids, function(index, item){
+        // 给url添加id参数
+        var url = $('#'+item).attr('href');
+        url = request.addParam(url, 'id', obj.uuid);
+        $('#'+item).attr('href',url);
+        // 移动到操作按钮组
+        $('#'+item).removeClass('hidden').appendTo('#status-operations');
+      });
+    }
+
+    // 可操作按钮的显示
+    if(newObj.statusCode==1){
+      if(newObj.currentUserRole==1){
+        // 修改链接追加参数
+        var xiugaiUrl = $('#zk-xiugai').attr('href');
+        xiugaiUrl = request.addParam(xiugaiUrl, 'type', 'update');
+        $('#zk-xiugai').attr('href', xiugaiUrl);
+
+        showOperation(['zk-xiugai', 'zk-zhiding', 'zk-shanchu']);
+      }
+    }else if(newObj.statusCode==2){
+      if(newObj.currentUserRole==2){
+        showOperation(['yy-baobei', 'yy-xiafa', 'yy-zhifu', 'yy-zhuanyi', 'yy-tuihui']);
+      }
+    }else if(newObj.statusCode==3){
+      if(newObj.currentUserRole==2){
+        showOperation(['yy-xiafa', 'yy-zhifu', 'yy-zhuanyi']);
+      }
+    }else if(newObj.statusCode==4){
+      if(newObj.currentUserRole==1){
+        showOperation(['zk-xiugai', 'zk-shensu', 'zk-wuxiao']);
+      }
+    }else if(newObj.statusCode==6 || newObj.statusCode==7){
+      if(newObj.currentUserRole==3){
+        showOperation(['ms-dingdan', 'ms-gaiqi', 'ms-tuihui', 'ms-zhuanyi']);
+      }
+    }else if(newObj.statusCode==8){
+      if(newObj.currentUserRole==2){
+        showOperation(['yy-xiafa', 'yy-zhifu', 'yy-zhuanyi']);
+      }
+    }else if(newObj.statusCode==9){
+      if(newObj.currentUserRole==3){
+        showOperation(['ms-duanxin', 'ms-huodong']);
+      }
+    }else if(newObj.statusCode==10){
+      if(newObj.currentUserRole==3){
+        showOperation(['ms-duanxin', 'ms-gaiqijin', 'ms-zhuancke']);
+      }
+    }
+
+    // 重新设定 iframe 高度
+    iframe.changeHeight();
+  });
+</script>

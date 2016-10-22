@@ -1,27 +1,27 @@
 "use strict";
 
 var DEBUG = true,
-    HOST_FOLDER = '',
-    WEB_ROOT = HOST_FOLDER;
+  HOST_FOLDER = '',
+  WEB_ROOT = HOST_FOLDER;
 
-function logger(msg, data){
-  if(DEBUG){
+function logger(msg, data) {
+  if (DEBUG) {
     console.log(msg);
     console.log(data);
   }
 }
 
 var api = {
-  // hostname: 'http://139.224.66.175/wxy/inf/',
+  //hostname: 'http://139.224.66.175/wxy/inf/',
   hostname: 'http://183.240.86.109/wxy/inf/',
   token: window.localStorage.getItem('token'),
   userInfo: JSON.parse(window.localStorage.getItem('userInfo')),
-  openid: 'ox_askdjklqweqwenm',//window.localStorage.getItem('openid'),
+  openid: 'ox_askdjklqweqwenm2',//window.localStorage.getItem('openid'),
   // 抓客 ox_askdjklqweqwenm
   // 邀约 ox_askdjklqweqwenm2
   // 门市 ox_askdjklqweqwenm3
   login: function () {
-    if(!api.openid){
+    if (!api.openid) {
       window.location.href = HOST_FOLDER + '/public/oauth.php';
       return;
     }
@@ -50,9 +50,9 @@ var api = {
           }
           window.location.href = href;
         } else {
-          if(data.retMsg == 'sysUser不存在!'){
+          if (data.retMsg == 'sysUser不存在!') {
             window.location.href = WEB_ROOT + '/apply/index.html';
-          }else{
+          } else {
             alert(data.retMsg);
           }
         }
@@ -162,6 +162,7 @@ var api = {
   },
   saveObject: function (objType, params, successCallback) {
     params.objType = objType;
+    params['group_flag'] = api.userInfo.groupFlag;
     $.ajax({
       url: api.hostname + 'saveObject',
       method: 'post',
@@ -198,6 +199,25 @@ var api = {
       }
     });
   },
+  delObject: function (objType, uuid, successCallback) {
+    $.ajax({
+      url: api.hostname + 'delObject',
+      method: 'get',
+      data: {
+        token: api.token,
+        weChatFlag: 1,
+        objType: objType,
+        uuid: uuid
+      },
+      dataType: 'JSON',
+      success: function (data) {
+        if (api.filterToken(data)) {
+          logger('delObject', data);
+          successCallback(data);
+        }
+      }
+    });
+  },
 }
 // api.login(); // 登录
 
@@ -218,6 +238,22 @@ var request = {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
     var r = window.location.search.substr(1).match(reg);  //匹配目标参数
     if (r != null) return unescape(r[2]); return null; //返回参数值
+  },
+  addParam: function addUrlPara(url, name, value) {
+    var currentUrl = url.split('#')[0];
+    if (/\?/g.test(currentUrl)) {
+      if (/name=[-\w]{4,25}/g.test(currentUrl)) {
+        currentUrl = currentUrl.replace(/name=[-\w]{4,25}/g, name + "=" + value);
+      } else {
+        currentUrl += "&" + name + "=" + value;
+      }
+    } else {
+      currentUrl += "?" + name + "=" + value;
+    }
+    if (url.split('#')[1]) {
+      currentUrl += '#' + url.split('#')[1];
+    }
+    return currentUrl;
   }
 }
 

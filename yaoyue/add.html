@@ -1,94 +1,58 @@
 <link rel="import" href="../components/head-iframe.html?__inline">
 
+<link rel="import" href="../components/link-datepicker-head.html?__inline">
+
 <div class="container">
-	<div class="map-head"><span class="vertical-line"></span><span id="operate-text">新增</span>客资</div>
+	<div class="map-head"><span class="vertical-line"></span><span id="operate-text">新增</span>沟通信息</div>
 	<div class="panel panel-primary">
 		<form id="form" action="" class="form-horizontal form" role="form">
 			<div class="panel-body">
 				<div class="form-group">
-					<label class="col-xs-4 control-label no-padding-left">
-            <span class="icon glyphicon glyphicon-search"></span> 称呼
-          </label>
+					<label class="col-xs-4 control-label no-padding-left">结婚婚期</label>
 					<div class="col-xs-8 no-padding-left">
-						<input name="name1" type="text" class="form-control">
+						<input name="weeding-date" type="text" class="form-control datepicker">
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-xs-4 control-label no-padding-left">
-            <span class="icon glyphicon glyphicon-search"></span> 渠道
-          </label>
-					<div class="col-xs-4 no-padding-left">
-						<select name="channel_id" class="form-control">
-            </select>
-					</div>
-					<div class="col-xs-4 no-padding-left">
-						<select name="channel_id2" class="form-control">
-            </select>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-xs-4 control-label no-padding-left">
-            <span class="icon glyphicon glyphicon-search"></span> 地区
-          </label>
+					<label class="col-xs-4 control-label no-padding-left">拍摄时间</label>
 					<div class="col-xs-8 no-padding-left">
-						<select name="location_id" class="form-control">
-            </select>
+						<input name="shooting-date" type="text" class="form-control datepicker">
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-xs-4 control-label no-padding-left">
-            <span class="icon glyphicon glyphicon-search"></span> 类别
-          </label>
+					<label class="col-xs-4 control-label no-padding-left">预算范围</label>
 					<div class="col-xs-8 no-padding-left">
-						<select name="customer_flag" class="form-control">
-              <option value="">请选择</option>
-              <option value="1">A</option>
-              <option value="2">B</option>
-              <option value="3">C</option>
-              <option value="4">D</option>
-            </select>
+						<input name="balance" type="text" class="form-control">
 					</div>
 				</div>
-			</div>
-			<div class="panel-body">
 				<div class="form-group">
-					<label class="col-xs-4 control-label no-padding-left">
-            <span class="icon glyphicon glyphicon-search"></span> 手机
-          </label>
+					<label class="col-xs-4 control-label no-padding-left">关系套系</label>
 					<div class="col-xs-8 no-padding-left">
-						<input name="tel1" type="text" class="form-control">
+						<input name="relation" type="text" class="form-control">
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-xs-4 control-label no-padding-left">
-            <span class="icon glyphicon glyphicon-search"></span> 微信
-          </label>
-					<div class="col-xs-8 no-padding-left">
-						<input name="wechat1" type="text" class="form-control">
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-xs-4 control-label no-padding-left">
-            <span class="icon glyphicon glyphicon-search"></span> Q Q
-          </label>
-					<div class="col-xs-8 no-padding-left">
-						<input name="qq1" type="text" class="form-control">
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-xs-4 control-label no-padding-left">
-            <span class="icon glyphicon glyphicon-search"></span> 身份
-          </label>
-					<div class="col-xs-8 no-padding-left">
-						<input name="name_flag" type="text" class="form-control">
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-xs-4 control-label">
-            沟通记录
-          </label>
+					<label class="col-xs-4 control-label no-padding-left">拍摄想法</label>
 					<div class="col-xs-12">
-						<textarea name="zkrecord" class="form-control" rows="3"></textarea>
+						<textarea name="shooting-idea" class="form-control" rows="3"></textarea>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-4 control-label no-padding-left">担心问题</label>
+					<div class="col-xs-12">
+						<textarea name="worry-question" class="form-control" rows="3"></textarea>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-4 control-label no-padding-left">订单需求</label>
+					<div class="col-xs-12">
+						<textarea name="order-need" class="form-control" rows="3"></textarea>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-4 control-label no-padding-left">沟通记录</label>
+					<div class="col-xs-12">
+						<textarea name="yyrecord" class="form-control" rows="3"></textarea>
 					</div>
 				</div>
 
@@ -101,6 +65,8 @@
 		</form>
 	</div>
 </div>
+
+<link rel="import" href="../components/link-datepicker-foot.html?__inline">
 
 <script>
 	var type = request.getParam('type'),
@@ -159,6 +125,8 @@
     $.each(values, function(index,item){
       params[item.name] = item.value;
     });
+    console.log(params);
+    return false;
 		// 如果是更新
 		if(type == 'update'){
 			params['uuid'] = customerUuid;
