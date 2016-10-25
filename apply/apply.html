@@ -61,7 +61,9 @@
             <span class="icon glyphicon glyphicon-search"></span> 头像
           </label>
 					<div class="col-xs-8 no-padding-left">
-						<input name="photo" type="file" class="form-control" accept="image/*">
+						<a href="javascript:;" class="form-control file">选择头像
+							<input name="photo" type="file" accept="image/*">
+						</a>
 					</div>
 				</div>
 				<div class="form-group">
@@ -104,17 +106,18 @@
 
 	// 表单提交
   $('#form').submit(function(){
-    var params = {},
-        values = $("#form").serializeArray();
+    var params = new FormData();
     // 表单数据
-		var params = new FormData();
-    $.each(values, function(index,item){
-      params.append(item.name, item.value);
-    });
+		params.append('name', $('input[name=name]').val());
+		params.append('company_id', $('select[name=company_id]').val());
+		params.append('user_job', $('select[name=user_job]').val());
+		params.append('tel', $('input[name=tel]').val());
+		params.append('department_id', $('select[name=department_id]').val());
+		params.append('workcenter_id', $('select[name=workcenter_id]').val());
 		// 头像文件
-		params.append("photo", $('input[name=photo]').prop("files")[0]);
+		params.append('photo', $('input[name=photo]').prop("files")[0]);
     // 额外数据
-		params.append("openid", api.openid);
+		params.append('openid', api.openid);
     // 调用接口
     api.register(params, function(data){
 			if(data.retMsg == 'OK'){

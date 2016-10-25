@@ -11,9 +11,21 @@ function logger(msg, data) {
   }
 }
 
+function ajax(url, data, method, successCallback) {
+  $.ajax({
+    url: url,
+    method: method,
+    data: data,
+    dataType: 'JSON',
+    success: function (data) {
+      successCallback(data);
+    }
+  });
+}
+
 var api = {
   //hostname: 'http://139.224.66.175/wxy/inf/',
-  hostname: 'http://183.240.86.109/wxy/inf/',
+  hostname: 'http://192.168.0.127:8080/wxy/inf/',
   token: window.localStorage.getItem('token'),
   userInfo: JSON.parse(window.localStorage.getItem('userInfo')),
   openid: 'ox_askdjklqweqwenm2',//window.localStorage.getItem('openid'),
@@ -25,41 +37,36 @@ var api = {
       window.location.href = HOST_FOLDER + '/public/oauth.php';
       return;
     }
-    $.ajax({
-      url: api.hostname + 'login',
-      method: 'get',
-      data: {
-        openid: api.openid,
-        weChatFlag: 1,
-      },
-      dataType: 'JSON',
-      success: function (data) {
-        if (data.retMsg == 'OK') {
-          logger('login', data.retVal);
-          window.localStorage.setItem('token', data.retVal.token);
-          window.localStorage.setItem('userInfo', JSON.stringify(data.retVal));
-          var href = '';
-          if (data.retVal.groupFlag == 1) {
-            href = WEB_ROOT + '/zhuake/index.html';
-          } else if (data.retVal.groupFlag == 2) {
-            href = WEB_ROOT + '/yaoyue/index.html';
-          } else if (data.retVal.groupFlag == 3) {
-            href = WEB_ROOT + '/menshi/index.html';
-          } else {
-            href = WEB_ROOT + '/unkonwn';
-          }
-          window.location.href = href;
+    ajax(api.hostname + 'login', {
+      openid: api.openid,
+      weChatFlag: 1,
+    }, 'get', function (data) {
+      if (data.retMsg == 'OK') {
+        logger('login', data.retVal);
+        window.localStorage.setItem('token', data.retVal.token);
+        window.localStorage.setItem('userInfo', JSON.stringify(data.retVal));
+        var href = '';
+        if (data.retVal.groupFlag == 1) {
+          href = WEB_ROOT + '/zhuake/index.html';
+        } else if (data.retVal.groupFlag == 2) {
+          href = WEB_ROOT + '/yaoyue/index.html';
+        } else if (data.retVal.groupFlag == 3) {
+          href = WEB_ROOT + '/menshi/index.html';
         } else {
-          if (data.retMsg == 'sysUser不存在!') {
-            window.location.href = WEB_ROOT + '/apply/index.html';
-          } else {
-            alert(data.retMsg);
-          }
+          href = WEB_ROOT + '/unkonwn';
+        }
+        window.location.href = href;
+      } else {
+        if (data.retMsg == 'sysUser不存在!') {
+          window.location.href = WEB_ROOT + '/apply/index.html';
+        } else {
+          alert(data.retMsg);
         }
       }
     });
   },
   register: function (params, successCallback) {
+    params['weChatFlag'] = 1;
     $.ajax({
       url: api.hostname + 'register',
       method: 'post',
@@ -77,22 +84,16 @@ var api = {
   listIdAndNameNoToken: function (objType, searchParams, successCallback) {
     searchParams['objType'] = objType;
     searchParams['weChatFlag'] = 1;
-    $.ajax({
-      url: api.hostname + 'registerInitData',
-      method: 'get',
-      data: searchParams,
-      dataType: 'JSON',
-      success: function (data) {
-        logger('listIdAndNameNoToken', data);
-        if (data.retMsg == 'OK') {
-          var itemElem = '<option value="">请选择</option>';
-          $.each(data.retVal, function (index, item) {
-            itemElem += '<option value="' + item.uuid + '">' + item.name + '</option>';
-          });
-          successCallback(itemElem);
-        } else {
-          alert(data.retMsg);
-        }
+    ajax(api.hostname + 'registerInitData', searchParams, 'get', function (data) {
+      logger('listIdAndNameNoToken', data);
+      if (data.retMsg == 'OK') {
+        var itemElem = '<option value="">请选择</option>';
+        $.each(data.retVal, function (index, item) {
+          itemElem += '<option value="' + item.uuid + '">' + item.name + '</option>';
+        });
+        successCallback(itemElem);
+      } else {
+        alert(data.retMsg);
       }
     });
   },
@@ -107,29 +108,24 @@ var api = {
 
   listIdAndName: function (objType, successCallback) {
     var params = {
-      objType: objType
+      objType: objType,
+      weChatFlag: 1
     };
-    $.ajax({
-      url: api.hostname + 'listIdAndName',
-      method: 'get',
-      data: {
-        token: api.token,
-        weChatFlag: 1,
-        params: JSON.stringify(params)
-      },
-      dataType: 'JSON',
-      success: function (data) {
-        if (api.filterToken(data)) {
-          logger('listIdAndName', data);
-          if (data.retMsg == 'OK') {
-            var itemElem = '<option value="">请选择</option>';
-            $.each(data.retVal.list, function (index, item) {
-              itemElem += '<option value="' + item.uuid + '">' + item.name + '</option>';
-            });
-            successCallback(itemElem);
-          } else {
-            alert(data.retMsg);
-          }
+    ajax(api.hostname + 'listIdAndName', {
+      token: api.token,
+      weChatFlag: 1,
+      params: JSON.stringify(params)
+    }, 'get', function (data) {
+      if (api.filterToken(data)) {
+        logger('listIdAndName', data);
+        if (data.retMsg == 'OK') {
+          var itemElem = '<option value="">请选择</option>';
+          $.each(data.retVal.list, function (index, item) {
+            itemElem += '<option value="' + item.uuid + '">' + item.name + '</option>';
+          });
+          successCallback(itemElem);
+        } else {
+          alert(data.retMsg);
         }
       }
     });
@@ -138,86 +134,101 @@ var api = {
     var params = {
       objType: objType,
       pageIndex: pageIndex,
-      pageSize: pageSize
+      pageSize: pageSize,
+      weChatFlag: 1
     };
     $.each(searchParams, function (key, value) {
       params[key] = value;
     });
-    $.ajax({
-      url: api.hostname + 'listObject',
-      method: 'get',
-      data: {
-        token: api.token,
-        weChatFlag: 1,
-        params: JSON.stringify(params)
-      },
-      dataType: 'JSON',
-      success: function (data) {
-        if (api.filterToken(data)) {
-          logger('listObject', data);
-          successCallback(data.retVal);
-        }
+    ajax(api.hostname + 'listObject', {
+      token: api.token,
+      params: JSON.stringify(params)
+    }, 'get', function (data) {
+      if (api.filterToken(data)) {
+        logger('listObject', data);
+        successCallback(data.retVal);
       }
     });
   },
   saveObject: function (objType, params, successCallback) {
     params.objType = objType;
-    params['group_flag'] = api.userInfo.groupFlag;
-    $.ajax({
-      url: api.hostname + 'saveObject',
-      method: 'post',
-      data: {
-        token: api.token,
-        weChatFlag: 1,
-        params: JSON.stringify(params)
-      },
-      dataType: 'JSON',
-      success: function (data) {
-        if (api.filterToken(data)) {
-          logger('saveObject', data);
-          successCallback(data);
-        }
+    if (objType == 'BusCustomer') {
+      params['group_flag'] = api.userInfo.groupFlag;
+      params['modify_id'] = api.userInfo.userUuid;
+      params['modify_group_flag'] = api.userInfo.groupFlag;
+    }
+    params['weChatFlag'] = 1;
+    ajax(api.hostname + 'saveObject', {
+      token: api.token,
+      params: JSON.stringify(params)
+    }, 'post', function (data) {
+      if (api.filterToken(data)) {
+        logger('saveObject', data);
+        successCallback(data);
       }
     });
   },
   getObject: function (objType, uuid, successCallback) {
-    $.ajax({
-      url: api.hostname + 'getObject',
-      method: 'get',
-      data: {
-        token: api.token,
-        weChatFlag: 1,
-        objType: objType,
-        uuid: uuid
-      },
-      dataType: 'JSON',
-      success: function (data) {
-        if (api.filterToken(data)) {
-          logger('getObject', data);
-          successCallback(data);
-        }
+    ajax(api.hostname + 'getObject', {
+      token: api.token,
+      weChatFlag: 1,
+      objType: objType,
+      uuid: uuid
+    }, 'get', function (data) {
+      if (api.filterToken(data)) {
+        logger('getObject', data);
+        successCallback(data);
       }
     });
   },
   delObject: function (objType, uuid, successCallback) {
-    $.ajax({
-      url: api.hostname + 'delObject',
-      method: 'get',
-      data: {
-        token: api.token,
-        weChatFlag: 1,
-        objType: objType,
-        uuid: uuid
-      },
-      dataType: 'JSON',
-      success: function (data) {
-        if (api.filterToken(data)) {
-          logger('delObject', data);
-          successCallback(data);
-        }
+    ajax(api.hostname + 'delObject', {
+      token: api.token,
+      weChatFlag: 1,
+      objType: objType,
+      uuid: uuid
+    }, 'get', function (data) {
+      if (api.filterToken(data)) {
+        logger('delObject', data);
+        successCallback(data);
       }
     });
   },
+
+  getStatusName: function (statusCode) {
+    var msg = '';
+    statusCode = parseInt(statusCode);
+    switch (statusCode) {
+      case 1: msg = '客资新增，待确认'; break;
+      case 2: msg = '客资已报备，待追踪'; break;
+      case 3: msg = '客资已报备，待追踪'; break;
+      case 4: msg = '退回，无效'; break;
+      case 5: msg = '下发到门店，等门市接受'; break;
+      case 6: msg = '门市接收，等待到店'; break;
+      case 7: msg = '客人未到店，已经改期'; break;
+      case 8: msg = '客人未到店，退回再邀约'; break;
+      case 9: msg = '客人到店，已经订单'; break;
+      case 10: msg = '客人到店，未订单'; break;
+      case 11: msg = '客人网络预付，下发到店'; break;
+      case 12: msg = '客人预付，门市追踪到店'; break;
+      case 13: msg = '客人网络预付订单'; break;
+      default: msg = '状态未知'; break;
+    }
+    return msg;
+  },
+  getCustomerFlagName: function (customerFlag) {
+    var msg = '';
+    customerFlag = parseInt(customerFlag);
+    switch (customerFlag) {
+      case 1: msg = 'A'; break;
+      case 2: msg = 'B'; break;
+      case 3: msg = 'C'; break;
+      case 4: msg = 'D'; break;
+      default: msg = '未知'
+    }
+    return msg;
+  },
+
 }
 // api.login(); // 登录
 

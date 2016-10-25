@@ -56,32 +56,22 @@
     api.listObject('BusCustomer', searchParams, pageIndex, pageSize, function(data){
       var tabelTbody = '',
           createTime,
-          customerFlag,
-          validFlag;
+          customerFlagName,
+          statusName;
       if(data){
         $.each(data.list, function(index, item){
           // 格式化数据
-          createTime = new Date(item.createDate).format("yyyy-MM-dd\nhh:mm:ss");
-          switch(item.customerFlag){
-            case 1: customerFlag = 'A'; break;
-            case 2: customerFlag = 'B'; break;
-            case 3: customerFlag = 'C'; break;
-            case 4: customerFlag = 'D'; break;
-            default: customerFlag = '未知'
-          }
-          switch(item.validFlag){
-            case 1: validFlag = '有效'; break;
-            case 2: validFlag = '无效'; break;
-            default: validFlag = '未报备'
-          }
+          createTime = new Date(item.zkcreateTime).format("yyyy-MM-dd\nhh:mm:ss");
+          customerFlagName = api.getCustomerFlagName(item.customerFlag);
+          statusName = api.getStatusName(item.customerUserStatus);
           // 构造table body
           tabelTbody +=
           '<tr onclick="javascript:window.location.href=\'detail.html?id='+ item.uuid +'\'">'
             + '<td>'+ (index+1) +'</td>'
             + '<td>'+ item.name1 +'</td>'
             + '<td>'+ createTime +'</td>'
-            + '<td>'+ customerFlag +'</td>'
-            + '<td>'+ validFlag +'</td>'
+            + '<td>'+ customerFlagName +'</td>'
+            + '<td>'+ statusName +'</td>'
             + '</tr>'
             + "\n";
         });
