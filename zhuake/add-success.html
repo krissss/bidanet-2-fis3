@@ -21,6 +21,10 @@
 </div>
 
 <script>
+	iframe.init();
+</script>
+
+<script>
 	var customerUuid = request.getParam('id'),
 		returnUpdateUrl = $('#return-update').attr('href');
 	returnUpdateUrl = request.addParam(returnUpdateUrl, 'type', 'update');

@@ -18,6 +18,10 @@
 </div>
 
 <script>
+	iframe.init();
+</script>
+
+<script>
   var customerUuid = request.getParam('id');
   api.delObject('BusCustomer', customerUuid, function(data){
     if(data.retMsg != 'OK'){

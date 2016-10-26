@@ -24,11 +24,11 @@ function ajax(url, data, method, successCallback) {
 }
 
 var api = {
-  //hostname: 'http://139.224.66.175/wxy/inf/',
-  hostname: 'http://192.168.0.127:8080/wxy/inf/',
+  hostname: 'http://139.224.66.175/wxy/inf/',
+  //hostname: 'http://183.240.86.109/wxy/inf/',
   token: window.localStorage.getItem('token'),
   userInfo: JSON.parse(window.localStorage.getItem('userInfo')),
-  openid: 'ox_askdjklqweqwenm2',//window.localStorage.getItem('openid'),
+  openid: 'ox_askdjklqweqwenm',//window.localStorage.getItem('openid'),
   // 抓客 ox_askdjklqweqwenm
   // 邀约 ox_askdjklqweqwenm2
   // 门市 ox_askdjklqweqwenm3
@@ -234,15 +234,46 @@ var api = {
 
 var iframe = {
   init: function () {
-    $(window.parent.document).find("#iframe").load(function () {
-      $(this).height($('body').height());
-    });
+    iframe.lastChange();
+    // $("#iframe", window.parent.document).load(function () {
+    //   // 此处 body 为 iframe 中的 body
+    //   // console.log($('body').height());
+    //   // 判断是否还有 iframe 子类，如果有则父窗口高度要再加上 iframe 内容的高度
+    //   // 此方法只能在初次加载的时候生效
+    //   if ($('body').find("#iframe").length > 0) {
+    //     $(this).height($('body').height() + $('body').find("#iframe").contents().height());
+    //   } else {
+    //     $(this).height($('body').height());
+    //   }
+    // });
   },
   changeHeight: function () {
-    $(window.parent.document).find("#iframe").height($('body').height());
+    iframe.lastChange();
   },
+  lastChange: function () {
+    // 此方法在所有iframe的最里层调用
+    var doc = document,
+      p = window;
+    while (p = p.parent) {
+      var frames = p.frames,
+        frame,
+        i = 0;
+        
+      while (frame = frames[i++]) {
+        // 去除之前设定的高度，解决只能扩增，不能缩减的问题
+        frame.frameElement.style.height = 0;
+        if (frame.document == doc) {
+          frame.frameElement.style.height = doc.body.scrollHeight + 'px'; // 这里一定要注意 火狐必须要加'px' 否则火狐无效 
+          doc = p.document;
+          break;
+        }
+      }
+      if (p == top) {
+        break;
+      }
+    }
+  }
 }
-iframe.init();
 
 var request = {
   getParam: function getUrlParam(name) {
