@@ -235,17 +235,6 @@ var api = {
 var iframe = {
   init: function () {
     iframe.lastChange();
-    // $("#iframe", window.parent.document).load(function () {
-    //   // 此处 body 为 iframe 中的 body
-    //   // console.log($('body').height());
-    //   // 判断是否还有 iframe 子类，如果有则父窗口高度要再加上 iframe 内容的高度
-    //   // 此方法只能在初次加载的时候生效
-    //   if ($('body').find("#iframe").length > 0) {
-    //     $(this).height($('body').height() + $('body').find("#iframe").contents().height());
-    //   } else {
-    //     $(this).height($('body').height());
-    //   }
-    // });
   },
   changeHeight: function () {
     iframe.lastChange();
