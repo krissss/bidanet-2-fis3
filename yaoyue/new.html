@@ -1,8 +1,12 @@
-<link rel="import" href="../components/head-iframe.html?__inline">
+<link rel="import" href="../components/head.html?__inline">
 
 <div class="container">
 	<div class="map-head"><span class="vertical-line"></span>新推送的客资</div>
+	<!-- 新消息在此追加 -->
+</div>
 
+<!-- 消息模板 -->
+<div class="hidden template">
 	<div class="panel panel-primary new-customer-message-container">
 		<div class="panel-body">
 			<div class="new-customer-message row">
@@ -20,27 +24,12 @@
 			</div>
 		</div>
 	</div>
-
 </div>
 
 <script>
 	iframe.init();
 </script>
 
-<script>
-  function addNewCustomer(){
-    var newObj = $('.new-customer-message-container').eq(0).clone();
-    newObj.find('.info').html('<p>发送时间：2016-09-09 12:00</p><p>来源：抓客客服-sdffd</p><p>渠道：官网-百度2</p>');
-    newObj.find('.number').html('50');
-    newObj.find('.accept-customer').attr('data-id', 'asjdkjklqkwe');
-    $('.map-head').after(newObj);
-    iframe.changeHeight();
-  }
-  
-  $('.add').click(function(){
-    addNewCustomer();
-  });
-  
-</script>
+<script src="js/i-new.js"></script>
 
-<link rel="import" href="../components/foot-iframe.html?__inline">
+<link rel="import" href="../components/foot.html?__inline">

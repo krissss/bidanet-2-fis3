@@ -1,28 +1,24 @@
-<link rel="import" href="../components/head-iframe.html?__inline">
+<link rel="import" href="../components/head.html?__inline">
 
 <div class="container">
   <div class="panel panel-primary">
 		<div class="panel-body">
 			<div class="operate-message">
-				<form action="list.html" class="form-horizontal form" role="form">
+				<form id="form" action="" class="form-horizontal form" role="form">
 					<div class="msg">转移</div>
 					<div class="form-group">
 						<label class="col-xs-12 control-label left">把客资转移给</label>
 						<div class="col-xs-6">
-							<input type="text" class="form-control" placeholder="组别">
-						</div>
+              <select name="workcenter_id" class="form-control">
+              </select>
+            </div>
             <div class="col-xs-6">
-							<input type="text" class="form-control" placeholder="人员">
-						</div>
-					</div>
-          <div class="form-group">
-						<label for="call" class="col-xs-12 control-label left">转移理由</label>
-						<div class="col-xs-12">
-              <textarea class="form-control" rows="3"></textarea>
-						</div>
+              <select name="user_id" class="form-control">
+              </select>
+            </div>
 					</div>
 					<div class="operate col-xs-10 col-xs-offset-1">
-						<input type="submit" class="btn btn-default btn-block" value="保存，返回客资列表">
+						<input type="submit" class="btn btn-default btn-block" value="保存返回">
 					</div>
 				</form>
 			</div>
@@ -34,4 +30,81 @@
 	iframe.init();
 </script>
 
-<link rel="import" href="../components/foot-iframe.html?__inline">
+<script>
+  var uuid = request.getParam('id'),
+      departmentId;
+
+  // 获取客资数据
+  api.getObject('BusCustomer', uuid, function(data){
+    if(data.retMsg == 'OK'){
+      var obj = data.retVal;
+      departmentId = obj.msdepartment_id;
+      // 组别
+      api.listIdAndName('SysWorkCenter', {
+        department_id: departmentId
+      }, function(options){
+        $('select[name=workcenter_id]').append(options);
+      });
+    }else{
+      alert(data.retMsg);
+    }
+  });
+  
+  // 人员级联更改
+  $('select[name=workcenter_id]').change(function(){
+    $('select[name=user_id]').val('');
+    if(!$(this).val()){
+      return false;
+    }
+    // 人员
+    api.returnWorkUser($(this).val(), function(options){
+      $('select[name=user_id]').html(options);
+    });
+  });
+
+  $('#form').bootstrapValidator({
+    // live: 'disabled',
+    fields: {
+      workcenter_id: {
+        validators: {
+          notEmpty: {
+            message: '部门不能为空'
+          }
+        }
+      },
+      user_id: {
+        validators: {
+          notEmpty: {
+            message: '用户不能为空'
+          }
+        }
+      },
+    },
+    submitHandler: function(validator, form, submitButton) {
+      commitForm();
+    }
+  });
+
+  // 表单提交
+  function commitForm(){
+    var params = {};
+    // 表单数据
+    params['workcenter_id'] = $('select[name=workcenter_id]').val();
+    params['sales_id'] = $('select[name=user_id]').val();
+    // 额外数据
+    params['uuid'] = uuid;
+    params['transfer'] = 1; // 转移需要传递，值为非0或false值
+    params['transfer_flag'] = 2; // 转移需要传递，1邀约，2门市
+    params['mstime'] = new Date().getTime();
+    // 调用接口
+    api.saveObject('BusCustomer', params, function(data){
+      if(data.retMsg == 'OK'){
+        window.location.href = 'transfer-success.html';
+      }else{
+        alert(data.retMsg);
+      }
+    });
+  }
+</script>
+
+<link rel="import" href="../components/foot.html?__inline">

@@ -1,40 +1,22 @@
 <link rel="import" href="../components/head.html?__inline">
 
-	<div class="common-header header">
-		<div class="user-head">
-			<img id="userhead" src="../img/default-avator.jpg" alt="user-head">
-		</div>
-		<div class="user-info">
-			<div id="username" class="name">
-				晓晓
-			</div>
-			<div id="usergroup" class="group">
-				新凯旋店-门市A组
-			</div>
-		</div>
-	</div>
-	<div class="menu">
-		<a href="new.html" target="iframe" class="item">
-			<span class="icon glyphicon glyphicon-search"></span>
-			<span class="title">新客</span>
-		</a>
-		<a href="list.html" target="iframe" class="item">
-			<span class="icon glyphicon glyphicon-search"></span>
-			<span class="title">列表</span>
-		</a>
-		<a href="mine.html" target="iframe" class="item">
-			<span class="icon glyphicon glyphicon-search"></span>
-			<span class="title">我的</span>
-		</a>
-	</div>
+  <link rel="import" href="../components/common-head.html?__inline">
 
-	<iframe id="iframe" name="iframe" src="new.html" width="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+  <div class="menu">
+    <a href="new.html" target="iframe" class="item">
+        <span class="icon iconfont icon-down"></span>
+        <span class="title">新客</span>
+    </a>
+    <a href="list.html" target="iframe" class="item">
+        <span class="icon iconfont icon-list"></span>
+        <span class="title">列表</span>
+    </a>
+    <a href="mine.html" target="iframe" class="item">
+        <span class="icon iconfont icon-me"></span>
+        <span class="title">我的</span>
+    </a>
+  </div>
 
-<script>
-  // console.log(api.userInfo);
-  $('#userhead').attr('src',api.userInfo.thumb_photo);
-  $('#username').text(api.userInfo.userName);
-  $('#usergroup').text(api.userInfo.departmentName + '-' + api.userInfo.workcenterName);
-</script>
+  <iframe id="iframe" name="iframe" src="new.html" width="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
 
 <link rel="import" href="../components/foot.html?__inline">

@@ -1,79 +1,29 @@
-<link rel="import" href="../components/head-iframe.html?__inline">
+<link rel="import" href="../components/head.html?__inline">
 
 <div class="container">
-	<div class="map-head">
-		<span class="vertical-line"></span>客资列表
-		<div class="filter">
-			<select class="form-control input-sm">
-        <option>按照客资状态</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-        <option>5</option>
+  <div class="map-head">
+    <span class="vertical-line"></span>客资列表
+    <div class="filter">
+      <select class="form-control input-sm validate-flag">
+        <option value="-1">按照客资状态</option>
+        <option value="1">有效</option>
+        <option value="2">无效</option>
       </select>
-		</div>
-	</div>
-
-	<div class="btn-group btn-group-justified margin-top-10">
-		<a href="javascript:;" class="btn btn-primary date-filter-btn" data-date="all">全部</a>
-		<a href="javascript:;" class="btn btn-default date-filter-btn" data-date="today">当日</a>
-		<a href="javascript:;" class="btn btn-default date-filter-btn" data-date="this-week">本周</a>
-    <a href="javascript:;" class="btn btn-default date-filter-btn" data-date="this-month">本月</a>
-	</div>
-
-	<table class="table table-bordered table-striped margin-top-10">
-		<thead>
-			<tr>
-				<th>序号</th>
-				<th>姓名</th>
-				<th>下发时间</th>
-				<th>订单</th>
-				<th>预约到店时间</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr onclick="javascript:window.location.href='detail.html'">
-				<td>1</td>
-				<td>Mark</td>
-				<td>Otto</td>
-				<td>@mdo</td>
-				<td>@mdo</td>
-			</tr>
-			</a>
-			<tr onclick="javascript:window.location.href='detail.html'">
-				<td>2</td>
-				<td>Mark</td>
-				<td>Otto</td>
-				<td>@TwBootstrap</td>
-				<td>@mdo</td>
-			</tr>
-			<tr onclick="javascript:window.location.href='detail.html'">
-				<td>3</td>
-				<td>Jacob</td>
-				<td>Thornton</td>
-				<td>@fat</td>
-				<td>@mdo</td>
-			</tr>
-			<tr>
-				<td>4</td>
-				<td>Larry the Bird</td>
-				<td>@twitter</td>
-				<td>@mdo</td>
-				<td>@mdo</td>
-			</tr>
-		</tbody>
-	</table>
-	<nav>
-		<ul class="pagination no-margin">
-			<li><a href="#">&laquo;</a></li>
-			<li class="active"><a href="#">1</a></li>
-			<li><a href="#">2</a></li>
-			<li><a href="#">3</a></li>
-			<li><a href="#">4</a></li>
-			<li><a href="#">5</a></li>
-			<li><a href="#">&raquo;</a></li>
-		</ul>
-	</nav>
+    </div>
+  </div>
+  <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>序号</th>
+          <th>姓名</th>
+          <th>下发时间</th>
+          <th>订单</th>
+          <th>预计到店时间</th>
+        </tr>
+      </thead>
+      <tbody id="table-content">
+      </tbody>
+    </table>
 
 </div>
 
@@ -82,12 +32,64 @@
 </script>
 
 <script>
-  $('.date-filter-btn').click(function(){
-    $('.date-filter-btn').removeClass('btn-primary').addClass('btn-default');
-    $(this).addClass('btn-primary');
-    var date = $(this).data('date');
-    console.log(date);
+  var searchParams =  {
+    sales_id: api.userInfo.userUuid
+  },
+  // 以下两个暂时预留不用
+  pageIndex = request.getParam('pageIndex')?request.getParam('pageIndex'):0,
+  pageSize = request.getParam('pageSize')?request.getParam('pageSize'):999;
+
+  // 有效无效的点击事件
+  $('.validate-flag').change(function(){
+    var value = parseInt($(this).val());
+    if(value == -1){
+      delete searchParams['valid_flag'];
+    }else{
+      searchParams['valid_flag'] = value;
+    }
+    setTableList(searchParams, pageIndex, pageSize);
   });
+
+  // 初始化加载数据
+  setTableList(searchParams, pageIndex, pageSize);
+  
+  // 设置表格数据
+  function setTableList(searchParams, pageIndex, pageSize){
+    api.listObject('BusCustomer', searchParams, pageIndex, pageSize, function(data){
+      var tabelTbody = '',
+          xiafaTime,
+          order,
+          shopTime;
+      if(data){
+        $.each(data.list, function(index, item){
+          // 排除部分数据
+          if(item.customerUserStatus <= 5){ // 未被接收的客资跳过
+            logger('未被接收的客资跳过', item);
+            return true;
+          }
+          // 格式化数据
+          xiafaTime = api.getFormatDate(item.mscreateTime, "yyyy-MM-dd\nhh:mm:ss");
+          order = item.paid ? item.paid : '';
+          shopTime = api.getFormatDate(item.shopDate, "yyyy-MM-dd\n") + item.strShopDate;
+          // 构造table body
+          tabelTbody +=
+          '<tr onclick="javascript:window.location.href=\'detail.html?id='+ item.uuid +'\'">'
+            + '<td>'+ (index+1) +'</td>'
+            + '<td>'+ item.name1 +'</td>'
+            + '<td>'+ xiafaTime +'</td>'
+            + '<td>'+ order +'</td>'
+            + '<td>'+ shopTime +'</td>'
+            + '</tr>'
+            + "\n";
+        });
+      }
+      // 一次性加到页面上
+      $('#table-content').html(tabelTbody);
+      // 重新设定 iframe 高度
+      iframe.changeHeight();
+    });
+  }
+  
 </script>
 
-<link rel="import" href="../components/foot-iframe.html?__inline">
+<link rel="import" href="../components/foot.html?__inline">

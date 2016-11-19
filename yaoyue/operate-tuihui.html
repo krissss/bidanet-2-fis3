@@ -1,19 +1,19 @@
-<link rel="import" href="../components/head-iframe.html?__inline">
+<link rel="import" href="../components/head.html?__inline">
 
 <div class="container">
 	<div class="panel panel-primary">
 		<div class="panel-body">
 			<div class="operate-message">
-				<form action="list.html" class="form-horizontal form" role="form">
+				<form id="form" action="" class="form-horizontal form" role="form">
 					<div class="msg">退回</div>
 					<div class="form-group">
 						<label for="call" class="col-xs-4 control-label left">退回理由</label>
 						<div class="col-xs-12">
-							<textarea class="form-control" rows="3"></textarea>
+							<textarea name="return_reason" class="form-control" rows="3"></textarea>
 						</div>
 					</div>
 					<div class="operate col-xs-10 col-xs-offset-1">
-						<input type="submit" class="btn btn-default btn-block" value="保存，返回客资列表">
+						<input type="submit" class="btn btn-default btn-block" value="保存返回">
 					</div>
 				</form>
 			</div>
@@ -25,4 +25,43 @@
 	iframe.init();
 </script>
 
-<link rel="import" href="../components/foot-iframe.html?__inline">
+<script>
+  var uuid = request.getParam('id');
+
+  $('#form').bootstrapValidator({
+    // live: 'disabled',
+    fields: {
+      return_reason: {
+        validators: {
+          notEmpty: {
+            message: '退回理由不能为空'
+          }
+        }
+      },
+    },
+    submitHandler: function(validator, form, submitButton) {
+      commitForm();
+    }
+  });
+
+  // 表单提交
+  function commitForm(){
+    var params = {};
+    // 表单数据
+    params['yyback_reason'] = $('textarea[name=return_reason]').val();
+    // 额外数据
+    params['uuid'] = uuid;
+    params['yytime'] = new Date().getTime();
+    params['customer_user_status'] = 4;
+    // 调用接口
+    api.saveObject('BusCustomer', params, function(data){
+      if(data.retMsg == 'OK'){
+        api.goBack();
+      }else{
+        alert(data.retMsg);
+      }
+    });
+  }
+</script>
+
+<link rel="import" href="../components/foot.html?__inline">

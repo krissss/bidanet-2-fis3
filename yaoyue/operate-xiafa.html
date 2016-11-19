@@ -1,34 +1,32 @@
-<link rel="import" href="../components/head-iframe.html?__inline">
+<link rel="import" href="../components/head.html?__inline">
+
+<link rel="import" href="../components/link-datepicker-head.html?__inline">
 
 <div class="container">
   <div class="panel panel-primary">
 		<div class="panel-body">
 			<div class="operate-message"> 
-				<form action="list.html" class="form-horizontal form" role="form">
+				<form id="form" action="" class="form-horizontal form" role="form">
 					<div class="msg">下发</div>
 					<div class="form-group">
 						<label class="col-xs-12 control-label left">填写预计到店时间</label>
 						<div class="col-xs-6">
-							<input type="text" class="form-control">
+							<input type="text" class="form-control datepicker" placeholder="选择日期" readonly="readonly">
+              <input name="shop_date" type="hidden">
 						</div>
             <div class="col-xs-6">
-							<input type="text" class="form-control">
+							<input type="text" name="shop_time" class="form-control" placeholder="填写具体时间">
 						</div>
 					</div>
           <div class="form-group">
 						<label for="call" class="col-xs-12 control-label left">选择下发店面和门市</label>
 						<div class="col-xs-12">
-							<select class="form-control">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
+							<select name="workcenter_id"  class="form-control">
               </select>
 						</div>
 					</div>
 					<div class="operate col-xs-10 col-xs-offset-1">
-						<input type="submit" class="btn btn-default btn-block" value="保存，返回客资列表">
+						<input type="submit" class="btn btn-default btn-block" value="保存返回">
 					</div>
 				</form>
 			</div>
@@ -36,8 +34,82 @@
 	</div>
 </div>
 
+<link rel="import" href="../components/link-datepicker-foot.html?__inline">
+
 <script>
 	iframe.init();
 </script>
 
-<link rel="import" href="../components/foot-iframe.html?__inline">
+<script>
+  var uuid = request.getParam('id'),
+      msdepartmentId;
+
+  // 部门
+  api.listIdAndName('SysDepartment', {
+    company_id: api.userInfo.companyId,
+    group_flag: 3,
+  }, function(list){
+    msdepartmentId = list[0].uuid;
+    // 工作组
+    api.listIdAndName('SysWorkCenter', {
+      department_id: msdepartmentId
+    }, function(options){
+      $('select[name=workcenter_id]').html(options);
+    });
+  }, false);
+
+  $('#form').bootstrapValidator({
+    // live: 'disabled',
+    fields: {
+      shop_date: {
+        validators: {
+          notEmpty: {
+            message: '到店时间不能为空'
+          }
+        }
+      },
+      shop_time: {
+        validators: {
+          notEmpty: {
+            message: '到店时间不能为空'
+          }
+        }
+      },
+      workcenter_id: {
+        validators: {
+          notEmpty: {
+            message: '下发门店不能为空'
+          }
+        }
+      },
+    },
+    submitHandler: function(validator, form, submitButton) {
+      commitForm();
+    }
+  });
+
+  // 表单提交
+  function commitForm(){
+    var params = {};
+    // 表单数据
+    params['shop_date'] = $('input[name=shop_date]').val();
+    params['str_shop_date'] = $('input[name=shop_time]').val();
+    params['msworkcenter_id'] = $('select[name=workcenter_id]').val();
+    // 额外数据
+    params['uuid'] = uuid;
+    params['yytime'] = new Date().getTime();
+    params['msdepartment_id'] = msdepartmentId;
+    params['customer_user_status'] = 5;
+    params['valid_flag'] = 1;
+    // 调用接口
+    api.saveObject('BusCustomer', params, function(data){
+      if(data.retMsg == 'OK'){
+        api.goBack();
+      }else{
+        alert(data.retMsg);
+      }
+    });
+  }
+</script>
+
+<link rel="import" href="../components/foot.html?__inline">

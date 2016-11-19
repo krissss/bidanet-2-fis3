@@ -1,134 +1,217 @@
-<link rel="import" href="../components/head-iframe.html?__inline">
+<link rel="import" href="../components/head.html?__inline">
 
 <div class="container margin-top-15">
-	<div class="panel panel-primary">
-		<div class="panel-body">
-			<form id="form" action="" class="form-horizontal form" role="form" enctype="multipart/form-data">
-				<div class="form-group">
-					<label class="col-xs-4 control-label no-padding-left">
-            <span class="icon glyphicon glyphicon-search"></span> 称呼
+  <div class="panel panel-primary">
+    <div class="panel-body">
+      <form id="form" action="" class="form-horizontal form" role="form" enctype="multipart/form-data">
+        <div class="form-group">
+          <label class="col-xs-4 control-label no-padding-left">
+            <span class="icon iconfont icon-card"></span> 称呼
           </label>
-					<div class="col-xs-8 no-padding-left">
-						<input name="name" type="text" class="form-control">
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-xs-4 control-label no-padding-left">
-            <span class="icon glyphicon glyphicon-search"></span> 公司
+          <div class="col-xs-8 no-padding-left">
+            <input name="name" type="text" class="form-control">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-xs-4 control-label no-padding-left">
+            <span class="icon iconfont icon-gongsi"></span> 公司
           </label>
-					<div class="col-xs-8 no-padding-left">
-						<select name="company_id" class="form-control">
+          <div class="col-xs-8 no-padding-left">
+            <select name="company_id" class="form-control">
             </select>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-xs-4 control-label no-padding-left">
-            <span class="icon glyphicon glyphicon-search"></span> 职位
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-xs-4 control-label no-padding-left">
+            <span class="icon iconfont icon-zhiwei"></span> 职位
           </label>
-					<div class="col-xs-8 no-padding-left">
-						<select name="user_job" class="form-control">
-							<option value="">请选择</option>
-							<option value="抓客客服">抓客客服</option>
-							<option value="邀约客服">邀约客服</option>
-							<option value="门市客服">门市客服</option>
-							<option value="其他">其他</option>
+          <div class="col-xs-8 no-padding-left">
+            <select name="user_job" class="form-control">
+              <option value="">请选择</option>
+              <option value="抓客客服">抓客客服</option>
+              <option value="邀约客服">邀约客服</option>
+              <option value="门市客服">门市客服</option>
+              <option value="其他">其他</option>
             </select>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-xs-4 control-label no-padding-left">
-            <span class="icon glyphicon glyphicon-search"></span> 手机
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-xs-4 control-label no-padding-left">
+            <span class="icon iconfont icon-mobile"></span> 手机
           </label>
-					<div class="col-xs-8 no-padding-left">
-						<input name="tel" type="text" class="form-control">
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-xs-4 control-label no-padding-left">
-            <span class="icon glyphicon glyphicon-search"></span> 岗位
+          <div class="col-xs-8 no-padding-left">
+            <input name="tel" type="text" class="form-control">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-xs-4 control-label no-padding-left">
+            <span class="icon iconfont icon-xuexiao"></span> 岗位
           </label>
-					<div class="col-xs-4 no-padding-left">
-						<select name="department_id" class="form-control">
+          <div class="col-xs-4 no-padding-left">
+            <select name="department_id" class="form-control">
             </select>
-					</div>
-					<div class="col-xs-4 no-padding-left">
-						<select name="workcenter_id" class="form-control">
+          </div>
+          <div class="col-xs-4 no-padding-left">
+            <select name="workcenter_id" class="form-control">
             </select>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-xs-4 control-label no-padding-left">
-            <span class="icon glyphicon glyphicon-search"></span> 头像
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-xs-4 control-label no-padding-left">
+            <span class="icon iconfont icon-me"></span> 头像
           </label>
-					<div class="col-xs-8 no-padding-left">
-						<a href="javascript:;" class="form-control file">选择头像
-							<input name="photo" type="file" accept="image/*">
-						</a>
-					</div>
-				</div>
-				<div class="form-group">
-					<div class="col-xs-offset-2 col-xs-8">
-						<input type="submit" class="btn btn-primary btn-block" value="提交">
-					</div>
-				</div>
-			</form>
-		</div>
-	</div>
+          <div class="col-xs-8 no-padding-left">
+            <a href="javascript:;" class="form-control file">选择头像
+              <input name="photo" type="file" accept="image/*">
+            </a>
+          </div>
+        </div>
+        <div class="form-group head-preview-container" style="display:none;">
+          <label class="col-xs-4 control-label no-padding-left">
+            <span class="icon iconfont icon-me"></span> 预览
+          </label>
+          <div class="col-xs-8 no-padding-left head-preview">
+            <img src="../img/default-avator.jpg">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-xs-offset-2 col-xs-8">
+            <input type="submit" class="btn btn-primary btn-block" value="提交">
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
 
 <script>
-	// 公司
+  iframe.init();
+</script>
+
+<script>
+  // 公司
   api.listIdAndNameNoToken('SysCompany', {}, function(options){
     $('select[name=company_id]').html(options);
   });
 
-	// 部门级联更改
-	$('select[name=company_id]').change(function(){
-		$('select[name=department_id]').val();
-		// 部门
-		api.listIdAndNameNoToken('SysDepartment', {
-			company_id: $(this).val()
-		}, function(options){
-			$('select[name=department_id]').html(options);
-		});
-	});
+  // 部门级联更改
+  $('select[name=company_id]').change(function(){
+    $('select[name=department_id]').val();
+    // 部门
+    api.listIdAndNameNoToken('SysDepartment', {
+      company_id: $(this).val()
+    }, function(options){
+      $('select[name=department_id]').html(options);
+    });
+  });
 
-	// 组别级联更改
-	$('select[name=department_id]').change(function(){
-		$('select[name=workcenter_id]').val();
-		// 组别
-		api.listIdAndNameNoToken('SysWorkCenter', {
-			department_id: $(this).val()
-		}, function(options){
-			$('select[name=workcenter_id]').html(options);
-		});
-	});
+  // 组别级联更改
+  $('select[name=department_id]').change(function(){
+    $('select[name=workcenter_id]').val();
+    // 组别
+    api.listIdAndNameNoToken('SysWorkCenter', {
+      department_id: $(this).val()
+    }, function(options){
+      $('select[name=workcenter_id]').html(options);
+    });
+  });
 
-	// 表单提交
-  $('#form').submit(function(){
+  // 头像选择预览
+  $('input[name=photo]').change(function(){
+    var r = new FileReader();
+    r.readAsDataURL($(this).prop("files")[0]); //Base64
+    $(r).load(function(){
+      $('.head-preview img').attr('src', this.result);
+      $('.head-preview-container').show();
+      iframe.changeHeight();
+    });
+  });
+
+  $('#form').bootstrapValidator({
+    // live: 'disabled',
+    fields: {
+      name: {
+        validators: {
+          notEmpty: {
+            message: '昵称不能为空'
+          }
+        }
+      },
+      tel: {
+        validators: {
+          notEmpty: {
+            message: '手机号不能为空'
+          },
+          // phone: {
+          //   message: '手机号不合法',
+          //   country: 'cn'
+          // }
+        }
+      },
+      company_id: {
+        validators: {
+          notEmpty: {
+            message: '公司不能为空'
+          }
+        }
+      },
+      user_job: {
+        validators: {
+          notEmpty: {
+            message: '职位不能为空'
+          }
+        }
+      },
+      department_id: {
+        validators: {
+          notEmpty: {
+            message: '岗位不能为空'
+          }
+        }
+      },
+      workcenter_id: {
+        validators: {
+          notEmpty: {
+            message: '岗位不能为空'
+          }
+        }
+      },
+      photo: {
+        validators: {
+          notEmpty: {
+            message: '头像不能为空'
+          }
+        }
+      },
+    },
+    submitHandler: function(validator, form, submitButton) {
+      commitForm();
+    }
+  });
+
+  // 表单提交
+  function commitForm(){
     var params = new FormData();
     // 表单数据
-		params.append('name', $('input[name=name]').val());
-		params.append('company_id', $('select[name=company_id]').val());
-		params.append('user_job', $('select[name=user_job]').val());
-		params.append('tel', $('input[name=tel]').val());
-		params.append('department_id', $('select[name=department_id]').val());
-		params.append('workcenter_id', $('select[name=workcenter_id]').val());
-		// 头像文件
-		params.append('photo', $('input[name=photo]').prop("files")[0]);
+    params.append('name', $('input[name=name]').val());
+    params.append('company_id', $('select[name=company_id]').val());
+    params.append('user_job', $('select[name=user_job]').val());
+    params.append('tel', $('input[name=tel]').val());
+    params.append('department_id', $('select[name=department_id]').val());
+    params.append('workcenter_id', $('select[name=workcenter_id]').val());
+    // 头像文件
+    params.append('photo', $('input[name=photo]').prop("files")[0]);
     // 额外数据
-		params.append('openid', api.openid);
+    params.append('openid', api.openid);
     // 调用接口
     api.register(params, function(data){
-			if(data.retMsg == 'OK'){
-				window.location.href = 'apply-success.html';
-				// console.log(data);
-			}else{
-				alert(data.retMsg);
-			}
+      if(data.retMsg == 'OK'){
+        window.location.href = 'apply-success.html';
+      }else{
+        alert(data.retMsg);
+      }
     });
-    return false;
-  });
+  }
 </script>
 
-<link rel="import" href="../components/foot-iframe.html?__inline">
+<link rel="import" href="../components/foot.html?__inline">

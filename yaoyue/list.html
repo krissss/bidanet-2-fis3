@@ -1,14 +1,14 @@
-<link rel="import" href="../components/head-iframe.html?__inline">
+<link rel="import" href="../components/head.html?__inline">
 
 <div class="container">
   <div class="map-head">
     <span class="vertical-line"></span>客资列表
     <div class="filter">
-      <select class="form-control input-sm validate-flag">
-        <option value="-1">按照客资状态</option>
-        <option value="1">有效</option>
-        <option value="2">无效</option>
-      </select>
+      <div class="btn-group">
+        <a href="javascript:;" class="btn btn-sm btn-primary validate-flag" data-validate="-1">全部</a>
+        <a href="javascript:;" class="btn btn-sm btn-default validate-flag" data-validate="1">有效客资</a>
+        <a href="javascript:;" class="btn btn-sm btn-default validate-flag" data-validate="2">无效客资</a>
+      </div>
     </div>
   </div>
   <table class="table table-bordered table-striped">
@@ -16,7 +16,7 @@
         <tr>
           <th>序号</th>
           <th>姓名</th>
-          <th>报备时间</th>
+          <th>接收时间</th>
           <th>类别</th>
           <th>状态</th>
         </tr>
@@ -43,9 +43,9 @@
   $('.validate-flag').change(function(){
     var value = parseInt($(this).val());
     if(value == -1){
-      delete searchParams['validate_flag'];
+      delete searchParams['valid_flag'];
     }else{
-      searchParams['validate_flag'] = value;
+      searchParams['valid_flag'] = value;
     }
     setTableList(searchParams, pageIndex, pageSize);
   });
@@ -62,8 +62,17 @@
           validFlag;
       if(data){
         $.each(data.list, function(index, item){
+          // 排除部分数据
+          if(item.validFlag == 2){ // 无效客资跳过
+            logger('无效客资跳过', item);
+            return true;
+          }
+          if(item.customerUserStatus == 1){ // 未被接收的客资跳过
+            logger('未被接收的客资跳过', item);
+            return true;
+          }
           // 格式化数据
-          baobeiTime = 'unknown'; //new Date(item.createDate).format("yyyy-MM-dd\nhh:mm:ss");
+          baobeiTime = api.getFormatDate(item.yycreateTime, "yyyy-MM-dd\nhh:mm:ss");
           switch(item.customerFlag){
             case 1: customerFlag = 'A'; break;
             case 2: customerFlag = 'B'; break;
@@ -97,4 +106,4 @@
   
 </script>
 
-<link rel="import" href="../components/foot-iframe.html?__inline">
+<link rel="import" href="../components/foot.html?__inline">

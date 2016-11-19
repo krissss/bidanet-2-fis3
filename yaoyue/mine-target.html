@@ -1,50 +1,60 @@
-<link rel="import" href="../components/head-iframe.html?__inline">
+<link rel="import" href="../components/head.html?__inline">
 
-<p>设置本月的目标</p>
+<p>设置本月的目标(暂未完成)</p>
 <div class="panel panel-primary">
-	<div class="panel-body">
-		<form action="mine.html" class="form-horizontal" role="form">
-			<div class="form-group">
-				<label for="call" class="col-xs-4 control-label">报备有效客资</label>
-				<div class="col-xs-8">
-					<input type="text" class="form-control" id="call">
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="call" class="col-xs-4 control-label">邀约到店数</label>
-				<div class="col-xs-8">
-					<input type="text" class="form-control" id="call">
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="call" class="col-xs-4 control-label">网络成交数</label>
-				<div class="col-xs-8">
-					<input type="text" class="form-control" id="call">
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="call" class="col-xs-4 control-label">总订单数</label>
-				<div class="col-xs-8">
-					<input type="text" class="form-control" id="call">
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="call" class="col-xs-4 control-label">邀约到店率</label>
-				<div class="col-xs-8">
-					<input type="text" class="form-control" id="call">
-				</div>
-			</div>
-			<div class="form-group">
-				<div class="col-xs-offset-2 col-xs-8">
-					<input type="submit" class="btn btn-primary btn-block" value="保存">
-				</div>
-			</div>
-		</form>
-	</div>
+  <div class="panel-body">
+    <form action="mine-target.html" class="form-horizontal" role="form">
+      <div class="form-group">
+        <label class="col-xs-4 control-label">目标时间</label>
+        <div class="col-xs-8">
+          <select name="time_type" class="form-control">
+            <option value="1">今日</option>
+            <option value="2">本周</option>
+            <option value="3">本月</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-xs-4 control-label">报备有效客资</label>
+        <div class="col-xs-8">
+          <input name="baobei_validate_customer_number" type="text" class="form-control">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-xs-4 control-label">邀约到店客资数</label>
+        <div class="col-xs-8">
+          <input name="invite_customer_number" type="text" class="form-control">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-xs-4 control-label">网络成交客资数</label>
+        <div class="col-xs-8">
+          <input name="network_paid_customer_number" type="text" class="form-control">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-xs-4 control-label">总成交订单数</label>
+        <div class="col-xs-8">
+          <input name="total_paid_number" type="text" class="form-control">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-xs-4 control-label">邀约到店率</label>
+        <div class="col-xs-8">
+          <input name="invite_customer_percent" type="text" class="form-control">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-xs-offset-2 col-xs-8">
+          <input type="submit" class="btn btn-primary btn-block" value="保存">
+        </div>
+      </div>
+    </form>
+  </div>
 </div>
 
 <script>
-	iframe.init();
+  iframe.init();
 </script>
 
-<link rel="import" href="../components/foot-iframe.html?__inline">
+<link rel="import" href="../components/foot.html?__inline">

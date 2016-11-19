@@ -1,0 +1,36 @@
+<link rel="import" href="../components/head.html?__inline">
+
+<div class="container">
+	<div id="operate-msg" class="panel panel-success hidden">
+		<div class="panel-body">
+			<div class="operate-message">
+				<div class="msg">转为C客成功</div>
+				<div class="operate col-xs-10 col-xs-offset-1">
+					<a href="javascript:history.back(-1);" class="btn btn-default btn-block">返回</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+	iframe.init();
+</script>
+
+<script>
+  var uuid = request.getParam('id');
+  api.saveObject('BusCustomer', {
+    uuid: uuid,
+    customer_flag: 3, // C客为3
+    mstime: new Date().getTime()
+  }, function(data){
+    if(data.retMsg == 'OK'){
+      $('#operate-msg').removeClass('hidden');
+      iframe.changeHeight();
+    }else{
+      alert(data.retMsg);
+    }
+  });
+</script>
+
+<link rel="import" href="../components/foot.html?__inline">

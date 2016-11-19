@@ -1,15 +1,117 @@
-<link rel="import" href="../components/head-iframe.html?__inline">
+<link rel="import" href="../components/head.html?__inline">
 
 <div class="container">
-	指定操作未知
+	<div class="panel panel-primary">
+		<div class="panel-body">
+			<div class="operate-message"> 
+				<form id="form" action="" class="form-horizontal form" role="form">
+					<div class="msg">指定</div>
+          <div class="form-group">
+						<label for="call" class="col-xs-12 control-label left">选择邀约部门人员</label>
+						<div class="col-xs-6">
+							<select name="workcenter_id"  class="form-control">
+              </select>
+						</div>
+            <div class="col-xs-6">
+              <select name="user_id"  class="form-control">
+              </select>
+            </div>
+					</div>
+					<div class="operate col-xs-10 col-xs-offset-1">
+						<input type="submit" class="btn btn-default btn-block" value="保存，返回客资列表">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 </div>
 
 <script>
 	iframe.init();
 </script>
+
 <script>
-  var customerUuid = request.getParam('id');
-  console.log(customerUuid);
+  var uuid = request.getParam('id'),
+      departmentId;
+
+  // 获取客资数据
+  api.getObject('BusCustomer', uuid, function(data){
+    if(data.retMsg == 'OK'){
+      var obj = data.retVal;
+      departmentId = obj.yydepartment_id;
+      // 工作组
+      api.listIdAndName('SysWorkCenter', {
+        department_id: departmentId
+      }, function(options){
+        $('select[name=workcenter_id]').html(options);
+      });
+    }else{
+      alert(data.retMsg);
+    }
+  });
+  
+  // 人员级联更改
+  $('select[name=workcenter_id]').change(function(){
+    $('select[name=user_id]').val('');
+    if(!$(this).val()){
+      return false;
+    }
+    // 人员
+    api.returnWorkUser($(this).val(), function(options){
+      $('select[name=user_id]').html(options);
+    });
+  });
+
+  $('#form').bootstrapValidator({
+    // live: 'disabled',
+    fields: {
+      workcenter_id: {
+        validators: {
+          notEmpty: {
+            message: '部门不能为空'
+          }
+        }
+      },
+      user_id: {
+        validators: {
+          notEmpty: {
+            message: '用户不能为空'
+          }
+        }
+      },
+    },
+    submitHandler: function(validator, form, submitButton) {
+      commitForm();
+    }
+  });
+
+  // 表单提交
+  function commitForm(){
+    var params = {};
+    // 表单数据
+    params['yyworkcenter_id'] = $('select[name=workcenter_id]').val();
+    params['invite_id'] = $('select[name=user_id]').val();
+    // 非更新需要额外数据
+    params['uuid'] = uuid;
+    params['needOrder'] = 1; // 抓客指定需要传递的参数，值为非0或false值
+    params['zktime'] = new Date().getTime();
+    // 指定前判断客资状态
+    api.getOperationUserAndStatus(uuid, function(data){
+      if(data.customer_user_status == 1){ // 状态是1才可以指定
+        // 调用接口
+        api.saveObject('BusCustomer', params, function(data){
+          if(data.retMsg == 'OK'){
+            window.location.href = 'zhiding-success.html';
+          }else{
+            alert(data.retMsg);
+          }
+        });
+      }else{
+        alert('该客资已被接收，指定失败');
+      }
+    });
+  };
+
 </script>
 
-<link rel="import" href="../components/foot-iframe.html?__inline">
+<link rel="import" href="../components/foot.html?__inline">

@@ -1,0 +1,561 @@
+@function px2rem($px){
+  $rem : 37.5px;
+  @return ($px/$rem) + rem;
+}
+
+/* common */
+body{
+  font-family: "Microsoft YaHei";
+  font-size: px2rem(14px);
+}
+
+input,button,select,textarea{
+  outline:none;
+  -webkit-appearance:none;
+}
+
+textarea{
+  resize:none;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+a:visited {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+a:active {
+    text-decoration: none;
+}
+
+.header{
+    background: url('../img/header_bg.jpg') no-repeat;
+    background-size: cover;
+}
+
+.margin-top-10{
+    margin-top: 10px;
+}
+
+.margin-top-15{
+    margin-top: 15px;
+}
+
+.no-margin{
+    margin: 0;
+}
+
+.no-padding-left{
+    padding-left: 0;
+}
+
+.no-padding-top{
+    padding-top: 0;
+}
+
+.text-danger{
+  color: #cc3333
+}
+
+.text-success{
+  color: #33cc33
+}
+/* common */
+
+/* rem reset */
+.btn{
+  padding: px2rem(6px) px2rem(12px);
+  font-size: px2rem(14px);
+}
+
+.btn-xs, .btn-group-xs>.btn{
+  padding: px2rem(1px) px2rem(5px);
+  font-size: px2rem(12px);
+}
+
+.table>thead>tr>th, 
+.table>tbody>tr>th, 
+.table>tfoot>tr>th, 
+.table>thead>tr>td, 
+.table>tbody>tr>td, 
+.table>tfoot>tr>td{
+  padding: px2rem(8px);
+}
+
+p{
+  margin: 0 0 px2rem(10px);
+}
+
+.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, 
+.col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, 
+.col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, 
+.col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, 
+.col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, 
+.col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, 
+.col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, 
+.col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, 
+.col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, 
+.col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, 
+.col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, 
+.col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
+    position: relative;
+    min-height: 1px;
+    padding-right: px2rem(15px);
+    padding-left: px2rem(15px);
+}
+
+.panel{
+  margin-bottom: px2rem(20px);
+}
+/* rem reset */
+
+/* map-head */
+.map-head {
+    font-size: px2rem(18px);;
+    color: #1983d1;
+    padding: 0 15px 5px 15px;
+    overflow: hidden;
+}
+
+.map-head .vertical-line{
+    display: inline-block;
+    width: 3px;
+    height: px2rem(12px);
+    line-height: px2rem(12px);
+    background-color: #1983d1;
+    margin: 0 10px 0 -15px;
+}
+
+.map-head .filter{
+    float: right;
+}
+
+.map-head .filter select{
+    border: 1px solid #ccc;
+}
+
+/* map-head */
+
+/* panel */
+.panel-body{
+  padding: px2rem(10px);
+}
+
+.panel-primary,
+.panel-success,
+.panel-warning{
+    border: 0;
+}
+
+.panel .msg-title{
+    font-size: px2rem(20px);
+    padding: 10px 0;
+}
+
+.panel-primary .panel-body {
+    background: #b6e1f8;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+.panel-primary .form{
+    color: #1983d1;
+}
+
+.panel-success .panel-body{
+    background: #dff0d8;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+.panel-success .col-xs-6{
+    margin-bottom: px2rem(15px);
+}
+
+.panel-warning .panel-body{
+    background: #fcf8e3;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+/* panel */
+
+/* form */
+.form label{
+    font-size: px2rem(18px);
+    font-weight: normal;
+}
+
+.form-group:last-child{
+    margin-bottom: 0;
+}
+
+.form-control{
+    border: 1px solid #fff;
+    box-shadow: inset 0 1px 1px #fff;
+    height: px2rem(34px);
+    padding: px2rem(6px) px2rem(12px);
+    font-size: px2rem(14px);
+}
+
+.form-group {
+    margin-bottom: px2rem(12px);
+}
+
+.form-group .icon{
+    font-size: px2rem(18px);
+}
+
+.form-horizontal .form-group{
+  margin-right: px2rem(-12px);
+  margin-left: px2rem(-12px);
+}
+
+select.input-sm,
+select.form-group-sm .form-control{
+  height: px2rem(30px);
+  line-height: px2rem(30px);
+}
+
+.input-sm,
+.form-group-sm .form-control{
+  font-size: px2rem(12px);
+  padding: px2rem(5px) px2rem(10px);
+}
+
+.form-horizontal .control-label{
+  height: px2rem(34px);
+  line-height: px2rem(34px);
+  text-align: center;
+}
+
+.form-horizontal .control-label.left{
+    text-align: left;
+}
+
+.form .file input {
+  position: absolute;
+  font-size: px2rem(100px);
+  right: 0;
+  top: 0;
+  opacity: 0;
+}
+
+.form-control[disabled], 
+.form-control[readonly], 
+fieldset[disabled] .form-control{
+  background-color: #fff;
+}
+/* form */
+
+/* apply-header */
+.apply-header{
+    width: 100%;
+    color: #fff;
+}
+
+.apply-header .site{
+    width: 80%;
+    margin: 0 auto;
+    padding: 40px 0 5px 0;
+    border-bottom: 1px solid #fff;
+}
+
+.apply-header .site .name{
+    font-size: px2rem(30px);
+    font-weight: bold;
+}
+
+.apply-header .site .version{
+    font-size: px2rem(24px);
+}
+
+.apply-header .title{
+    width: 80%;
+    margin: 0 auto;
+    font-size: px2rem(24px);
+    padding: 5px 0 40px 0;
+}
+/* apply-header */
+
+/* common-header */
+.common-header{
+    width: 100%;
+    color: #fff;
+    padding: 20px 0;
+    font-size: px2rem(20px);
+    overflow: hidden;
+}
+
+.common-header .user-head{
+    float: left;
+    margin-left: px2rem(20px);
+}
+
+.head-preview{
+    padding: 0;
+    margin-left: px2rem(20px);
+}
+
+.common-header .user-head,
+.head-preview{
+    width: px2rem(80px);
+    height: px2rem(80px);
+}
+
+.common-header .user-head img,
+.head-preview img
+{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.common-header .user-info{
+    margin-left: 110px;
+    margin-right: 20px;
+}
+
+.common-header .user-info .name{
+    padding: 5px 0;
+    border-bottom: 1px solid #fff;
+}
+
+.common-header .user-info .group{
+    padding-top: 5px;
+}
+
+.common-header .site .name{
+    font-size: px2rem(30px);
+    font-weight: bold;
+}
+
+.common-header .site .version{
+    font-size: px2rem(24px);
+}
+
+.common-header .title{
+    width: 80%;
+    margin: 0 auto;
+    font-size: 24px;
+    padding: 5px 0 40px 0;
+}
+
+.user-state-container{
+  position: absolute;
+  top: px2rem(5px);
+  right: px2rem(5px);
+  color: #333;
+}
+
+.user-state-container .user-state-choose{
+  background: rgba(255,255,255,.8);
+  padding: px2rem(3px) px2rem(5px);
+  color: #333;
+  border-radius: 3px;
+  font-size: px2rem(16px);
+}
+/* common-header */
+
+/* menu */
+.menu {
+    padding: 10px;
+}
+
+.menu .item {
+    display: inline-block;
+    white-space: nowrap;
+    width: 32%;
+    margin: 1% 0;
+    text-align: center;
+}
+
+.menu .item .icon {
+    display: block;
+    color: #1983d1;
+    font-size: px2rem(20px);
+    height: px2rem(30px);
+    line-height: px2rem(30px);
+}
+
+.menu .item .title {
+    color: #8b8b8b;
+}
+/* menu */
+
+/* message-box */
+.message-box .title {
+    font-weight: bold;
+    font-size: px2rem(16px);
+}
+
+.message-box .date{
+    font-size: px2rem(12px);
+    color: #666;
+}
+
+.message-box .line{
+    height: 1px;
+    width: 100%;
+    background-color: #aaa;
+    margin: 5px 0;
+}
+/* message-box */
+
+/* new-customer-message */
+.new-customer-message {
+    padding-right: 15px;
+}
+
+.new-customer-message .info{
+    min-height: px2rem(100px);
+}
+
+.new-customer-message .info p{
+    min-height: px2rem(30px);
+    line-height: px2rem(30px);
+    margin: 0;
+}
+
+.new-customer-message .count-down{
+    height: px2rem(90px);
+    line-height: px2rem(90px);    
+    background-color: #41a9e0;
+    font-size: px2rem(30px);
+    text-align: center;
+    color: #fff;
+}
+
+.new-customer-message .count-down .number{
+    font-size: px2rem(32px);
+}
+/* new-customer-message */
+
+/* customer-status-message */
+.customer-status-message .title{
+    color: #e9142d;
+    font-size: px2rem(18px);
+    font-weight: bold;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #aaa;
+}
+
+.customer-status-message .title .small{
+    font-size: px2rem(12px);
+    font-weight: normal;
+}
+
+.customer-status-message .message-tr{
+    overflow: hidden;    
+    border-bottom: 1px solid #aaa;
+}
+
+.customer-status-message .tr-title {
+    text-align: center;
+    min-height: px2rem(100px);
+    line-height: px2rem(50px);
+    font-weight: bold;
+}
+
+.customer-status-message .tr-info {
+    border-left: 1px solid #aaa;
+    min-height: px2rem(100px);
+}
+
+.customer-status-message .tr-info p{
+    min-height: px2rem(25px);
+    line-height: px2rem(25px);
+    margin: 0;
+    font-size: px2rem(12px);
+}
+
+.customer-status-message .status-message p{
+    line-height: px2rem(25px);
+    margin: 0;
+    font-size: px2rem(14px);
+}
+
+.customer-status-message .status-message p:first-child{
+    color: #e9142d;
+}
+
+/* customer-status-message */
+
+/* customer-info-message */
+.customer-info-message .title{
+    font-size: px2rem(18px);
+    min-height: px2rem(35px);
+    line-height: px2rem(30px);
+    text-align: left;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 5px;
+    overflow: hidden;
+}
+
+.customer-info-message .title .name{
+    padding: 0;
+}
+
+.customer-info-message .title .user-info{
+    padding: 0;
+    font-size: px2rem(14px);
+    min-height: px2rem(15px);
+    line-height: px2rem(15px);
+    text-align: right;
+}
+
+.customer-info-message .title .user-info .username{
+    margin: 0;    
+}
+
+.customer-info-message .title .user-info .date{
+    font-size: px2rem(12px);
+    margin: 0;
+}
+
+.customer-info-message .info .item{
+    padding-left: 0;
+    padding-right: 5px;
+    margin: 5px 0;
+}
+
+.customer-info-message .info .name{
+    text-align: left;
+    padding: 0;
+    font-weight: bold;
+    font-size: px2rem(12px);
+    line-height: px2rem(20px);
+}
+
+.customer-info-message .info .msg{
+    text-align: left;
+    background-color: #fff;
+    padding-left: 3px;
+    font-size: px2rem(12px);
+    line-height: px2rem(20px);
+    min-height: px2rem(20px);
+}
+.customer-info-message .info .msg.min-height-40{
+    min-height: px2rem(40px);
+}
+/* customer-info-message */
+
+/* operate-message */
+.operate-message .msg{
+    font-size: px2rem(20px);
+    border-bottom: 1px solid #ccc;
+}
+
+.operate-message .operate{
+    padding: px2rem(20px);
+}
+
+.operate-message .form{
+    color: #333;
+}
+/* operate-message */

@@ -1,17 +1,13 @@
 <script>
-$('.datepicker').datepicker({
-  language: 'zh-CN',
-  autoclose: true,
-  disableTouchKeyboard: true,
-  format: {
-    toDisplay: function (date, format, language) {
-      var d = new Date(date);
-      return new Date(d.getTime()).format("yyyy-MM-dd");
-    },
-    toValue: function (date, format, language) {
-      var d = new Date(date);
-      return d.getTime();
-    }
-  },
-});
+  $('.datepicker').datetimepicker({
+    language: 'zh-CN',
+    autoclose: true,
+    todayBtn: true,
+    todayHighlight: true,
+    startView: 2,
+    minView: 2,
+    format: 'yyyy-mm-dd',
+  }).on('changeDate', function (ev) {
+    $(this).next('input[type=hidden]').val(ev.date.getTime());
+  });
 </script>

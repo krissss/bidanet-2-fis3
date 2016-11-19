@@ -1,4 +1,4 @@
-<link rel="import" href="../components/head-iframe.html?__inline">
+<link rel="import" href="../components/head.html?__inline">
 
 <div class="container">
 	<div class="map-head">
@@ -45,9 +45,9 @@
     $(this).addClass('btn-primary');
     var value = parseInt($(this).data('validate'));
     if(value == -1){
-      delete searchParams['validate_flag'];
+      delete searchParams['valid_flag'];
     }else{
-      searchParams['validate_flag'] = value;
+      searchParams['valid_flag'] = value;
     }
     setTableList(searchParams, pageIndex, pageSize);
   });
@@ -67,7 +67,7 @@
           // 格式化数据
           createTime = new Date(item.zkcreateTime).format("yyyy-MM-dd\nhh:mm:ss");
           customerFlagName = api.getCustomerFlagName(item.customerFlag);
-          statusName = api.getStatusName(item.customerUserStatus);
+          statusName = api.getStatusName(item.customerUserStatus, item.validFlag);
           // 构造table body
           tabelTbody +=
           '<tr onclick="javascript:window.location.href=\'detail.html?id='+ item.uuid +'\'">'
@@ -89,4 +89,4 @@
   
 </script>
 
-<link rel="import" href="../components/foot-iframe.html?__inline">
+<link rel="import" href="../components/foot.html?__inline">

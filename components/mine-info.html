@@ -1,0 +1,76 @@
+<link rel="import" href="../components/head.html?__inline">
+
+<p>我的信息</p>
+<div class="panel panel-primary">
+  <div class="panel-body">
+    <form id="form" action="" class="form-horizontal form" role="form" enctype="multipart/form-data">
+      <div class="form-group">
+        <label class="col-xs-4 control-label no-padding-left">
+          <span class="icon iconfont icon-card"></span> 称呼
+        </label>
+        <div class="col-xs-8 no-padding-left">
+          <input name="name" type="text" class="form-control" readonly="readonly">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-xs-4 control-label no-padding-left">
+          <span class="icon iconfont icon-gongsi"></span> 公司
+        </label>
+        <div class="col-xs-8 no-padding-left">
+          <input name="company" type="text" class="form-control" readonly="readonly">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-xs-4 control-label no-padding-left">
+          <span class="icon iconfont icon-zhiwei"></span> 职位
+        </label>
+        <div class="col-xs-8 no-padding-left">
+          <input name="job" type="text" class="form-control" readonly="readonly">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-xs-4 control-label no-padding-left">
+          <span class="icon iconfont icon-mobile"></span> 手机
+        </label>
+        <div class="col-xs-8 no-padding-left">
+          <input name="mobile" type="text" class="form-control" readonly="readonly">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-xs-4 control-label no-padding-left">
+          <span class="icon iconfont icon-xuexiao"></span> 岗位
+        </label>
+        <div class="col-xs-4 no-padding-left">
+          <input name="department" type="text" class="form-control" readonly="readonly">
+        </div>
+        <div class="col-xs-4 no-padding-left">
+          <input name="workcenter" type="text" class="form-control" readonly="readonly">
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+    iframe.init();
+</script>
+
+<script>
+  // 获取客资数据
+  api.getObject('SysUser', api.userInfo.userUuid, function(data){
+    if(data.retMsg == 'OK'){
+      var obj = data.retVal;
+      $('input[name=name]').val(obj.name);
+      $('input[name=company]').val(obj.companyName);
+      $('input[name=job]').val(obj.user_job);
+      $('input[name=mobile]').val(obj.tel);
+      $('input[name=department]').val(obj.departmentName);
+      $('input[name=workcenter]').val(obj.workCenterName);
+      
+    }else{
+      alert(data.retMsg);
+    }
+  });
+</script>
+
+<link rel="import" href="../components/foot.html?__inline">

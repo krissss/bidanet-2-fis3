@@ -1,0 +1,63 @@
+<div class="common-header header">
+	<div class="user-head">
+		<img id="userhead" src="../img/default-avator.jpg" alt="user-head">
+	</div>
+	<div class="user-info">
+		<div id="username" class="name"></div>
+		<div id="usergroup" class="group"></div>
+	</div>
+  <div class="user-state-container dropdown">
+    <a href="javascript:;" type="button" data-toggle="dropdown" class="user-state-choose">
+      <span class="user-state-info">在线</span>
+      <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-right">
+      <li class="change-state" data-key="1">
+        <a href="javascript:;">
+          <span class="glyphicon glyphicon-ok-sign text-success"></span> 上线
+        </a>
+      </li>
+      <li class="change-state" data-key="0">
+        <a href="javascript:;">
+          <span class="glyphicon glyphicon-minus-sign text-danger"></span> 下线
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<script>
+  $('#userhead').attr('src',api.userInfo.thumb_photo);
+  $('#username').text(api.userInfo.userName);
+  $('#usergroup').text(api.userInfo.departmentName + '-' + api.userInfo.workcenterName);
+
+  // 切换用户状态
+  function changeUserStateInfo(isOnline){
+  var offLineHtml = '<span class="glyphicon glyphicon-minus-sign text-danger"></span> 离线',
+      onLineHtml = '<span class="glyphicon glyphicon-ok-sign text-success"></span> 在线';
+  if(parseInt(isOnline) == 1){
+    $('.user-state-info').html(onLineHtml);
+  }else{
+    $('.user-state-info').html(offLineHtml);
+  }
+  }
+
+  // 初始化状态
+  changeUserStateInfo(api.userInfo.isOnline);
+
+  // 点击切换状态
+  $('.change-state').click(function(){
+    var key = parseInt($(this).data('key'));
+    api.saveObject('SysUser', {
+      uuid: api.userInfo.userUuid,
+      is_online: key
+    }, function(data){
+      if(data.retMsg == 'OK'){
+        changeUserStateInfo(key);
+        api.changeOnlineState(key);
+      }else{
+        alert(data.retMsg);
+      }
+    });
+  });
+</script>
