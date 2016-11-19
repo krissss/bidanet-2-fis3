@@ -112,6 +112,11 @@ var api = {
     api.userInfo.isOnline = parseInt(isOnline);
     window.localStorage.setItem('userInfo', JSON.stringify(api.userInfo));
   },
+  logout: function(){
+    // 清空所有数据
+    window.localStorage.clear();
+    window.location.href = HOST_FOLDER + '/public/logout.php';
+  },
   register: function (params, successCallback) {
     params['weChatFlag'] = 1;
     loader.show();

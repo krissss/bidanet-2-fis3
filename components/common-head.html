@@ -22,6 +22,11 @@
           <span class="glyphicon glyphicon-minus-sign text-danger"></span> 下线
         </a>
       </li>
+      <li id="logout">
+        <a href="javascript:;">
+          <span class="glyphicon glyphicon-remove-sign text-default"></span> 清除缓存重新登录
+        </a>
+      </li>
     </ul>
   </div>
 </div>
@@ -33,13 +38,13 @@
 
   // 切换用户状态
   function changeUserStateInfo(isOnline){
-  var offLineHtml = '<span class="glyphicon glyphicon-minus-sign text-danger"></span> 离线',
-      onLineHtml = '<span class="glyphicon glyphicon-ok-sign text-success"></span> 在线';
-  if(parseInt(isOnline) == 1){
-    $('.user-state-info').html(onLineHtml);
-  }else{
-    $('.user-state-info').html(offLineHtml);
-  }
+    var offLineHtml = '<span class="glyphicon glyphicon-minus-sign text-danger"></span> 离线',
+        onLineHtml = '<span class="glyphicon glyphicon-ok-sign text-success"></span> 在线';
+    if(parseInt(isOnline) == 1){
+      $('.user-state-info').html(onLineHtml);
+    }else{
+      $('.user-state-info').html(offLineHtml);
+    }
   }
 
   // 初始化状态
@@ -59,5 +64,10 @@
         alert(data.retMsg);
       }
     });
+  });
+
+  // 退出登录
+  $('#logout').click(function(){
+    api.logout();
   });
 </script>
