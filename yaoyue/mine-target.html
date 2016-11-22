@@ -3,7 +3,7 @@
 <p>设置本月的目标(暂未完成)</p>
 <div class="panel panel-primary">
   <div class="panel-body">
-    <form action="mine-target.html" class="form-horizontal" role="form">
+    <form id="form" action="" class="form-horizontal" role="form">
       <div class="form-group">
         <label class="col-xs-4 control-label no-padding">目标时间</label>
         <div class="col-xs-8 no-padding-left">
@@ -39,15 +39,6 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-xs-4 control-label no-padding">邀约到店率</label>
-        <div class="col-xs-8 no-padding-left">
-          <div class="input-group">
-            <input name="invite_customer_percent" type="number" class="form-control">
-            <div class="input-group-addon">%</div>
-          </div>
-        </div>
-      </div>
-      <div class="form-group">
         <div class="col-xs-offset-2 col-xs-8">
           <input type="submit" class="btn btn-primary btn-block" value="保存">
         </div>
@@ -58,6 +49,117 @@
 
 <script>
   iframe.init();
+</script>
+
+<script>
+  var isUpdate = false;
+  
+  // 获取初始化数据
+  //getData(1);
+
+  // 获取抓客报表
+  function getData(timeFlag){
+    api.listObject('InviteReport', {
+      creator_id: api.userInfo.userUuid,
+      time_flag: parseInt(timeFlag),
+    }, 0, 1, function(data){
+      if(data.list.length > 0){
+        isUpdate = true;
+        var obj = data.list[0];
+        $('select[name=time_type]').val(obj.time_flag);
+        $('input[name=baobei_validate_customer_number]').val(obj.record_valid_customer);
+        $('input[name=invite_customer_number]').val(obj.invite_shop_customer);
+        $('input[name=network_paid_customer_number]').val(obj.network_deal_customer);
+        $('input[name=total_paid_number]').val(obj.deal_order_total);
+      }else{
+        isUpdate = false;
+        $('input[name=baobei_validate_customer_number]').val('');
+        $('input[name=invite_customer_number]').val('');
+        $('input[name=network_paid_customer_number]').val('');
+        $('input[name=total_paid_number]').val('');
+      }
+    });
+  }
+
+  // 时间更换
+  $('.time-select').change(function(){
+    getData($(this).val());
+  });
+  
+  $('#form').bootstrapValidator({
+    // live: 'disabled',
+    message: '数据验证未通过',
+    fields: {
+      baobei_validate_customer_number: {
+        validators: {
+          notEmpty: {
+            message: '我的客资数不能为空'
+          },
+          integer: {
+            message: '我的客资数必须为数字'
+          }
+        }
+      },
+      invite_customer_number: {
+        validators: {
+          notEmpty: {
+            message: '有效客资数不能为空'
+          },
+          integer: {
+            message: '有效客资数必须为数字'
+          }
+        }
+      },
+      network_paid_customer_number: {
+        validators: {
+          notEmpty: {
+            message: '客资有效率不能为空'
+          },
+          integer: {
+            message: '客资有效率必须为数字'
+          }
+        }
+      },
+      total_paid_number: {
+        validators: {
+          notEmpty: {
+            message: '客资成交数不能为空'
+          },
+          integer: {
+            message: '客资成交数必须为数字'
+          }
+        }
+      },
+    },
+    submitHandler: function(validator, form, submitButton) {
+      commitForm();
+    }
+  });
+
+  // 表单提交
+  function commitForm(){
+    var params = {};
+    // 表单数据
+    params['time_flag'] = parseInt($('select[name=time_type]').val());
+    params['record_valid_customer'] = parseInt($('input[name=baobei_validate_customer_number]').val());
+    params['invite_shop_customer'] = parseInt($('input[name=invite_customer_number]').val());
+    params['network_deal_customer'] = parseInt($('input[name=network_paid_customer_number]').val());
+    params['deal_order_total'] = parseInt($('input[name=total_paid_number]').val());
+    // 额外数据
+    if(!isUpdate){
+      params['creator_id'] = api.userInfo.userUuif;
+    }
+    params['modify_time'] = new Date().getTime();
+    // 调用接口
+    api.saveObject('InviteReport', params, function(data){
+      if(data.retMsg == 'OK'){
+        alert('保存成功');
+        window.location.reload();
+      }else{
+        alert(data.retMsg);
+      }
+    });
+  }
 </script>
 
 <link rel="import" href="../components/foot.html?__inline">

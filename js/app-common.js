@@ -324,6 +324,23 @@ var api = {
       }
     });
   },
+  report: function(objType, timeFlag, successCallback){
+    ajax(api.hostname + 'report', {
+      token: api.token,
+      weChatFlag: 1,
+      objType: objType,
+      time_flag: timeFlag,
+    }, 'get', function (data) {
+      if (api.filterToken(data)) {
+        logger('report', data);
+        if (data.retMsg == 'OK') {
+          successCallback();
+        } else {
+          alert(data.retMsg);
+        }
+      }
+    });
+  },
 
   // 获取状态名称
   getStatusName: function (statusCode, validFlag) {

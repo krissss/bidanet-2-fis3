@@ -5,9 +5,9 @@ if(!PROD){ // 测试环境
   var HOST_FOLDER = '',
   WEB_ROOT = HOST_FOLDER,
   //API_BASE = 'http://118.178.226.161:8082/wxy/inf/',
-  API_BASE = 'http://192.168.2.100:8081/wxy/inf/',
+  API_BASE = 'http://127.0.0.1:8080/wxy/inf/',
   //USER_OPENID = 'okju2w7Rt607heeud2joDzfPpBmQ';
-  USER_OPENID = 'okju2w9qlr7oq7nmv5R_EfsMSO5A';
+  USER_OPENID = 'okju2wyrqbNNeNsYLWNpPGaJZ6FU';
   // 抓客 okju2w9qlr7oq7nmv5R_EfsMSO5A
   // 邀约 okju2wyrqbNNeNsYLWNpPGaJZ6FU
   // 门市 okju2w-cU1cIABNSa4x9Np6WEo4k

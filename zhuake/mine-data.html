@@ -43,11 +43,17 @@
 	iframe.init();
 </script>
 <script>
+  var timeFlag = 1;
+  // 切换日期
   $('.date-filter-btn').click(function(){
     $('.date-filter-btn').removeClass('btn-primary').addClass('btn-default');
     $(this).addClass('btn-primary');
     var date = $(this).data('date');
     console.log(date);
+  });
+
+  api.report('Zkeport', timeFlag, function(data){
+    
   });
 </script>
 
