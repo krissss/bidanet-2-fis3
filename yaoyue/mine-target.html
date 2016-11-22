@@ -5,8 +5,8 @@
   <div class="panel-body">
     <form action="mine-target.html" class="form-horizontal" role="form">
       <div class="form-group">
-        <label class="col-xs-4 control-label">目标时间</label>
-        <div class="col-xs-8">
+        <label class="col-xs-4 control-label no-padding">目标时间</label>
+        <div class="col-xs-8 no-padding-left">
           <select name="time_type" class="form-control">
             <option value="1">今日</option>
             <option value="2">本周</option>
@@ -15,33 +15,36 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-xs-4 control-label">报备有效客资</label>
-        <div class="col-xs-8">
-          <input name="baobei_validate_customer_number" type="text" class="form-control">
+        <label class="col-xs-4 control-label no-padding">报备有效客资</label>
+        <div class="col-xs-8 no-padding-left">
+          <input name="baobei_validate_customer_number" type="number" class="form-control">
         </div>
       </div>
       <div class="form-group">
-        <label class="col-xs-4 control-label">邀约到店客资数</label>
-        <div class="col-xs-8">
-          <input name="invite_customer_number" type="text" class="form-control">
+        <label class="col-xs-4 control-label no-padding">邀约到店客资数</label>
+        <div class="col-xs-8 no-padding-left">
+          <input name="invite_customer_number" type="number" class="form-control">
         </div>
       </div>
       <div class="form-group">
-        <label class="col-xs-4 control-label">网络成交客资数</label>
-        <div class="col-xs-8">
-          <input name="network_paid_customer_number" type="text" class="form-control">
+        <label class="col-xs-4 control-label no-padding">网络成交客资数</label>
+        <div class="col-xs-8 no-padding-left">
+          <input name="network_paid_customer_number" type="number" class="form-control">
         </div>
       </div>
       <div class="form-group">
-        <label class="col-xs-4 control-label">总成交订单数</label>
-        <div class="col-xs-8">
-          <input name="total_paid_number" type="text" class="form-control">
+        <label class="col-xs-4 control-label no-padding">总成交订单数</label>
+        <div class="col-xs-8 no-padding-left">
+          <input name="total_paid_number" type="number" class="form-control">
         </div>
       </div>
       <div class="form-group">
-        <label class="col-xs-4 control-label">邀约到店率</label>
-        <div class="col-xs-8">
-          <input name="invite_customer_percent" type="text" class="form-control">
+        <label class="col-xs-4 control-label no-padding">邀约到店率</label>
+        <div class="col-xs-8 no-padding-left">
+          <div class="input-group">
+            <input name="invite_customer_percent" type="number" class="form-control">
+            <div class="input-group-addon">%</div>
+          </div>
         </div>
       </div>
       <div class="form-group">

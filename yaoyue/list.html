@@ -4,11 +4,8 @@
   <div class="map-head">
     <span class="vertical-line"></span>客资列表
     <div class="filter">
-      <div class="btn-group">
-        <a href="javascript:;" class="btn btn-sm btn-primary validate-flag" data-validate="-1">全部</a>
-        <a href="javascript:;" class="btn btn-sm btn-default validate-flag" data-validate="1">有效客资</a>
-        <a href="javascript:;" class="btn btn-sm btn-default validate-flag" data-validate="2">无效客资</a>
-      </div>
+      <select class="form-control input-sm customer-status">
+      </select>
     </div>
   </div>
   <table class="table table-bordered table-striped">
@@ -39,13 +36,16 @@
   pageIndex = request.getParam('pageIndex')?request.getParam('pageIndex'):0,
   pageSize = request.getParam('pageSize')?request.getParam('pageSize'):999;
 
-  // 有效无效的点击事件
-  $('.validate-flag').change(function(){
+  // 下拉筛选
+  $('.customer-status').html(api.getCustomerStatusOptions([-1,2,3,4,5,6,7,8,9,10,14]));
+
+  // 筛选事件
+  $('.customer-status').change(function(){
     var value = parseInt($(this).val());
     if(value == -1){
-      delete searchParams['valid_flag'];
+      delete searchParams['customer_user_status'];
     }else{
-      searchParams['valid_flag'] = value;
+      searchParams['customer_user_status'] = value;
     }
     setTableList(searchParams, pageIndex, pageSize);
   });
@@ -59,7 +59,7 @@
       var tabelTbody = '',
           baobeiTime,
           customerFlag,
-          validFlag;
+          customerStatus;
       if(data){
         $.each(data.list, function(index, item){
           // 排除部分数据
@@ -80,11 +80,7 @@
             case 4: customerFlag = 'D'; break;
             default: customerFlag = '未知'
           }
-          switch(item.validFlag){
-            case 1: validFlag = '有效'; break;
-            case 2: validFlag = '无效'; break;
-            default: validFlag = '未报备'
-          }
+          customerStatus = api.getStatusName(item.customerUserStatus);
           // 构造table body
           tabelTbody +=
           '<tr onclick="javascript:window.location.href=\'detail.html?id='+ item.uuid +'\'">'
@@ -92,7 +88,7 @@
             + '<td>'+ item.name1 +'</td>'
             + '<td>'+ baobeiTime +'</td>'
             + '<td>'+ customerFlag +'</td>'
-            + '<td>'+ validFlag +'</td>'
+            + '<td>'+ customerStatus +'</td>'
             + '</tr>'
             + "\n";
         });

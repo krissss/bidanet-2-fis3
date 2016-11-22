@@ -4,10 +4,7 @@
   <div class="map-head">
     <span class="vertical-line"></span>客资列表
     <div class="filter">
-      <select class="form-control input-sm validate-flag">
-        <option value="-1">按照客资状态</option>
-        <option value="1">有效</option>
-        <option value="2">无效</option>
+      <select class="form-control input-sm customer-status">
       </select>
     </div>
   </div>
@@ -39,13 +36,16 @@
   pageIndex = request.getParam('pageIndex')?request.getParam('pageIndex'):0,
   pageSize = request.getParam('pageSize')?request.getParam('pageSize'):999;
 
-  // 有效无效的点击事件
-  $('.validate-flag').change(function(){
+  // 下拉筛选
+  $('.customer-status').html(api.getCustomerStatusOptions([-1,6,7,8,9,10]));
+
+  // 筛选事件
+  $('.customer-status').change(function(){
     var value = parseInt($(this).val());
     if(value == -1){
-      delete searchParams['valid_flag'];
+      delete searchParams['customer_user_status'];
     }else{
-      searchParams['valid_flag'] = value;
+      searchParams['customer_user_status'] = value;
     }
     setTableList(searchParams, pageIndex, pageSize);
   });

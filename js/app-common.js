@@ -349,9 +349,21 @@ var api = {
       case 11: msg = '客人网络预付，下发到店'; break;
       case 12: msg = '客人预付，门市追踪到店'; break;
       case 13: msg = '客人网络预付订单'; break;
+      case 14: msg = '退回，申诉中'; break;
       default: msg = '状态未知'; break;
     }
     return msg;
+  },
+  getCustomerStatusOptions: function(ids){
+    var options = '';
+    $.each(ids, function(index, item){
+      if(item == -1){
+        options += '<option value="'+ item +'">全部</option>'
+      }else{
+        options += '<option value="'+ item +'">'+ api.getStatusName(item) +'</option>'
+      }
+    });
+    return options;
   },
   // 获取客资标志名称
   getCustomerFlagName: function (customerFlag) {

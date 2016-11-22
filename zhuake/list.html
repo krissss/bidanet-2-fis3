@@ -4,11 +4,8 @@
 	<div class="map-head">
 		<span class="vertical-line"></span>客资列表
 		<div class="filter">
-			<div class="btn-group">
-        <a href="javascript:;" class="btn btn-sm btn-primary validate-flag" data-validate="-1">全部</a>
-				<a href="javascript:;" class="btn btn-sm btn-default validate-flag" data-validate="1">有效客资</a>
-				<a href="javascript:;" class="btn btn-sm btn-default validate-flag" data-validate="2">无效客资</a>
-			</div>
+			<select class="form-control input-sm customer-status">
+      </select>
 		</div>
 	</div>
 	<table class="table table-bordered table-striped">
@@ -38,6 +35,20 @@
   // 以下两个暂时预留不用
   pageIndex = request.getParam('pageIndex')?request.getParam('pageIndex'):0,
   pageSize = request.getParam('pageSize')?request.getParam('pageSize'):999;
+
+  // 下拉筛选
+  $('.customer-status').html(api.getCustomerStatusOptions([-1,1,2,3,4,5,6,7,8,9,10,14]));
+
+  // 筛选事件
+  $('.customer-status').change(function(){
+    var value = parseInt($(this).val());
+    if(value == -1){
+      delete searchParams['customer_user_status'];
+    }else{
+      searchParams['customer_user_status'] = value;
+    }
+    setTableList(searchParams, pageIndex, pageSize);
+  });
 
   // 有效无效的点击事件
   $('.validate-flag').click(function(){

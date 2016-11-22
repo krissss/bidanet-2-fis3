@@ -3,11 +3,11 @@
 <p>设置本月的目标(暂未完成)</p>
 <div class="panel panel-primary">
   <div class="panel-body">
-    <form action="" class="form-horizontal" role="form">
+    <form id="form" action="" class="form-horizontal" role="form">
       <div class="form-group">
-        <label class="col-xs-4 control-label">目标时间</label>
-        <div class="col-xs-8">
-          <select name="time_type" class="form-control">
+        <label class="col-xs-4 control-label no-padding">目标时间</label>
+        <div class="col-xs-8 no-padding-left">
+          <select name="time_type" class="time-select form-control">
             <option value="1">今日</option>
             <option value="2">本周</option>
             <option value="3">本月</option>
@@ -15,27 +15,30 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-xs-4 control-label">我的客资数</label>
-        <div class="col-xs-8">
-          <input name="my_customer_number" type="text" class="form-control">
+        <label class="col-xs-4 control-label no-padding">我的客资数</label>
+        <div class="col-xs-8 no-padding-left">
+          <input name="my_customer_number" type="number" class="form-control">
         </div>
       </div>
       <div class="form-group">
-        <label class="col-xs-4 control-label">有效客资数</label>
-        <div class="col-xs-8">
-          <input name="validate_customer_number" type="text" class="form-control">
+        <label class="col-xs-4 control-label no-padding">有效客资数</label>
+        <div class="col-xs-8 no-padding-left">
+          <input name="validate_customer_number" type="number" class="form-control">
         </div>
       </div>
       <div class="form-group">
-        <label class="col-xs-4 control-label">客资有效率</label>
-        <div class="col-xs-8">
-          <input name="validate_customer_percent" type="text" class="form-control">
+        <label class="col-xs-4 control-label no-padding">客资有效率</label>
+        <div class="col-xs-8 no-padding-left">
+          <div class="input-group">
+            <input name="validate_customer_percent" type="number" min="0" max="100" step="1" class="form-control">
+            <div class="input-group-addon">%</div>
+          </div>
         </div>
       </div>
       <div class="form-group">
-        <label class="col-xs-4 control-label">客资成交数</label>
-        <div class="col-xs-8">
-          <input name="paid_customer_number" type="text" class="form-control">
+        <label class="col-xs-4 control-label no-padding">客资成交数</label>
+        <div class="col-xs-8 no-padding-left">
+          <input name="paid_customer_number" type="number" class="form-control">
         </div>
       </div>
       <div class="form-group">
@@ -49,6 +52,117 @@
 
 <script>
   iframe.init();
+</script>
+
+<script>
+  var isUpdate = false;
+  
+  // 获取初始化数据
+  //getData(1);
+
+  // 获取抓客报表
+  function getData(timeFlag){
+    api.listObject('Zkreport', {
+      creator_id: api.userInfo.userUuid,
+      time_flag: parseInt(timeFlag),
+    }, 0, 1, function(data){
+      if(data.list.length > 0){
+        isUpdate = true;
+        var obj = data.list[0];
+        $('select[name=time_type]').val(obj.time_flag);
+        $('input[name=my_customer_number]').val(obj.my_customer);
+        $('input[name=validate_customer_number]').val(obj.valid_customer);
+        $('input[name=validate_customer_percent]').val(obj.customer_valid_rate);
+        $('input[name=paid_customer_number]').val(obj.deal_customer);
+      }else{
+        isUpdate = false;
+        $('input[name=my_customer_number]').val('');
+        $('input[name=validate_customer_number]').val('');
+        $('input[name=validate_customer_percent]').val('');
+        $('input[name=paid_customer_number]').val('');
+      }
+    });
+  }
+
+  // 时间更换
+  $('.time-select').change(function(){
+    getData($(this).val());
+  });
+  
+  $('#form').bootstrapValidator({
+    // live: 'disabled',
+    message: '数据验证未通过',
+    fields: {
+      my_customer_number: {
+        validators: {
+          notEmpty: {
+            message: '我的客资数不能为空'
+          },
+          integer: {
+            message: '我的客资数必须为数字'
+          }
+        }
+      },
+      validate_customer_number: {
+        validators: {
+          notEmpty: {
+            message: '有效客资数不能为空'
+          },
+          integer: {
+            message: '有效客资数必须为数字'
+          }
+        }
+      },
+      validate_customer_percent: {
+        validators: {
+          notEmpty: {
+            message: '客资有效率不能为空'
+          },
+          integer: {
+            message: '客资有效率必须为数字'
+          }
+        }
+      },
+      paid_customer_number: {
+        validators: {
+          notEmpty: {
+            message: '客资成交数不能为空'
+          },
+          integer: {
+            message: '客资成交数必须为数字'
+          }
+        }
+      },
+    },
+    submitHandler: function(validator, form, submitButton) {
+      commitForm();
+    }
+  });
+
+  // 表单提交
+  function commitForm(){
+    var params = {};
+    // 表单数据
+    params['time_flag'] = $('select[name=time_type]').val();
+    params['my_customer'] = $('input[name=my_customer_number]').val();
+    params['valid_customer'] = $('input[name=validate_customer_number]').val();
+    params['customer_valid_rate'] = $('input[name=validate_customer_percent]').val();
+    params['deal_customer'] = $('input[name=paid_customer_number]').val();
+    // 额外数据
+    if(!isUpdate){
+      params['creator_id'] = api.userInfo.userUuif;
+    }
+    params['modify_time'] = new Date().getTime();
+    // 调用接口
+    api.saveObject('Zkreport', params, function(data){
+      if(data.retMsg == 'OK'){
+        alert('保存成功');
+        window.location.reload();
+      }else{
+        alert(data.retMsg);
+      }
+    });
+  }
 </script>
 
 <link rel="import" href="../components/foot.html?__inline">

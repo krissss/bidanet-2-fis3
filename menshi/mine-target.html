@@ -5,8 +5,8 @@
   <div class="panel-body">
     <form action="mine-target.html" class="form-horizontal" role="form">
       <div class="form-group">
-        <label class="col-xs-4 control-label">目标时间</label>
-        <div class="col-xs-8">
+        <label class="col-xs-4 control-label no-padding">目标时间</label>
+        <div class="col-xs-8 no-padding-left">
           <select name="time_type" class="form-control">
             <option value="1">今日</option>
             <option value="2">本周</option>
@@ -15,33 +15,36 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-xs-4 control-label">接收有效客资数</label>
-        <div class="col-xs-8">
-          <input name="accept_validate_customer_number" type="text" class="form-control">
+        <label class="col-xs-4 control-label no-padding">接收有效客资数</label>
+        <div class="col-xs-8 no-padding-left">
+          <input name="accept_validate_customer_number" type="number" class="form-control">
         </div>
       </div>
       <div class="form-group">
-        <label class="col-xs-4 control-label">邀约到店数</label>
-        <div class="col-xs-8">
-          <input name="invite_customer_number" type="text" class="form-control">
+        <label class="col-xs-4 control-label no-padding">邀约到店数</label>
+        <div class="col-xs-8 no-padding-left">
+          <input name="invite_customer_number" type="number" class="form-control">
         </div>
       </div>
       <div class="form-group">
-        <label class="col-xs-4 control-label">成交数</label>
-        <div class="col-xs-8">
-          <input name="paid_customer_number" type="text" class="form-control">
+        <label class="col-xs-4 control-label no-padding">成交数</label>
+        <div class="col-xs-8 no-padding-left">
+          <input name="paid_customer_number" type="number" class="form-control">
         </div>
       </div>
       <div class="form-group">
-        <label class="col-xs-4 control-label">成交套系均价</label>
-        <div class="col-xs-8">
-          <input name="taoxi_money" type="text" class="form-control">
+        <label class="col-xs-4 control-label no-padding">成交套系均价</label>
+        <div class="col-xs-8 no-padding-left">
+          <input name="taoxi_money" type="number" class="form-control">
         </div>
       </div>
       <div class="form-group">
-        <label class="col-xs-4 control-label">成交率</label>
-        <div class="col-xs-8">
-          <input name="paid_percent" type="text" class="form-control">
+        <label class="col-xs-4 control-label no-padding">成交率</label>
+        <div class="col-xs-8 no-padding-left">
+          <div class="input-group">
+            <input name="paid_percent" type="number" class="form-control">
+            <div class="input-group-addon">%</div>
+          </div>
         </div>
       </div>
       <div class="form-group">
@@ -55,6 +58,10 @@
 
 <script>
   iframe.init();
+</script>
+
+<script>
+
 </script>
 
 <link rel="import" href="../components/foot.html?__inline">
