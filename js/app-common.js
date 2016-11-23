@@ -102,6 +102,8 @@ var api = {
       } else {
         if (data.retMsg == 'sysUser不存在!') {
           window.location.href = WEB_ROOT + '/apply/index.html';
+        }if (data.retVal.audit_flag) {
+          window.location.href = WEB_ROOT + '/apply/apply-msg.html?code=' + data.retVal.audit_flag;
         } else {
           alert(data.retMsg);
         }

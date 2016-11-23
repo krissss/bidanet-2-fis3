@@ -1,0 +1,32 @@
+<link rel="import" href="head.html?__inline">
+
+<div class="container margin-top-15">
+	<div class="panel panel-success">
+		<div class="panel-body">
+			<div class="msg-title"></div>
+			<div class="operate-btns row hidden">
+				<div class="col-xs-6">
+					<a id="return-btn" href="javascript:;" class="btn btn-default btn-block">返回 重新修改</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+  var code = request.getParam('code');
+  if(code == 0){
+    $('.msg-title').text('申请审核中，请耐心等待');
+  }else if(code == 2){
+    $('.msg-title').text('申请未通过，您可以修改后重新提交审核');
+    $('.operate-btns').removeClass('hidden');
+  }else{
+    $('.msg-title').text('未知审核状态');
+  }
+
+	$('#return-btn').click(function(){
+		window.top.location.href = WEB_ROOT + '/apply/index.html';
+	});
+</script>
+
+<link rel="import" href="foot.html?__inline">
