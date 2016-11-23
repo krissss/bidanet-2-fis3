@@ -19,7 +19,7 @@
 					<div class="form-group">
 						<label class="col-xs-12 control-label left">支付金额</label>
 						<div class="col-xs-12">
-							<input name="pay_money" type="text" class="form-control">
+							<input name="pay_money" type="number" class="form-control">
 						</div>
 					</div>
           <div class="form-group">
@@ -94,8 +94,8 @@
   function commitForm(){
     var params = {};
     // 表单数据
-    params['pay_type'] = $('select[name=pay_type]').val();//TODO
-    params['paid'] = $('input[name=pay_money]').val();//TODO
+    params['pay_type'] = $('select[name=pay_type]').val();
+    params['paid'] = parseInt($('input[name=pay_money]').val());
     params['msworkcenter_id'] = $('select[name=workcenter_id]').val();
     // 额外数据
     params['uuid'] = uuid;

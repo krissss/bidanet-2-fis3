@@ -13,6 +13,12 @@
             </div>
           </div>
           <div class="form-group">
+            <label class="col-xs-12 control-label left">套系金额</label>
+            <div class="col-xs-12">
+              <input name="cost_order" type="number" class="form-control">
+            </div>
+          </div>
+          <div class="form-group">
             <label for="call" class="col-xs-12 control-label left">选择付款方式</label>
             <div class="col-xs-12">
               <select name="pay_type" class="form-control">
@@ -25,7 +31,7 @@
 					<div class="form-group">
 						<label class="col-xs-4 control-label left">支付金额</label>
 						<div class="col-xs-12">
-							<input name="pay_money" type="text" class="form-control">
+							<input name="pay_money" type="number" class="form-control">
 						</div>
 					</div>
 					<div class="operate col-xs-5 col-xs-offset-1">
@@ -52,6 +58,7 @@
     if(data.retMsg == 'OK'){
       var obj = data.retVal;
       $('input[name=relation]').val(obj.type_name);
+      $('input[name=cost_order]').val(obj.order_cost);
       $('select[name=pay_type]').val(obj.pay_type);
       $('input[name=pay_money]').val(obj.paid);
     }else{
@@ -65,8 +72,9 @@
     var params = {};
     // 表单数据
     params['type_name'] = $('input[name=relation]').val();
+    params['order_cost'] = parseInt($('input[name=cost_order]').val());
     params['pay_type'] = $('select[name=pay_type]').val()?$('select[name=pay_type]').val():'';
-    params['paid'] = $('input[name=pay_money]').val();
+    params['paid'] = parseInt($('input[name=pay_money]').val());
     // 额外数据
     params['uuid'] = uuid;
     params['mstime'] = new Date().getTime();
