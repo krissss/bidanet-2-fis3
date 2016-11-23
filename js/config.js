@@ -1,4 +1,4 @@
-var DEBUG = true,
+var DEBUG = false,
   PROD = !DEBUG;
 
 if(!PROD){ // 测试环境
