@@ -1,10 +1,10 @@
 <link rel="import" href="../components/head.html?__inline">
 
-<p>抓客客资统计(暂未完成)</p>
+<p>客资统计</p>
 <div class="btn-group btn-group-justified margin-top-10">
-	<a href="javascript:;" class="btn btn-primary date-filter-btn" data-date="today">今日</a>
-	<a href="javascript:;" class="btn btn-default date-filter-btn" data-date="this-week">本周</a>
-	<a href="javascript:;" class="btn btn-default date-filter-btn" data-date="this-month">本月</a>
+  <a href="javascript:;" class="btn btn-primary date-filter-btn" data-date="1">今日</a>
+	<a href="javascript:;" class="btn btn-default date-filter-btn" data-date="2">本周</a>
+	<a href="javascript:;" class="btn btn-default date-filter-btn" data-date="3">本月</a>
 </div>
 <table class="table table-bordered margin-top-10">
 	<tbody>
@@ -17,24 +17,24 @@
 		</tr>
 		<tr>
 			<td>实际</td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
+			<td id="real-1"></td>
+			<td id="real-2"></td>
+			<td id="real-3"></td>
+			<td id="real-4"></td>
 		</tr>
 		<tr>
 			<td>目标</td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
+			<td id="target-1"></td>
+			<td id="target-2"></td>
+			<td id="target-3"></td>
+			<td id="target-4"></td>
 		</tr>
 		<tr>
 			<td>达成率</td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
+			<td id="percent-1"></td>
+			<td id="percent-2"></td>
+			<td id="percent-3"></td>
+			<td id="percent-4"></td>
 		</tr>
 	</tbody>
 </table>
@@ -42,18 +42,66 @@
 <script>
 	iframe.init();
 </script>
+
 <script>
-  var timeFlag = 1;
-  // 切换日期
+  // 获取初始化数据
+  getData(1);
+
+  // 获取抓客报表
+  function getData(timeFlag){
+    api.report('ZKReport', timeFlag, function(data){
+      // 实际
+      var actualResult = data.actualResult,
+        real1 = actualResult.myCustomerResult,
+        real2 = actualResult.validCustomerResult,
+        real3 = actualResult.customerValidRate ? Math.round(actualResult.customerValidRate*10000)/100 : 0,
+        real4 = actualResult.dealCustomerResult;
+      $('#real-1').text(real1);
+      $('#real-2').text(real2);
+      $('#real-3').text(real3 + '%');
+      $('#real-4').text(real4);
+      // 目标
+      var target1 = 0,
+          target2 = 0,
+          target3 = 0,
+          target4 = 0;
+      if(data.targetResult.length > 0){
+        var targetResult = data.targetResult[0];
+        target1 = targetResult.my_customer;
+        target2 = targetResult.valid_customer;
+        target3 = targetResult.customer_valid_rate;
+        target4 = targetResult.deal_customer;
+      }
+      $('#target-1').text(target1);
+      $('#target-2').text(target2);
+      $('#target-3').text(target3 + '%');
+      $('#target-4').text(target4);
+      // 计算
+      $('#percent-1').text(caculatePercent(real1, target1));
+      $('#percent-2').text(caculatePercent(real2, target2));
+      $('#percent-3').text(caculatePercent(real3, target3));
+      $('#percent-4').text(caculatePercent(real4, target4));
+    });
+  }
+
+  // 计算达成率
+  function caculatePercent(real, target){
+    var result = '';
+    if(target == 0 || target == undefined){
+      result = 0;
+    }else{
+      result = real/target*100;
+      result = Math.round(result*100)/100;
+    }
+    return result + '%';
+  }
+
+  // 时间更换
   $('.date-filter-btn').click(function(){
     $('.date-filter-btn').removeClass('btn-primary').addClass('btn-default');
     $(this).addClass('btn-primary');
     var date = $(this).data('date');
-    console.log(date);
-  });
-
-  api.report('Zkeport', timeFlag, function(data){
-    
+    getData(date);
   });
 </script>
 

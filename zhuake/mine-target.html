@@ -1,13 +1,13 @@
 <link rel="import" href="../components/head.html?__inline">
 
-<p>设置本月的目标(暂未完成)</p>
+<p>设置目标</p>
 <div class="panel panel-primary">
   <div class="panel-body">
     <form id="form" action="" class="form-horizontal" role="form">
       <div class="form-group">
         <label class="col-xs-4 control-label no-padding">目标时间</label>
         <div class="col-xs-8 no-padding-left">
-          <select name="time_type" class="time-select form-control">
+          <select name="time_type" class="form-control">
             <option value="1">今日</option>
             <option value="2">本周</option>
             <option value="3">本月</option>
@@ -55,27 +55,30 @@
 </script>
 
 <script>
-  var isUpdate = false;
+  var isUpdate = false,
+      uuid = '';
   
   // 获取初始化数据
-  //getData(1);
+  getData(1);
 
   // 获取抓客报表
   function getData(timeFlag){
-    api.listObject('Zkreport', {
+    api.listObject('ZKReport', {
       creator_id: api.userInfo.userUuid,
       time_flag: parseInt(timeFlag),
     }, 0, 1, function(data){
       if(data.list.length > 0){
         isUpdate = true;
         var obj = data.list[0];
-        $('select[name=time_type]').val(obj.time_flag);
-        $('input[name=my_customer_number]').val(obj.my_customer);
-        $('input[name=validate_customer_number]').val(obj.valid_customer);
-        $('input[name=validate_customer_percent]').val(obj.customer_valid_rate);
-        $('input[name=paid_customer_number]').val(obj.deal_customer);
+        uuid = obj.uuid;
+        $('select[name=time_type]').val(obj.timeFlag);
+        $('input[name=my_customer_number]').val(obj.myCustomer);
+        $('input[name=validate_customer_number]').val(obj.validCustomer);
+        $('input[name=validate_customer_percent]').val(obj.customerValidRate);
+        $('input[name=paid_customer_number]').val(obj.dealCustomer);
       }else{
         isUpdate = false;
+        uuid = '';
         $('input[name=my_customer_number]').val('');
         $('input[name=validate_customer_number]').val('');
         $('input[name=validate_customer_percent]').val('');
@@ -85,7 +88,7 @@
   }
 
   // 时间更换
-  $('.time-select').change(function(){
+  $('select[name=time_type]').change(function(){
     getData($(this).val());
   });
   
@@ -154,10 +157,10 @@
     }
     params['modify_time'] = new Date().getTime();
     // 调用接口
-    api.saveObject('Zkreport', params, function(data){
+    api.saveObject('ZKReport', params, function(data){
       if(data.retMsg == 'OK'){
         alert('保存成功');
-        window.location.reload();
+        //window.location.reload();
       }else{
         alert(data.retMsg);
       }

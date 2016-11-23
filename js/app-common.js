@@ -334,7 +334,7 @@ var api = {
       if (api.filterToken(data)) {
         logger('report', data);
         if (data.retMsg == 'OK') {
-          successCallback();
+          successCallback(data.retVal);
         } else {
           alert(data.retMsg);
         }

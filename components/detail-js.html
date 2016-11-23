@@ -73,7 +73,7 @@
           return msg;
         }
         switch(newObj.statusCode){
-          case 1: case 2: case 3: case 4:
+          case 1: case 2: case 3: case 4: case 14:
             break;
           case 5:
             msg = ms1(msg);
@@ -182,7 +182,16 @@
             }
             break;
           case 14:
-            msg += '邀约退回，抓客申诉中...';
+            if(obj.appeal == 0){
+              msg += '邀约退回，抓客申诉中...';
+              reason += '理由：<br />' + api.getTextAreaShow(obj.appeal_reason);
+            }else if(obj.appeal == 1){
+              msg += '邀约退回，抓客申诉成功，等待处理...';
+            }else if(obj.appeal == 2){
+              msg += '邀约退回，抓客申诉失败，等待处理...';
+            }else{
+              msg += '申诉状态未知';
+            }
             break;
           case 11: case 12: case 13:
             msg += '网络预约暂时不做'; // TODO
@@ -203,7 +212,7 @@
       zkCustomerCellphone: obj.tel1,
       zkCustomerChannel: obj.channelName + '-' + obj.channelWayName,
       zkCustomerWechat: obj.wechat1,
-      zkCustomerLocation: obj.locationName,
+      zkCustomerLocation: obj.location,
       zkCustomerQq: obj.qq1,
       zkCustomerType: function(){
         return api.getCustomerFlagName(obj.customer_flag);
@@ -265,7 +274,7 @@
       if(newObj.statusCode >= 3){
         // 报备之后邀约信息都可以看
         showCustomerYy = true;
-        if(newObj.statusCode >= 5){
+        if(newObj.statusCode >= 5 && newObj.statusCode!=14){
           // 下发之后门市状态都可以看
           showStatusMs = true;
           // 下发之后门市信息都可见
@@ -330,6 +339,14 @@
     }else if(newObj.statusCode==10){
       if(newObj.currentUserRole==3){
         showOperation(['ms-duanxin', 'ms-gaiqijin', 'ms-zhuancke']);
+      }
+    }else if(newObj.statusCode==14){
+      if(newObj.currentUserRole==1){
+        if(obj.appeal==1){ // 申诉成功
+          showOperation(['zk-chongxinliuzhuan', 'zk-wuxiao']);
+        }else if(obj.appeal==2){ // 申诉失败
+          showOperation(['zk-shensu', 'zk-wuxiao']);
+        }
       }
     }
 
