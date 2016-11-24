@@ -94,7 +94,7 @@ var api = {
     }, 'get', function (data) {
       logger('login', data);
       if (data.retMsg == 'OK') {
-        if (data.retVal.audit_flag != null || data.retVal.audit_flag != 1) {
+        if (data.retVal.audit_flag != null && data.retVal.audit_flag != 1) {
           window.location.href = WEB_ROOT + '/apply/apply-msg.html?code=' + data.retVal.audit_flag;
           return false;
         }
