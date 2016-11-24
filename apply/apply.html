@@ -203,6 +203,7 @@
     params.append('photo', $('input[name=photo]').prop("files")[0]);
     // 额外数据
     params.append('openid', api.openid);
+    params.append('audit_flag', 0); // 0 为申请中
     // 调用接口
     api.register(params, function(data){
       if(data.retMsg == 'OK'){

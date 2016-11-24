@@ -92,17 +92,21 @@ var api = {
       openid: api.openid,
       weChatFlag: 1,
     }, 'get', function (data) {
+      logger('login', data);
       if (data.retMsg == 'OK') {
-        logger('login', data.retVal);
+        if (data.retVal.audit_flag != null || data.retVal.audit_flag != 1) {
+          window.location.href = WEB_ROOT + '/apply/apply-msg.html?code=' + data.retVal.audit_flag;
+          return false;
+        }
         window.localStorage.setItem('token', data.retVal.token);
         api.token = data.retVal.token;
         window.localStorage.setItem('userInfo', JSON.stringify(data.retVal));
         api.userInfo = data.retVal;
         api.redirectUserPage();
       } else {
-        if (data.retMsg == 'sysUser不存在!') {
+        if (data.retMsg == 'sysUser不存在o!') {
           window.location.href = WEB_ROOT + '/apply/index.html';
-        }if (data.retVal.audit_flag) {
+        } else if (data.retVal.audit_flag != null) {
           window.location.href = WEB_ROOT + '/apply/apply-msg.html?code=' + data.retVal.audit_flag;
         } else {
           alert(data.retMsg);
