@@ -269,7 +269,7 @@ var api = {
     ajax(api.hostname + 'getSelfData', {
       token: api.token,
       weChatFlag: 1,
-      openid: api.openid,
+      openid: api.userInfo.openid,
       seq: 0
     }, 'get', function (data) {
       if (api.filterToken(data)) {
