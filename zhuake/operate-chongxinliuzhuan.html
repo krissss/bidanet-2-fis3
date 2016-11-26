@@ -24,6 +24,7 @@
     customer_user_status: 1,
     zktime: new Date().getTime(),
     appeal: 0, // 重新流转申诉设置为0
+    appealFlag: 1, // 重新流转需要传递的参数
   }, function(data){
     if(data.retMsg == 'OK'){
       $('#operate-msg').removeClass('hidden');
