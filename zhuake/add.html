@@ -34,20 +34,6 @@
             <input name="location" type="text" class="form-control">
           </div>
         </div>
-        <div class="form-group">
-          <label class="col-xs-4 control-label no-padding-left">
-            <span class="icon iconfont icon-jiangzhang"></span> 类别
-          </label>
-          <div class="col-xs-8 no-padding-left">
-            <select name="customer_flag" class="form-control">
-              <option value="">请选择</option>
-              <option value="1">A</option>
-              <option value="2">B</option>
-              <option value="3">C</option>
-              <option value="4">D</option>
-            </select>
-          </div>
-        </div>
       </div>
       <div class="panel-body">
         <div class="form-group">
@@ -134,7 +120,6 @@
                   $('input[name=name]').val(updateObj.name1);
                   $('select[name=channel_id]').val(updateObj.channel_id);
                   $('input[name=location]').val(updateObj.location);
-                  $('select[name=customer_flag]').val(updateObj.customer_flag);
                   $('input[name=tel]').val(updateObj.tel1);
                   $('input[name=wechat]').val(updateObj.wechat1);
                   $('input[name=qq]').val(updateObj.qq1);
@@ -216,13 +201,6 @@
       //     }
       //   }
       // },
-      customer_flag: {
-        validators: {
-          notEmpty: {
-            message: '类别不能为空'
-          }
-        }
-      },
       location: {
         validators: {
           notEmpty: {
@@ -251,12 +229,15 @@
     params['channel_id'] = $('select[name=channel_id]').val();
     params['channel_way_id'] = $('select[name=channel_way_id]').val()?$('select[name=channel_way_id]').val():'';
     params['location'] = $('input[name=location]').val();
-    params['customer_flag'] = $('select[name=customer_flag]').val();
     params['tel1'] = $('input[name=tel]').val();
     params['wechat1'] = $('input[name=wechat]').val();
     params['qq1'] = $('input[name=qq]').val();
     params['name_flag'] = $('input[name=name_flag]').val();
     params['zkrecord'] = $('textarea[name=zkrecord]').val();
+    if(!params['tel1'] && !params['wechat1'] && !params['qq1']){
+      alert('手机、微信、QQ请至少填写一个');
+      return false;
+    }
     // 如果是更新
     if(type == 'update'){
       params['uuid'] = uuid;

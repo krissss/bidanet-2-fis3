@@ -214,9 +214,6 @@
       zkCustomerWechat: obj.wechat1,
       zkCustomerLocation: obj.location,
       zkCustomerQq: obj.qq1,
-      zkCustomerType: function(){
-        return api.getCustomerFlagName(obj.customer_flag);
-      },
       zkCustomerIdentity: obj.name_flag,
       zkCustomerRecord: api.getTextAreaShow(obj.zkrecord),
       yyUsername: obj.uykName,
@@ -231,6 +228,9 @@
       },
       yyCustomerBalance: obj.str_budget,
       yyCustomerRelation: obj.type_name,
+      yyCustomerType: function(){
+        return api.getCustomerFlagName(obj.customer_flag);
+      },
       yyCustomerShootingRecord: api.getTextAreaShow(obj.shoot_idea),
       yyCustomerWorryRecord: api.getTextAreaShow(obj.care_problem),
       yyCustomerOrderRecord: api.getTextAreaShow(obj.need),

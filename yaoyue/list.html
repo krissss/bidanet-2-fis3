@@ -8,13 +8,13 @@
       </select>
     </div>
   </div>
-  <table class="table table-bordered table-striped">
+  <table class="table table-bordered table-striped table-small">
       <thead>
         <tr>
-          <th>序号</th>
+          <th width="44">序号</th>
           <th width="65">姓名</th>
           <th>接收时间</th>
-          <th>类别</th>
+          <th width="44">类别</th>
           <th>状态</th>
         </tr>
       </thead>
@@ -73,13 +73,7 @@
           }
           // 格式化数据
           baobeiTime = api.getFormatDate(item.yycreateTime, "yyyy-MM-dd\nhh:mm:ss");
-          switch(item.customerFlag){
-            case 1: customerFlag = 'A'; break;
-            case 2: customerFlag = 'B'; break;
-            case 3: customerFlag = 'C'; break;
-            case 4: customerFlag = 'D'; break;
-            default: customerFlag = '未知'
-          }
+          customerFlag = api.getCustomerFlagName(item.customerFlag);
           customerStatus = api.getStatusName(item.customerUserStatus);
           // 构造table body
           tabelTbody +=

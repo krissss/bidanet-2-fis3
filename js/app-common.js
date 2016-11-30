@@ -397,7 +397,7 @@ var api = {
       case 2: msg = 'B'; break;
       case 3: msg = 'C'; break;
       case 4: msg = 'D'; break;
-      default: msg = '未知'
+      default: msg = ''
     }
     return msg;
   },

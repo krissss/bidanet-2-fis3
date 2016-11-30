@@ -34,6 +34,18 @@
           </div>
         </div>
         <div class="form-group">
+          <label class="col-xs-4 control-label no-padding-left">类别</label>
+          <div class="col-xs-8 no-padding-left">
+            <select name="customer_flag" class="form-control">
+              <option value="">请选择</option>
+              <option value="1">A</option>
+              <option value="2">B</option>
+              <option value="3">C</option>
+              <option value="4">D</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
           <label class="col-xs-4 control-label no-padding-left">拍摄想法</label>
           <div class="col-xs-12">
             <textarea name="shooting_idea" class="form-control" rows="3"></textarea>
@@ -93,10 +105,11 @@
         $('input[name=shooting_date]').val(obj.shooting_time);
         $('input[name=balance]').val(obj.str_budget);
         $('input[name=relation]').val(obj.type_name);
+        $('select[name=customer_flag]').val(obj.customer_flag);
         $('textarea[name=shooting_idea]').val(obj.shoot_idea);
         $('textarea[name=worry_question]').val(obj.care_problem);
         $('textarea[name=order_need]').val(obj.need);
-        $('textarea[name=yyrecord]').val(obj.ykrecord);
+        $('textarea[name=yyrecord]').val(obj.yyrecord);
       }else{
         alert(data.retMsg);
       }
@@ -118,6 +131,7 @@
     params['shooting_time'] = $('input[name=shooting_date]').val();
     params['str_budget'] = $('input[name=balance]').val();
     params['type_name'] = $('input[name=relation]').val();
+    params['customer_flag'] = $('select[name=customer_flag]').val();
     params['shoot_idea'] = $('textarea[name=shooting_idea]').val();
     params['care_problem'] = $('textarea[name=worry_question]').val();
     params['need'] = $('textarea[name=order_need]').val();
