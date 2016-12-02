@@ -257,7 +257,14 @@
     // 发短信、打电话、加好友操作
     $('#sms-customer').attr('href', 'sms:' + obj.tel1);
     $('#call-customer').attr('href', 'tel:' + obj.tel1);
-    // $('#add-customer').attr('href', 'sms:' + obj.tel1);
+    $('#add-customer').popover({
+      title: '您可以长按以下内容进行复制',
+      content: 'QQ： ' + (obj.qq1?obj.qq1:'') + '<br>微信： '+ (obj.wechat1?obj.wechat1:''),
+      html: true,
+      placement: 'bottom',
+      container: 'body',
+      trigger: 'click'
+    })
 
     // 状态和客资详情邀约和门市信息的显示或隐藏
     var showStatusYy = false,

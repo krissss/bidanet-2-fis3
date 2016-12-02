@@ -4,8 +4,8 @@ var DEBUG = false,
 if(!PROD){ // 测试环境
   var HOST_FOLDER = '',
   WEB_ROOT = HOST_FOLDER,
-  //API_BASE = 'http://118.178.226.161:8082/wxy/inf/',
-  API_BASE = 'http://127.0.0.1:8081/wxy/inf/',
+  API_BASE = 'http://118.178.226.161:8082/wxy/inf/',
+  //API_BASE = 'http://127.0.0.1:8081/wxy/inf/',
   //USER_OPENID = 'okju2w7Rt607heeud2joDzfPpBmQ';
   USER_OPENID = 'okju2w3tYAObB_oK6343isPtIMXU';
   // 抓客 okju2w3k4W_ydmvRx3d-Qk6pU1-M

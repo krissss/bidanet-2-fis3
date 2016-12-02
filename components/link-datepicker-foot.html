@@ -7,7 +7,13 @@
     startView: 2,
     minView: 2,
     format: 'yyyy-mm-dd',
+  }).on('show', function (ev) {
+    var special = $(this).data('special');
+    if(special){
+      $(this).datetimepicker('setStartDate', new Date().format('yyyy-MM-dd'));
+      $(this).datetimepicker('setEndDate', new Date().format('yyyy-MM-dd', +1));
+    }
   }).on('changeDate', function (ev) {
     $(this).next('input[type=hidden]').val(ev.date.getTime());
-  });
+  }); 
 </script>

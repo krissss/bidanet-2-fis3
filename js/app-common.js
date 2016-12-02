@@ -488,10 +488,14 @@ var request = {
 /** 
  * 时间对象的格式化; 
  */
-Date.prototype.format = function (format) {
+Date.prototype.format = function (format, addDayCount) {
   /* 
    * eg:format="yyyy-MM-dd hh:mm:ss"; 
    */
+  if(!addDayCount){
+    addDayCount = 0;
+  }
+  this.setDate(this.getDate()+addDayCount);
   var o = {
     "M+": this.getMonth() + 1, // month  
     "d+": this.getDate(), // day  
