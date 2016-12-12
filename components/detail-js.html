@@ -220,12 +220,8 @@
       yyTransferData: function(){
         return api.getFormatDate(obj.yytime,"yyyy-MM-dd hh:mm");
       },
-      yyCustomerWeddingDate: function(){
-        return api.getFormatDate(obj.wedding_date,"yyyy-MM-dd");
-      },
-      yyCustomerShootingDate: function(){
-        return api.getFormatDate(obj.shooting_time,"yyyy-MM-dd");
-      },
+      yyCustomerWeddingDate: obj.str_wedding_date,
+      yyCustomerShootingDate: obj.str_shooting_date,
       yyCustomerBalance: obj.str_budget,
       yyCustomerRelation: obj.type_name,
       yyCustomerType: function(){

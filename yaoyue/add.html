@@ -1,7 +1,5 @@
 <link rel="import" href="../components/head.html?__inline">
 
-<link rel="import" href="../components/link-datepicker-head.html?__inline">
-
 <div class="container">
   <div class="map-head"><span class="vertical-line"></span><span id="operate-text">新增</span>沟通信息</div>
   <div class="panel panel-primary">
@@ -10,15 +8,13 @@
         <div class="form-group">
           <label class="col-xs-4 control-label no-padding-left">结婚婚期</label>
           <div class="col-xs-8 no-padding-left">
-            <input name="picker_wedding_date" type="text" class="form-control datepicker" readonly="readonly">
-            <input name="wedding_date" type="hidden">
+            <input name="wedding_date" type="text" class="form-control">
           </div>
         </div>
         <div class="form-group">
           <label class="col-xs-4 control-label no-padding-left">拍摄时间</label>
           <div class="col-xs-8 no-padding-left">
-            <input name="picker_shooting_date" type="text" class="form-control datepicker" readonly="readonly">
-            <input name="shooting_date" type="hidden">
+            <input name="shooting_date" type="text" class="form-control">
           </div>
         </div>
         <div class="form-group">
@@ -80,8 +76,6 @@
   </div>
 </div>
 
-<link rel="import" href="../components/link-datepicker-foot.html?__inline">
-
 <script>
   iframe.init();
 </script>
@@ -99,10 +93,8 @@
     api.getObject('BusCustomer', customerUuid, function(data){
       if(data.retMsg == 'OK'){
         var obj = data.retVal;
-        $('input[name=picker_wedding_date]').val(api.getFormatDate(obj.wedding_date, "yyyy-MM-dd"));
-        $('input[name=wedding_date]').val(obj.wedding_date);
-        $('input[name=picker_shooting_date]').val(api.getFormatDate(obj.shooting_time, "yyyy-MM-dd"));
-        $('input[name=shooting_date]').val(obj.shooting_time);
+        $('input[name=wedding_date]').val(obj.str_wedding_date);
+        $('input[name=shooting_date]').val(obj.str_shooting_date);
         $('input[name=balance]').val(obj.str_budget);
         $('input[name=relation]').val(obj.type_name);
         $('select[name=customer_flag]').val(obj.customer_flag);
@@ -127,8 +119,8 @@
   function commitForm(){
     var params = {};
     // 表单数据
-    params['wedding_date'] = $('input[name=wedding_date]').val();
-    params['shooting_time'] = $('input[name=shooting_date]').val();
+    params['str_wedding_date'] = $('input[name=wedding_date]').val();
+    params['str_shooting_date'] = $('input[name=shooting_date]').val();
     params['str_budget'] = $('input[name=balance]').val();
     params['type_name'] = $('input[name=relation]').val();
     params['customer_flag'] = $('select[name=customer_flag]').val();
