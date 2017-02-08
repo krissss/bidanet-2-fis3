@@ -388,6 +388,13 @@ var api = {
     });
     return options;
   },
+  getCustomerStatusCheckBoxes: function(ids, name){
+    var options = '';
+    $.each(ids, function(index, item){
+      options += '<div class="checkbox"><label><input type="checkbox" value="'+item+'" name="'+name+'"> '+api.getStatusName(item)+'</label></div>'
+    });
+    return options;
+  },
   // 获取客资标志名称
   getCustomerFlagName: function (customerFlag) {
     var msg = '';
@@ -431,16 +438,28 @@ var newApi = {
   hostname: NEW_API_BASE,
   userInfo: JSON.parse(window.localStorage.getItem('userInfo')),
 
-  // @params type zk|yy|ms
-  report: function(type, timeFlag, successCallback){
-    ajax(newApi.hostname + 'report/' + type + '.php', {
+  // @params role zk|yy|ms
+  report: function(role, timeFlag, successCallback){
+    ajax(newApi.hostname + 'report/' + role + '.php', {
       uuid: newApi.userInfo.userUuid,
       timeFlag: timeFlag,
     }, 'get', function (data) {
       logger('new-report', data);
       successCallback(data);
     });
-  }
+  },
+  // @params role zk|yy|ms
+  search: function(role, params, successCallback){
+    params['uuid'] = newApi.userInfo.userUuid;
+    ajax(newApi.hostname + 'search/' + role + '.php', params, 'get', function (data) {
+      logger('new-search', data);
+      if (data.retMsg == 'OK') {
+        successCallback(data.retVal);
+      } else {
+        alert(data.retMsg);
+      }
+    });
+  },
 }
 
 var iframe = {

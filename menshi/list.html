@@ -1,95 +1,203 @@
 <link rel="import" href="../components/head.html?__inline">
 
+<link rel="import" href="../components/link-datepicker-head.html?__inline">
+
 <div class="container">
   <div class="map-head">
     <span class="vertical-line"></span>客资列表
     <div class="filter">
-      <select class="form-control input-sm customer-status">
-      </select>
+      <a class="btn btn-primary btn-xs" id="search-btn">高级搜索</a>
     </div>
   </div>
   <table class="table table-bordered table-striped table-small">
-      <thead>
-        <tr>
-          <th>序号</th>
-          <th class="table-th-width-65">姓名</th>
-          <th>下发时间</th>
-          <th>订单</th>
-          <th>预计到店时间</th>
-        </tr>
-      </thead>
-      <tbody id="table-content">
-      </tbody>
-    </table>
-
+    <thead>
+      <tr>
+        <th>序号</th>
+        <th class="table-th-width-65">姓名</th>
+        <th>下发时间</th>
+        <th>订单</th>
+        <th>预计到店时间</th>
+      </tr>
+    </thead>
+    <tbody id="table-content">
+    </tbody>
+  </table>
+  <div class="search" style="display: none">
+    <div class="panel panel-primary">
+      <div class="panel-body">
+        <form id="form" action="" class="form-horizontal" role="form">
+          <div class="form-group">
+            <label class="col-xs-3 control-label no-padding">姓名</label>
+            <div class="col-xs-9 no-padding-left">
+              <input name="customer_name" type="text" class="form-control">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-xs-3 control-label no-padding">手机号</label>
+            <div class="col-xs-9 no-padding-left">
+              <input name="customer_cellphone" type="number" class="form-control">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-xs-3 control-label no-padding">到店时间</label>
+            <div class="col-xs-9 no-padding-left no-padding-right">
+              <div class="col-xs-6 no-padding-left">
+                <input type="text" class="form-control datepicker" readonly="readonly">
+                <input name="dd_time_1" type="hidden">
+              </div>
+              <div class="col-xs-6 no-padding-left">
+                <input type="text" class="form-control datepicker" readonly="readonly">
+                <input name="dd_time_2" type="hidden">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-xs-3 control-label no-padding">客资类型</label>
+            <div class="col-xs-9 no-padding-left">
+              <select name="customer_flag" class="form-control">
+                <option value="">请选择</option>
+                <option value="1">A</option>
+                <option value="2">B</option>
+                <option value="3">C</option>
+                <option value="4">D</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-xs-3 control-label no-padding">客资状态</label>
+            <div class="col-xs-9 no-padding-left" id="customer-status-checkbox" data-name="customer_status">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-xs-3 control-label no-padding">是否订单</label>
+            <div class="col-xs-9 no-padding-left" id="customer-status-checkbox" data-name="customer_status">
+              <div class="radio">
+                <label>
+                  <input type="radio" name="is_order" value="" checked> 全部
+                </label>
+              </div>
+              <div class="radio">
+                <label>
+                  <input type="radio" name="is_order" value="1"> 是
+                </label>
+              </div>
+              <div class="radio">
+                <label>
+                  <input type="radio" name="is_order" value="2"> 否
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-offset-2 col-xs-4">
+              <input onclick="hideSearch()" type="button" class="btn btn-default btn-block" value="取消">
+            </div>
+            <div class="col-xs-4">
+              <input type="submit" class="btn btn-primary btn-block" value="查询">
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
+
+<link rel="import" href="../components/link-datepicker-foot.html?__inline">
 
 <script>
 	iframe.init();
 </script>
 
 <script>
-  var searchParams =  {
-    sales_id: api.userInfo.userUuid
-  },
-  // 以下两个暂时预留不用
-  pageIndex = request.getParam('pageIndex')?request.getParam('pageIndex'):0,
-  pageSize = request.getParam('pageSize')?request.getParam('pageSize'):999;
+  // 高级查询多选
+  var customerStatusCheckBoxContainer = $('#customer-status-checkbox'),
+      customerStatusCheckBoxName = customerStatusCheckBoxContainer.data('name');
+  customerStatusCheckBoxContainer.html(
+    api.getCustomerStatusCheckBoxes([6,7,8,9,10], customerStatusCheckBoxName)
+  );
 
-  // 下拉筛选
-  $('.customer-status').html(api.getCustomerStatusOptions([-1,6,7,8,9,10]));
+  // 高级搜索点击事件
+  function showSearch() {
+    $('.filter').hide();
+    $('.table').hide();
+    $('.search').show();
+    iframe.init();
+  }
+  function hideSearch(){
+    $('.filter').show();
+    $('.table').show();
+    $('.search').hide();
+    iframe.init();
+  }
+  $('#search-btn').click(function(){
+    showSearch();
+  });
 
-  // 筛选事件
-  $('.customer-status').change(function(){
-    var value = parseInt($(this).val());
-    if(value == -1){
-      delete searchParams['customer_user_status'];
-    }else{
-      searchParams['customer_user_status'] = value;
-    }
-    setTableList(searchParams, pageIndex, pageSize);
+  // 高级搜索提交
+  $('#form').submit(function(){
+    var params = {};
+    // 表单数据
+    params['name'] = $('input[name=customer_name]').val();
+    params['cellphone'] = $('input[name=customer_cellphone]').val();
+    params['dd_time_1'] = $('input[name=dd_time_1]').val();
+    params['dd_time_2'] = $('input[name=dd_time_2]').val();
+    params['customer_flag'] = $('select[name=customer_flag]').val();
+    var statusArray = new Array();
+    $('input[name=customer_status]:checked').each(function(){
+        statusArray.push($(this).val());
+    });
+    params['status'] = statusArray.join(',');
+    params['is_order'] = $('input[name=is_order]:checked').val();
+    getNewApiData(params);
+    hideSearch();
+    return false;
   });
 
   // 初始化加载数据
-  setTableList(searchParams, pageIndex, pageSize);
-  
-  // 设置表格数据
-  function setTableList(searchParams, pageIndex, pageSize){
-    api.listObject('BusCustomer', searchParams, pageIndex, pageSize, function(data){
-      var tabelTbody = '',
-          xiafaTime,
-          order,
-          shopTime;
-      if(data){
-        $.each(data.list, function(index, item){
-          // 排除部分数据
-          if(item.customerUserStatus <= 5){ // 未被接收的客资跳过
-            logger('未被接收的客资跳过', item);
-            return true;
-          }
-          // 格式化数据
-          xiafaTime = api.getFormatDate(item.mscreateTime, "yyyy-MM-dd\nhh:mm:ss");
-          order = item.paid ? item.paid : '';
-          shopTime = api.getFormatDate(item.shopDate, "yyyy-MM-dd\n") + item.strShopDate;
-          // 构造table body
-          tabelTbody +=
-          '<tr onclick="javascript:window.location.href=\'detail.html?id='+ item.uuid +'\'">'
-            + '<td>'+ (index+1) +'</td>'
-            + '<td width="65">'+ item.name1 +'</td>'
-            + '<td>'+ xiafaTime +'</td>'
-            + '<td>'+ order +'</td>'
-            + '<td>'+ shopTime +'</td>'
-            + '</tr>'
-            + "\n";
-        });
-      }
-      // 一次性加到页面上
-      $('#table-content').html(tabelTbody);
-      // 重新设定 iframe 高度
-      iframe.changeHeight();
+  getNewApiData({});
+
+  // 获取new api的数据
+  function getNewApiData(searchParams){
+    newApi.search('ms', searchParams, function(data){
+      setTableList(data);
     });
   }
-  
+
+  // 设置表格数据
+  function setTableList(data){
+    var tabelTbody = '',
+        xiafaTime,
+        order,
+        shopTime;
+    if(data){
+      $.each(data.list, function(index, item){
+        // 排除部分数据
+        if(item.status <= 5){ // 未被接收的客资跳过
+          logger('未被接收的客资跳过', item);
+          return true;
+        }
+        // 格式化数据
+        xiafaTime = api.getFormatDate(parseInt(item.xiafaTime), "yyyy-MM-dd\nhh:mm:ss");
+        order = item.paid ? item.paid : '';
+        shopTime = api.getFormatDate(parseInt(item.shopDate), "yyyy-MM-dd\n") + item.strShopDate;
+        // 构造table body
+        tabelTbody +=
+        '<tr onclick="javascript:window.location.href=\'detail.html?id='+ item.uuid +'\'">'
+          + '<td>'+ (index+1) +'</td>'
+          + '<td width="65">'+ item.name +'</td>'
+          + '<td>'+ xiafaTime +'</td>'
+          + '<td>'+ order +'</td>'
+          + '<td>'+ shopTime +'</td>'
+          + '</tr>'
+          + "\n";
+      });
+    }
+    // 一次性加到页面上
+    $('#table-content').html(tabelTbody);
+    // 重新设定 iframe 高度
+    iframe.changeHeight();
+  }
+
 </script>
 
 <link rel="import" href="../components/foot.html?__inline">

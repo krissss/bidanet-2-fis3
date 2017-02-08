@@ -9,7 +9,7 @@ body{
   font-size: px2rem(14px);
 }
 
-input,button,select,textarea{
+button,select,textarea{
   outline:none;
   -webkit-appearance:none;
 }
@@ -59,6 +59,10 @@ a:active {
     padding-left: 0 !important;
 }
 
+.no-padding-right{
+    padding-right: 0 !important;
+}
+
 .no-padding-top{
     padding-top: 0 !important;
 }
@@ -83,11 +87,11 @@ a:active {
   font-size: px2rem(12px);
 }
 
-.table>thead>tr>th, 
-.table>tbody>tr>th, 
-.table>tfoot>tr>th, 
-.table>thead>tr>td, 
-.table>tbody>tr>td, 
+.table>thead>tr>th,
+.table>tbody>tr>th,
+.table>tfoot>tr>th,
+.table>thead>tr>td,
+.table>tbody>tr>td,
 .table>tfoot>tr>td{
   padding: px2rem(8px);
 }
@@ -108,17 +112,17 @@ p{
   margin: 0 0 px2rem(10px);
 }
 
-.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, 
-.col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, 
-.col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, 
-.col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, 
-.col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, 
-.col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, 
-.col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, 
-.col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, 
-.col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, 
-.col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, 
-.col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, 
+.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1,
+.col-xs-2, .col-sm-2, .col-md-2, .col-lg-2,
+.col-xs-3, .col-sm-3, .col-md-3, .col-lg-3,
+.col-xs-4, .col-sm-4, .col-md-4, .col-lg-4,
+.col-xs-5, .col-sm-5, .col-md-5, .col-lg-5,
+.col-xs-6, .col-sm-6, .col-md-6, .col-lg-6,
+.col-xs-7, .col-sm-7, .col-md-7, .col-lg-7,
+.col-xs-8, .col-sm-8, .col-md-8, .col-lg-8,
+.col-xs-9, .col-sm-9, .col-md-9, .col-lg-9,
+.col-xs-10, .col-sm-10, .col-md-10, .col-lg-10,
+.col-xs-11, .col-sm-11, .col-md-11, .col-lg-11,
 .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
     position: relative;
     min-height: 1px;
@@ -272,8 +276,8 @@ select.form-group-sm .form-control{
   opacity: 0;
 }
 
-.form-control[disabled], 
-.form-control[readonly], 
+.form-control[disabled],
+.form-control[readonly],
 fieldset[disabled] .form-control{
   background-color: #fff;
 }
@@ -450,7 +454,7 @@ fieldset[disabled] .form-control{
 
 .new-customer-message .count-down{
     height: px2rem(90px);
-    line-height: px2rem(90px);    
+    line-height: px2rem(90px);
     background-color: #41a9e0;
     font-size: px2rem(30px);
     text-align: center;
@@ -477,7 +481,7 @@ fieldset[disabled] .form-control{
 }
 
 .customer-status-message .message-tr{
-    overflow: hidden;    
+    overflow: hidden;
     border-bottom: 1px solid #aaa;
 }
 
@@ -536,7 +540,7 @@ fieldset[disabled] .form-control{
 }
 
 .customer-info-message .title .user-info .username{
-    margin: 0;    
+    margin: 0;
 }
 
 .customer-info-message .title .user-info .date{
