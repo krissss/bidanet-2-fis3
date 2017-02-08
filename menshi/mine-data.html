@@ -13,7 +13,7 @@
 			<td>接收有效客资数</td>
 			<td>邀约到店数</td>
 			<td>成交数</td>
-			<td>成交套系均价</td>
+			<td>客资成交率</td>
 		</tr>
 		<tr>
 			<td>实际</td>
@@ -49,33 +49,27 @@
 
   // 获取抓客报表
   function getData(timeFlag){
-    api.report('SalesroomReport', timeFlag, function(data){
+    newApi.report('ms', timeFlag, function(data){
       // 实际
       var actualResult = data.actualResult,
-        real1 = actualResult.sendValidNumberResult,
-        real2 = actualResult.inviteShopNumberResult,
-        real3 = actualResult.dealOrderTotalResult,
-        real4 = actualResult.orderPriceResult;
+        real1 = actualResult.jskzs,
+        real2 = actualResult.sjdds,
+        real3 = actualResult.cjs,
+        real4 = actualResult.cjl;
       $('#real-1').text(real1);
       $('#real-2').text(real2);
       $('#real-3').text(real3);
-      $('#real-4').text(real4);
+      $('#real-4').text(real4 + '%');
       // 目标
-      var target1 = 0,
-          target2 = 0,
-          target3 = 0,
-          target4 = 0;
-      if(data.targetResult.length > 0){
-        var targetResult = data.targetResult[0];
-        target1 = targetResult.send_valid_number;
-        target2 = targetResult.invite_shop_number;
-        target3 = targetResult.deal_order_total;
-        target4 = targetResult.order_price;
-      }
+      var targetResult = data.targetResult,
+      target1 = targetResult.jskzs,
+      target2 = targetResult.sjdds,
+      target3 = targetResult.cjs,
+      target4 = targetResult.cjl;
       $('#target-1').text(target1);
       $('#target-2').text(target2);
       $('#target-3').text(target3);
-      $('#target-4').text(target4);
+      $('#target-4').text(target4 + '%');
       // 计算
       $('#percent-1').text(caculatePercent(real1, target1));
       $('#percent-2').text(caculatePercent(real2, target2));

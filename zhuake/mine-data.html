@@ -13,7 +13,7 @@
 			<td>我的客资数</td>
 			<td>有效客资数</td>
 			<td>客资有效率</td>
-			<td>客资成交数</td>
+			<td>客资成交率</td>
 		</tr>
 		<tr>
 			<td>实际</td>
@@ -49,33 +49,27 @@
 
   // 获取抓客报表
   function getData(timeFlag){
-    api.report('ZKReport', timeFlag, function(data){
+    newApi.report('zk', timeFlag, function(data){
       // 实际
       var actualResult = data.actualResult,
-        real1 = actualResult.myCustomerResult,
-        real2 = actualResult.validCustomerResult,
-        real3 = actualResult.customerValidRate ? Math.round(actualResult.customerValidRate*10000)/100 : 0,
-        real4 = actualResult.dealCustomerResult;
+        real1 = actualResult.kzs,
+        real2 = actualResult.yxkzs,
+        real3 = actualResult.yxl,
+        real4 = actualResult.cjl;
       $('#real-1').text(real1);
       $('#real-2').text(real2);
       $('#real-3').text(real3 + '%');
-      $('#real-4').text(real4);
+      $('#real-4').text(real4 + '%');
       // 目标
-      var target1 = 0,
-          target2 = 0,
-          target3 = 0,
-          target4 = 0;
-      if(data.targetResult.length > 0){
-        var targetResult = data.targetResult[0];
-        target1 = targetResult.my_customer;
-        target2 = targetResult.valid_customer;
-        target3 = targetResult.customer_valid_rate;
-        target4 = targetResult.deal_customer;
-      }
+      var targetResult = data.targetResult,
+      target1 = targetResult.kzs,
+      target2 = targetResult.yxkzs,
+      target3 = targetResult.yxl,
+      target4 = targetResult.cjl;
       $('#target-1').text(target1);
       $('#target-2').text(target2);
       $('#target-3').text(target3 + '%');
-      $('#target-4').text(target4);
+      $('#target-4').text(target4 + '%');
       // 计算
       $('#percent-1').text(caculatePercent(real1, target1));
       $('#percent-2').text(caculatePercent(real2, target2));

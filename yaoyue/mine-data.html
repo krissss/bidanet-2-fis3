@@ -11,8 +11,8 @@
 		<tr>
 			<td></td>
 			<td>报备有效客资</td>
-			<td>邀约到店资数</td>
-			<td>网络成交资数</td>
+			<td>邀约到店数</td>
+			<td>邀约到店率</td>
 			<td>总成交订单数</td>
 		</tr>
 		<tr>
@@ -49,32 +49,26 @@
 
   // 获取抓客报表
   function getData(timeFlag){
-    api.report('InviteReport', timeFlag, function(data){
+    newApi.report('yy', timeFlag, function(data){
       // 实际
       var actualResult = data.actualResult,
-        real1 = actualResult.recordValidCustomerResult,
-        real2 = actualResult.inviteShopCustomerResult,
-        real3 = actualResult.networkDealCustomerResult,
-        real4 = actualResult.dealOrderTotalResult;
+        real1 = actualResult.yxkzs,
+        real2 = actualResult.yydds,
+        real3 = actualResult.yyddl,
+        real4 = actualResult.cjs;
       $('#real-1').text(real1);
       $('#real-2').text(real2);
-      $('#real-3').text(real3);
+      $('#real-3').text(real3 + '%');
       $('#real-4').text(real4);
       // 目标
-      var target1 = 0,
-          target2 = 0,
-          target3 = 0,
-          target4 = 0;
-      if(data.targetResult.length > 0){
-        var targetResult = data.targetResult[0];
-        target1 = targetResult.record_valid_customer;
-        target2 = targetResult.invite_shop_customer;
-        target3 = targetResult.network_deal_customer;
-        target4 = targetResult.deal_order_total;
-      }
+      var targetResult = data.targetResult,
+      target1 = targetResult.yxkzs,
+      target2 = targetResult.yydds,
+      target3 = targetResult.yyddl,
+      target4 = targetResult.cjs;
       $('#target-1').text(target1);
       $('#target-2').text(target2);
-      $('#target-3').text(target3);
+      $('#target-3').text(target3 + '%');
       $('#target-4').text(target4);
       // 计算
       $('#percent-1').text(caculatePercent(real1, target1));

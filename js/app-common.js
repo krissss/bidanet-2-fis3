@@ -15,9 +15,9 @@ function logger(msg, data) {
 // 取消load-container的滑动
 $(document).on("touchmove",function(e) {
    if(e.target.className.indexOf("load-container") >= 0) {
-        e.preventDefault();      
+        e.preventDefault();
     } else {
-        e.stopPropagation();     
+        e.stopPropagation();
     }
 });
 
@@ -356,7 +356,7 @@ var api = {
       case 1: msg = '客资新增，待确认'; break;
       case 2: msg = '客资已接收，待报备'; break;
       case 3: msg = '客资已报备，待追踪'; break;
-      case 4: 
+      case 4:
         if(validFlag == 2){
           msg = '退回，无效';
         }else{
@@ -426,7 +426,22 @@ var api = {
   }
 
 }
-// api.login(); // 登录
+
+var newApi = {
+  hostname: NEW_API_BASE,
+  userInfo: JSON.parse(window.localStorage.getItem('userInfo')),
+
+  // @params type zk|yy|ms
+  report: function(type, timeFlag, successCallback){
+    ajax(newApi.hostname + 'report/' + type + '.php', {
+      uuid: newApi.userInfo.userUuid,
+      timeFlag: timeFlag,
+    }, 'get', function (data) {
+      logger('new-report', data);
+      successCallback(data);
+    });
+  }
+}
 
 var iframe = {
   init: function () {
@@ -443,13 +458,13 @@ var iframe = {
       var frames = p.frames,
         frame,
         i = 0;
-        
+
       while (frame = frames[i++]) {
         // 去除之前设定的高度，解决只能扩增，不能缩减的问题
         frame.frameElement.style.height = 0;
         if (frame.document == doc) {
           frame.frameElement.style.minHeight = '300px';
-          frame.frameElement.style.height = doc.body.scrollHeight + 'px'; // 这里一定要注意 火狐必须要加'px' 否则火狐无效 
+          frame.frameElement.style.height = doc.body.scrollHeight + 'px'; // 这里一定要注意 火狐必须要加'px' 否则火狐无效
           doc = p.document;
           break;
         }
@@ -485,26 +500,26 @@ var request = {
   }
 }
 
-/** 
- * 时间对象的格式化; 
+/**
+ * 时间对象的格式化;
  */
 Date.prototype.format = function (format, addDayCount) {
-  /* 
-   * eg:format="yyyy-MM-dd hh:mm:ss"; 
+  /*
+   * eg:format="yyyy-MM-dd hh:mm:ss";
    */
   if(!addDayCount){
     addDayCount = 0;
   }
   this.setDate(this.getDate()+addDayCount);
   var o = {
-    "M+": this.getMonth() + 1, // month  
-    "d+": this.getDate(), // day  
-    "h+": this.getHours(), // hour  
-    "m+": this.getMinutes(), // minute  
-    "s+": this.getSeconds(), // second  
-    "q+": Math.floor((this.getMonth() + 3) / 3), // quarter  
+    "M+": this.getMonth() + 1, // month
+    "d+": this.getDate(), // day
+    "h+": this.getHours(), // hour
+    "m+": this.getMinutes(), // minute
+    "s+": this.getSeconds(), // second
+    "q+": Math.floor((this.getMonth() + 3) / 3), // quarter
     "S": this.getMilliseconds()
-    // millisecond  
+    // millisecond
   }
 
   if (/(y+)/.test(format)) {

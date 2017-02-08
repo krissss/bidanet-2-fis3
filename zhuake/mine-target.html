@@ -36,9 +36,12 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-xs-4 control-label no-padding">客资成交数</label>
+        <label class="col-xs-4 control-label no-padding">客资成交率</label>
         <div class="col-xs-8 no-padding-left">
-          <input name="paid_customer_number" type="number" class="form-control">
+          <div class="input-group">
+            <input name="paid_customer_number" type="number" min="0" max="101" step="1" class="form-control">
+            <div class="input-group-addon">%</div>
+          </div>
         </div>
       </div>
       <div class="form-group">
@@ -57,7 +60,7 @@
 <script>
   var isUpdate = false,
       uuid = '';
-  
+
   // 获取初始化数据
   getData(1);
 
@@ -91,7 +94,7 @@
   $('select[name=time_type]').change(function(){
     getData($(this).val());
   });
-  
+
   $('#form').bootstrapValidator({
     // live: 'disabled',
     message: '数据验证未通过',
