@@ -40,3 +40,14 @@ fis.media('prod').match('*.png', {
   // fis-optimizer-png-compressor 插件进行压缩，已内置
   optimizer: fis.plugin('png-compressor')
 });
+
+// 发布时忽略以下目录或者文件
+fis.set('project.ignore', [
+  'fis-conf.js',
+  'node_modules/**',
+  '.git/**',
+  '.svn/**',
+  'package.json',
+  'README.md',
+  'release.bat',
+]);
