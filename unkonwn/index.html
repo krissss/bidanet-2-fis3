@@ -1,0 +1,13 @@
+<link rel="import" href="../components/head.html?__inline">
+
+<h4>该账户类型不允许登录系统，如果已经更改账户类型，请点击下方清空缓存</h4>
+
+<a id="logout" href="javascript:;" class="btn btn-primary"> 清空缓存 </a>
+
+<script>
+$('#logout').click(function(){
+    api.logout();
+});
+</script>
+
+<link rel="import" href="../components/foot.html?__inline">
